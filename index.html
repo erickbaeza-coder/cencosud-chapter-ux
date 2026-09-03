@@ -1,0 +1,957 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUB IA — Chapter UX Cencosud</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ══════════════════════════════════════════════════
+     PRISMA DESIGN TOKENS + SHADCN/UI PATTERNS
+     ══════════════════════════════════════════════════ */
+  :root {
+    /* ── Prisma Brand ── */
+    --brand-50:  #EFF6FF;
+    --brand-100: #DBEAFE;
+    --brand-200: #BFDBFE;
+    --brand-300: #93C5FD;
+    --brand-400: #60A5FA;
+    --brand-500: #3B82F6;
+    --brand-600: #2563EB;
+    --brand-700: #1D4ED8;
+    --brand-800: #1E40AF;
+    --brand-900: #1E3A8A;
+
+    /* ── Prisma Neutrals (Slate) ── */
+    --neutral-0:   #FFFFFF;
+    --neutral-50:  #F8FAFC;
+    --neutral-100: #F1F5F9;
+    --neutral-200: #E2E8F0;
+    --neutral-300: #CBD5E1;
+    --neutral-400: #94A3B8;
+    --neutral-500: #64748B;
+    --neutral-600: #475569;
+    --neutral-700: #334155;
+    --neutral-800: #1E293B;
+    --neutral-900: #0F172A;
+
+    /* ── Prisma Semantic ── */
+    --success-50:  #F0FDF4;
+    --success-500: #22C55E;
+    --success-600: #16A34A;
+    --success-700: #15803D;
+    --warning-50:  #FFFBEB;
+    --warning-500: #F59E0B;
+    --warning-600: #D97706;
+    --warning-700: #B45309;
+    --danger-50:   #FEF2F2;
+    --danger-500:  #EF4444;
+    --danger-600:  #DC2626;
+    --info-50:     #F0F9FF;
+    --info-500:    #0EA5E9;
+    --info-600:    #0284C7;
+
+    /* ── Prisma Accent (Purple for IA) ── */
+    --accent-50:  #FAF5FF;
+    --accent-100: #F3E8FF;
+    --accent-200: #E9D5FF;
+    --accent-500: #A855F7;
+    --accent-600: #9333EA;
+    --accent-700: #7E22CE;
+    --accent-800: #6B21A8;
+
+    /* ── Prisma Spacing ── */
+    --space-xs:  2px;
+    --space-s:   4px;
+    --space-m:   6px;
+    --space-l:   8px;
+    --space-xl:  12px;
+    --space-2xl: 16px;
+    --space-3xl: 20px;
+    --space-4xl: 24px;
+    --space-5xl: 32px;
+    --space-6xl: 40px;
+    --space-7xl: 48px;
+
+    /* ── Prisma Radius ── */
+    --radius-xs:   2px;
+    --radius-s:    4px;
+    --radius-m:    8px;
+    --radius-l:    12px;
+    --radius-xl:   16px;
+    --radius-full: 999px;
+
+    /* ── Shadcn/UI Shadows ── */
+    --shadow-sm:  0 1px 2px rgba(0,0,0,0.05);
+    --shadow:     0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md:  0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -2px rgba(0,0,0,0.1);
+    --shadow-lg:  0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.05);
+
+    /* ── Aliases ── */
+    --bg: var(--neutral-50);
+    --bg-card: var(--neutral-0);
+    --border: var(--neutral-200);
+    --border-hover: var(--neutral-300);
+    --text-primary: var(--neutral-900);
+    --text-secondary: var(--neutral-600);
+    --text-muted: var(--neutral-400);
+    --ring: var(--brand-500);
+  }
+
+  /* ══════════════════════════════════════════════════
+     RESET & BASE
+     ══════════════════════════════════════════════════ */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-primary);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; }
+  img { display: block; max-width: 100%; }
+
+  /* ══════════════════════════════════════════════════
+     NAVIGATION — Shadcn/UI style
+     ══════════════════════════════════════════════════ */
+  .nav {
+    background: var(--bg-card);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: blur(8px);
+    background: rgba(255,255,255,0.85);
+  }
+  .nav-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-5xl);
+    display: flex;
+    align-items: center;
+    height: 56px;
+    gap: var(--space-4xl);
+  }
+  .nav-brand {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+    font-weight: 700;
+    font-size: 15px;
+    color: var(--neutral-900);
+    white-space: nowrap;
+    letter-spacing: -0.3px;
+  }
+  .nav-brand .prisma-dot {
+    width: 24px;
+    height: 24px;
+    background: linear-gradient(135deg, var(--brand-600), var(--accent-600));
+    border-radius: var(--radius-m);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-brand .prisma-dot svg { width: 14px; height: 14px; }
+  .nav-brand .badge {
+    background: var(--accent-100);
+    color: var(--accent-700);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  .nav-links {
+    display: flex;
+    gap: var(--space-xs);
+    align-items: center;
+  }
+  .nav-links a {
+    padding: var(--space-l) var(--space-2xl);
+    border-radius: var(--radius-m);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .nav-links a:hover {
+    background: var(--neutral-100);
+    color: var(--text-primary);
+  }
+  .nav-links a.active {
+    background: var(--neutral-100);
+    color: var(--text-primary);
+    font-weight: 600;
+  }
+  .nav-right {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: var(--space-xl);
+  }
+  .search-box {
+    position: relative;
+  }
+  .search-box input {
+    background: var(--neutral-100);
+    border: 1px solid transparent;
+    border-radius: var(--radius-m);
+    padding: 7px var(--space-2xl) 7px 36px;
+    font-size: 13px;
+    font-family: inherit;
+    width: 240px;
+    color: var(--text-primary);
+    outline: none;
+    transition: all 0.15s ease;
+  }
+  .search-box input::placeholder { color: var(--text-muted); }
+  .search-box input:focus {
+    background: var(--bg-card);
+    border-color: var(--ring);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+  }
+  .search-box svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+    width: 15px;
+    height: 15px;
+  }
+  .search-kbd {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: var(--neutral-200);
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: var(--radius-s);
+    line-height: 1.6;
+  }
+
+  /* ══════════════════════════════════════════════════
+     LAYOUT
+     ══════════════════════════════════════════════════ */
+  .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-5xl);
+  }
+
+  /* ══════════════════════════════════════════════════
+     HERO
+     ══════════════════════════════════════════════════ */
+  .hero-section {
+    padding: var(--space-7xl) 0 var(--space-6xl);
+  }
+  .hero-content {
+    max-width: 640px;
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-l);
+    background: var(--accent-50);
+    border: 1px solid var(--accent-200);
+    color: var(--accent-700);
+    font-size: 12px;
+    font-weight: 600;
+    padding: var(--space-s) var(--space-2xl);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-3xl);
+  }
+  .hero-eyebrow .pulse {
+    width: 6px; height: 6px;
+    background: var(--accent-500);
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+  .hero-section h1 {
+    font-size: 36px;
+    font-weight: 700;
+    letter-spacing: -0.8px;
+    line-height: 1.15;
+    margin-bottom: var(--space-2xl);
+    color: var(--neutral-900);
+  }
+  .hero-section h1 span {
+    background: linear-gradient(135deg, var(--brand-600), var(--accent-600));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-section p {
+    font-size: 16px;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    max-width: 520px;
+  }
+
+  /* ══════════════════════════════════════════════════
+     STATS — Shadcn Card pattern
+     ══════════════════════════════════════════════════ */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-6xl);
+  }
+  .stat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-l);
+    padding: var(--space-4xl);
+    transition: all 0.15s ease;
+  }
+  .stat-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-hover);
+  }
+  .stat-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-xl);
+  }
+  .stat-header .label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+  }
+  .stat-header .icon {
+    width: 32px;
+    height: 32px;
+    border-radius: var(--radius-m);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .stat-header .icon svg { width: 16px; height: 16px; }
+  .stat-card .value {
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: var(--space-s);
+  }
+  .stat-card .change {
+    font-size: 12px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+  }
+  .stat-card .change.up { color: var(--success-600); }
+
+  /* ══════════════════════════════════════════════════
+     QUICK ACCESS — Bento grid
+     ══════════════════════════════════════════════════ */
+  .section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-3xl);
+  }
+  .section-header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.3px;
+  }
+  .section-header a {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--brand-600);
+    display: flex;
+    align-items: center;
+    gap: var(--space-s);
+  }
+  .section-header a:hover { color: var(--brand-700); }
+
+  .bento-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: var(--space-xl);
+    margin-bottom: var(--space-6xl);
+  }
+  .bento-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-l);
+    padding: var(--space-3xl);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-xl);
+  }
+  .bento-card:hover {
+    border-color: var(--brand-300);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+  .bento-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-l);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .bento-icon svg { width: 22px; height: 22px; }
+  .bento-card .title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+  .bento-card .desc {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: -4px;
+  }
+
+  /* ══════════════════════════════════════════════════
+     NEWS FEED
+     ══════════════════════════════════════════════════ */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-6xl);
+  }
+  .news-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-l);
+    padding: var(--space-4xl);
+    transition: all 0.15s ease;
+  }
+  .news-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-hover);
+  }
+  .news-card .tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    font-weight: 600;
+    padding: var(--space-xs) var(--space-xl);
+    border-radius: var(--radius-full);
+    margin-bottom: var(--space-xl);
+  }
+  .tag-plugin  { background: var(--accent-100); color: var(--accent-700); }
+  .tag-skill   { background: var(--success-50); color: var(--success-700); }
+  .tag-form    { background: var(--warning-50); color: var(--warning-700); }
+  .tag-prisma  { background: var(--brand-50); color: var(--brand-700); }
+  .tag-tool    { background: var(--info-50); color: var(--info-600); }
+  .news-card h3 {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: var(--space-l);
+    letter-spacing: -0.2px;
+  }
+  .news-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+  .news-card .meta {
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .news-card .author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-l);
+  }
+  .avatar {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--neutral-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--text-secondary);
+  }
+
+  /* ══════════════════════════════════════════════════
+     TOOLS — Two-column feature cards
+     ══════════════════════════════════════════════════ */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-6xl);
+  }
+  .tool-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-l);
+    padding: var(--space-5xl);
+    display: flex;
+    gap: var(--space-3xl);
+    transition: all 0.15s ease;
+  }
+  .tool-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-hover);
+  }
+  .tool-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-l);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .tool-icon svg { width: 24px; height: 24px; }
+  .tool-card h3 {
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.2px;
+    margin-bottom: var(--space-l);
+  }
+  .tool-card p {
+    font-size: 13px;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin-bottom: var(--space-2xl);
+  }
+  .tool-tags {
+    display: flex;
+    gap: var(--space-l);
+    flex-wrap: wrap;
+  }
+  .tool-tag {
+    font-size: 11px;
+    font-weight: 500;
+    padding: var(--space-xs) var(--space-xl);
+    border-radius: var(--radius-full);
+    background: var(--neutral-100);
+    color: var(--text-secondary);
+  }
+
+  /* ══════════════════════════════════════════════════
+     BUTTONS — Shadcn/UI
+     ══════════════════════════════════════════════════ */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-l);
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: var(--radius-m);
+    padding: var(--space-l) var(--space-2xl);
+    border: none;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+  .btn-primary {
+    background: var(--brand-600);
+    color: white;
+  }
+  .btn-primary:hover { background: var(--brand-700); }
+  .btn-outline {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover {
+    background: var(--neutral-100);
+    color: var(--text-primary);
+    border-color: var(--border-hover);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--brand-600);
+    border: none;
+    padding: var(--space-l) var(--space-xl);
+  }
+  .btn-ghost:hover {
+    background: var(--brand-50);
+    color: var(--brand-700);
+  }
+  .btn svg { width: 14px; height: 14px; }
+
+  /* ══════════════════════════════════════════════════
+     BANNER CTA
+     ══════════════════════════════════════════════════ */
+  .cta-banner {
+    background: linear-gradient(135deg, var(--brand-600), var(--accent-600));
+    border-radius: var(--radius-xl);
+    padding: var(--space-6xl) var(--space-7xl);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-7xl);
+  }
+  .cta-banner h2 {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: var(--space-l);
+  }
+  .cta-banner p {
+    font-size: 14px;
+    opacity: 0.85;
+    max-width: 480px;
+  }
+  .cta-banner .btn {
+    background: white;
+    color: var(--brand-700);
+    font-weight: 600;
+    padding: var(--space-xl) var(--space-4xl);
+    flex-shrink: 0;
+  }
+  .cta-banner .btn:hover {
+    background: var(--brand-50);
+  }
+
+  /* ══════════════════════════════════════════════════
+     FOOTER
+     ══════════════════════════════════════════════════ */
+  .footer {
+    border-top: 1px solid var(--border);
+    padding: var(--space-4xl) 0;
+    margin-top: var(--space-5xl);
+  }
+  .footer-inner {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 var(--space-5xl);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  /* ══════════════════════════════════════════════════
+     RESPONSIVE
+     ══════════════════════════════════════════════════ */
+  @media (max-width: 1024px) {
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
+    .bento-grid { grid-template-columns: repeat(3, 1fr); }
+    .cta-banner { flex-direction: column; gap: var(--space-3xl); text-align: center; }
+  }
+  @media (max-width: 768px) {
+    .stats-grid { grid-template-columns: 1fr; }
+    .bento-grid { grid-template-columns: repeat(2, 1fr); }
+    .news-grid, .tools-grid { grid-template-columns: 1fr; }
+    .nav-links { display: none; }
+    .hero-section h1 { font-size: 28px; }
+  }
+
+  /* Hamburger */
+  .nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;color:var(--text-primary)}
+  .nav-hamburger svg{display:block}
+  .btn-fullscreen{background:none;border:1px solid var(--border-subtle);border-radius:var(--radius-m);cursor:pointer;padding:6px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all .15s;margin-left:8px;position:relative;text-decoration:none}
+  .btn-fullscreen:hover{color:var(--brand-500);border-color:var(--brand-500);background:var(--brand-50)}
+  .fs-tooltip{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--neutral-800);color:#fff;padding:12px 16px;border-radius:var(--radius-m);font-size:12px;white-space:nowrap;z-index:1000;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+  .fs-tooltip::before{content:'';position:absolute;top:-6px;right:12px;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:6px solid var(--neutral-800)}
+  .fs-tooltip code{display:block;margin-top:6px;padding:6px 8px;background:var(--neutral-900);border-radius:4px;cursor:text}
+  .btn-fullscreen.open .fs-tooltip{display:block}
+  .mobile-menu{display:none;position:fixed;top:56px;left:0;right:0;bottom:0;background:#FFFFFF;z-index:999;border-top:1px solid #E2E8F0;padding:var(--space-3xl);overflow-y:auto}
+  .mobile-menu.open{display:flex;flex-direction:column;gap:var(--space-m)}
+  .mobile-menu a{display:block;padding:var(--space-l) var(--space-xl);border-radius:var(--radius-m);color:var(--text-secondary);text-decoration:none;font-size:15px;font-weight:500;transition:all .15s}
+  .mobile-menu a:hover,.mobile-menu a.active{background:var(--brand-50);color:var(--brand-600)}
+  @media(max-width:768px){.nav-hamburger{display:block}}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ NAVIGATION ═══════════════════ -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <div class="prisma-dot">
+        <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
+      HUB IA
+      <span class="badge">Chapter UX</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="formacion.html">Formación</a>
+      <a href="procesos.html">Procesos</a>
+      <a href="prisma.html">Prisma & IA</a>
+    </div>
+    <div class="nav-right">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Buscar skills, guías, términos...">
+        <span class="search-kbd">/</span>
+      </div>
+      <button class="btn-fullscreen" onclick="this.classList.toggle('open')" title="Ver sin marco">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        <div class="fs-tooltip" onclick="event.stopPropagation()">Haz clic en la URL, copia con ⌘C y pégala en una pestaña nueva:<code id="fs-url" style="font-size:11px;user-select:all">https://cnco.sharepoint.com/sites/UXWorkprocess/Documentos%20compartidos/HUB%20IA%20Chapter%20UX/index.html</code></div>
+      </button>
+    </div>
+    <button class="nav-hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open');this.querySelector('svg').innerHTML=document.getElementById('mobile-menu').classList.contains('open')?'<line x1=&quot;18&quot; y1=&quot;6&quot; x2=&quot;6&quot; y2=&quot;18&quot;/><line x1=&quot;6&quot; y1=&quot;6&quot; x2=&quot;18&quot; y2=&quot;18&quot;/>':'<line x1=&quot;3&quot; y1=&quot;12&quot; x2=&quot;21&quot; y2=&quot;12&quot;/><line x1=&quot;3&quot; y1=&quot;6&quot; x2=&quot;21&quot; y2=&quot;6&quot;/><line x1=&quot;3&quot; y1=&quot;18&quot; x2=&quot;21&quot; y2=&quot;18&quot;/>'">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html" class="active">Inicio</a>
+  <a href="catalogo.html">Catálogo</a>
+  <a href="formacion.html">Formación</a>
+  <a href="procesos.html">Procesos</a>
+  <a href="prisma.html">Prisma &amp; IA</a>
+</div>
+
+<!-- ═══════════════════ HERO ═══════════════════ -->
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <div class="pulse"></div>
+        8 skills y plugins disponibles para instalar
+      </div>
+      <h1>La plataforma de <span>IA para UX</span> del Chapter</h1>
+      <p>Descubre, aprende e instala las capacidades de inteligencia artificial disponibles para todos los perfiles del Chapter UX: Product Design, UI, Research y Content. Un solo lugar, todos los dominios.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ STATS ═══════════════════ -->
+<section class="container">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-header">
+        <span class="label">Skills & plugins</span>
+        <div class="icon" style="background: var(--accent-100);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-600)" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+        </div>
+      </div>
+      <div class="value" style="color: var(--accent-600);">8</div>
+      <div class="change up">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="12" height="12"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+        5 publicadas, 2 en desarrollo, 1 WIP
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-header">
+        <span class="label">Procesos agénticos</span>
+        <div class="icon" style="background: var(--brand-50);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+      </div>
+      <div class="value" style="color: var(--brand-600);">3</div>
+      <div class="change up">Discovery + Diseño + Prisma Designer</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-header">
+        <span class="label">Herramientas IA</span>
+        <div class="icon" style="background: var(--success-50);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--success-600)" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+      </div>
+      <div class="value" style="color: var(--success-600);">2</div>
+      <div class="change up">Claude + Figma Make</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-header">
+        <span class="label">Dominios activos</span>
+        <div class="icon" style="background: var(--warning-50);">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--warning-600)" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        </div>
+      </div>
+      <div class="value" style="color: var(--warning-600);">8</div>
+      <div class="change up">WL, Supermercados CL, Paris, MKP, Easy, Loyalty, Fulfillment, CMS</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ QUICK ACCESS ═══════════════════ -->
+<section class="container">
+  <div class="section-header">
+    <h2>Acceso rápido</h2>
+  </div>
+  <div class="bento-grid">
+    <a class="bento-card" href="catalogo.html">
+      <div class="bento-icon" style="background: var(--accent-100);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-600)" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      </div>
+      <span class="title">Catálogo</span>
+      <span class="desc">Skills, plugins y agentes</span>
+    </a>
+    <a class="bento-card" href="formacion.html">
+      <div class="bento-icon" style="background: var(--warning-50);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--warning-600)" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
+      </div>
+      <span class="title">Formación IA</span>
+      <span class="desc">Ruta de aprendizaje</span>
+    </a>
+    <a class="bento-card" href="procesos.html">
+      <div class="bento-icon" style="background: var(--brand-50);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      </div>
+      <span class="title">Procesos</span>
+      <span class="desc">Discovery y diseño</span>
+    </a>
+    <a class="bento-card" href="prisma.html">
+      <div class="bento-icon" style="background: var(--brand-50);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+      </div>
+      <span class="title">Prisma & IA</span>
+      <span class="desc">Design system + Claude</span>
+    </a>
+    <a class="bento-card" href="formacion.html#glosario">
+      <div class="bento-icon" style="background: var(--success-50);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--success-600)" stroke-width="2" stroke-linecap="round"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+      </div>
+      <span class="title">Glosario</span>
+      <span class="desc">Términos clave de IA</span>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════ NOVEDADES ═══════════════════ -->
+<section class="container">
+  <div class="section-header">
+    <h2>Novedades</h2>
+    <a href="#">Ver todas <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><polyline points="9 18 15 12 9 6"/></svg></a>
+  </div>
+  <div class="news-grid">
+    <div class="news-card">
+      <div class="tag tag-plugin">Plugin</div>
+      <h3>Discovery Agéntico v2.15.0 disponible</h3>
+      <p>Última versión del plugin con 9 skills: Discovery completo (S1–S6) y Diseño (DS1–DS3). Soporte para detección de plataforma app/web y generación de PDR. Actualización recomendada.</p>
+      <div class="meta">
+        <div class="author">
+          <div class="avatar">EB</div>
+          Equipo WL
+        </div>
+        <span>28 ago 2026</span>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="tag tag-skill">Skill</div>
+      <h3>Usuarios Sintéticos en desarrollo</h3>
+      <p>Skill del Equipo Supermercados CL que genera perfiles de usuario sintéticos con data cuantitativa y rangos de severidad para testing. Próximamente transversal.</p>
+      <div class="meta">
+        <div class="author">
+          <div class="avatar">SC</div>
+          Equipo Supermercados CL
+        </div>
+        <span>25 ago 2026</span>
+      </div>
+    </div>
+    <div class="news-card">
+      <div class="tag tag-form">Formación</div>
+      <h3>Nuevo módulo: Conectar MCPs</h3>
+      <p>Módulo 3 de la ruta de formación disponible. Aprende paso a paso cómo configurar Figma MCP, Prisma MCP y Jira + Confluence MCP para trabajar con Claude.</p>
+      <div class="meta">
+        <div class="author">
+          <div class="avatar">UX</div>
+          Chapter UX
+        </div>
+        <span>20 ago 2026</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ HERRAMIENTAS IA ═══════════════════ -->
+<section class="container">
+  <div class="section-header">
+    <h2>Herramientas IA disponibles</h2>
+  </div>
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-icon" style="background: var(--accent-100);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-600)" stroke-width="2" stroke-linecap="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      </div>
+      <div>
+        <h3>Claude</h3>
+        <p>Asistente IA de Anthropic para análisis, creación de contenido y automatización. Disponible en tres entornos según la tarea: Chat para consultas rápidas, Cowork para trabajo operativo con archivos, y Claude Code para repositorios y terminal.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Chat</span>
+          <span class="tool-tag">Cowork</span>
+          <span class="tool-tag">Claude Code</span>
+          <span class="tool-tag">Skills</span>
+          <span class="tool-tag">Plugins</span>
+        </div>
+      </div>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon" style="background: var(--brand-50);">
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+      </div>
+      <div>
+        <h3>Figma Make</h3>
+        <p>Generación y edición de diseños en Figma mediante IA. Integrado con el sistema de diseño Prisma a través de MCP, permite crear y modificar pantallas directamente desde descripciones en lenguaje natural.</p>
+        <div class="tool-tags">
+          <span class="tool-tag">Figma</span>
+          <span class="tool-tag">MCP</span>
+          <span class="tool-tag">Prisma</span>
+          <span class="tool-tag">Design System</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════ CTA BANNER ═══════════════════ -->
+<section class="container">
+  <div class="cta-banner">
+    <div>
+      <h2>¿Nuevo en IA para UX?</h2>
+      <p>Comienza con la Formación IA: una ruta progresiva de 3 niveles para todo el equipo UX, desde los fundamentos hasta crear tus propios plugins y agentes.</p>
+    </div>
+    <a class="btn" href="formacion.html">
+      Comenzar la ruta
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" width="16" height="16"><polyline points="9 18 15 12 9 6"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<footer class="footer">
+  <div class="footer-inner" style="flex-direction:column;gap:var(--space-3xl);text-align:center">
+    <div style="display:flex;gap:var(--space-3xl);flex-wrap:wrap;justify-content:center">
+      <a href="index.html" style="color:var(--brand-500);font-weight:600;text-decoration:none;font-size:13px">Inicio</a>
+      <a href="catalogo.html" style="color:var(--text-muted);text-decoration:none;font-size:13px;transition:color .15s" onmouseover="this.style.color='var(--brand-500)'" onmouseout="this.style.color='var(--text-muted)'">Catálogo</a>
+      <a href="formacion.html" style="color:var(--text-muted);text-decoration:none;font-size:13px;transition:color .15s" onmouseover="this.style.color='var(--brand-500)'" onmouseout="this.style.color='var(--text-muted)'">Formación</a>
+      <a href="procesos.html" style="color:var(--text-muted);text-decoration:none;font-size:13px;transition:color .15s" onmouseover="this.style.color='var(--brand-500)'" onmouseout="this.style.color='var(--text-muted)'">Procesos</a>
+      <a href="prisma.html" style="color:var(--text-muted);text-decoration:none;font-size:13px;transition:color .15s" onmouseover="this.style.color='var(--brand-500)'" onmouseout="this.style.color='var(--text-muted)'">Prisma &amp; IA</a>
+    </div>
+    <div>
+      <span>HUB IA &middot; Chapter UX Cencosud &middot; Prisma Design System</span>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Prisma & IA — HUB IA Chapter UX</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --brand-50:#EFF6FF;--brand-100:#DBEAFE;--brand-200:#BFDBFE;--brand-300:#93C5FD;
+    --brand-500:#3B82F6;--brand-600:#2563EB;--brand-700:#1D4ED8;--brand-800:#1E40AF;
+    --neutral-0:#FFF;--neutral-50:#F8FAFC;--neutral-100:#F1F5F9;--neutral-200:#E2E8F0;
+    --neutral-300:#CBD5E1;--neutral-400:#94A3B8;--neutral-500:#64748B;--neutral-600:#475569;
+    --neutral-700:#334155;--neutral-800:#1E293B;--neutral-900:#0F172A;
+    --success-50:#F0FDF4;--success-500:#22C55E;--success-600:#16A34A;--success-700:#15803D;
+    --warning-50:#FFFBEB;--warning-500:#F59E0B;--warning-600:#D97706;--warning-700:#B45309;
+    --danger-50:#FEF2F2;--danger-500:#EF4444;--danger-600:#DC2626;
+    --info-50:#F0F9FF;--info-500:#0EA5E9;--info-600:#0284C7;
+    --accent-50:#FAF5FF;--accent-100:#F3E8FF;--accent-200:#E9D5FF;
+    --accent-500:#A855F7;--accent-600:#9333EA;--accent-700:#7E22CE;--accent-800:#6B21A8;
+    --space-xs:2px;--space-s:4px;--space-m:6px;--space-l:8px;--space-xl:12px;
+    --space-2xl:16px;--space-3xl:20px;--space-4xl:24px;--space-5xl:32px;--space-6xl:40px;--space-7xl:48px;
+    --radius-xs:2px;--radius-s:4px;--radius-m:8px;--radius-l:12px;--radius-xl:16px;--radius-full:999px;
+    --shadow-sm:0 1px 2px rgba(0,0,0,0.05);--shadow:0 1px 3px rgba(0,0,0,0.08),0 1px 2px rgba(0,0,0,0.06);
+    --shadow-md:0 4px 6px -1px rgba(0,0,0,0.1),0 2px 4px -2px rgba(0,0,0,0.1);
+    --shadow-lg:0 10px 15px -3px rgba(0,0,0,0.08),0 4px 6px -4px rgba(0,0,0,0.05);
+    --bg:var(--neutral-50);--bg-card:var(--neutral-0);--border:var(--neutral-200);
+    --border-hover:var(--neutral-300);--text-primary:var(--neutral-900);
+    --text-secondary:var(--neutral-600);--text-muted:var(--neutral-400);--ring:var(--brand-500);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Inter',-apple-system,BlinkMacSystemFont,sans-serif;font-size:14px;line-height:1.5;color:var(--text-primary);background:var(--bg);-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}button{font-family:inherit;cursor:pointer}
+
+  /* NAV */
+  .nav{background:rgba(255,255,255,0.85);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:50;backdrop-filter:blur(8px)}
+  .nav-inner{max-width:1280px;margin:0 auto;padding:0 var(--space-5xl);display:flex;align-items:center;height:56px;gap:var(--space-4xl)}
+  .nav-brand{display:flex;align-items:center;gap:var(--space-xl);font-weight:700;font-size:15px;color:var(--neutral-900);white-space:nowrap;letter-spacing:-0.3px}
+  .nav-brand .prisma-dot{width:24px;height:24px;background:linear-gradient(135deg,var(--brand-600),var(--accent-600));border-radius:var(--radius-m);display:flex;align-items:center;justify-content:center}
+  .nav-brand .prisma-dot svg{width:14px;height:14px}
+  .nav-brand .badge{background:var(--accent-100);color:var(--accent-700);font-size:10px;font-weight:600;padding:2px 8px;border-radius:var(--radius-full);letter-spacing:0.3px;text-transform:uppercase}
+  .nav-links{display:flex;gap:var(--space-xs);align-items:center}
+  .nav-links a{padding:var(--space-l) var(--space-2xl);border-radius:var(--radius-m);font-size:13px;font-weight:500;color:var(--text-secondary);transition:all 0.15s;white-space:nowrap}
+  .nav-links a:hover{background:var(--neutral-100);color:var(--text-primary)}
+  .nav-links a.active{background:var(--neutral-100);color:var(--text-primary);font-weight:600}
+  .nav-right{margin-left:auto;display:flex;align-items:center;gap:var(--space-xl)}
+  .search-box{position:relative}
+  .search-box input{background:var(--neutral-100);border:1px solid transparent;border-radius:var(--radius-m);padding:7px var(--space-2xl) 7px 36px;font-size:13px;font-family:inherit;width:240px;color:var(--text-primary);outline:none;transition:all 0.15s}
+  .search-box input::placeholder{color:var(--text-muted)}
+  .search-box input:focus{background:var(--bg-card);border-color:var(--ring);box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
+  .search-box svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);width:15px;height:15px}
+  .search-kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--neutral-200);color:var(--text-muted);font-size:10px;font-weight:600;padding:1px 6px;border-radius:var(--radius-s);line-height:1.6}
+  .container{max-width:1280px;margin:0 auto;padding:0 var(--space-5xl)}
+
+  /* HERO */
+  .hero-section{padding:var(--space-7xl) 0 var(--space-5xl)}
+  .hero-section h1{font-size:32px;font-weight:700;letter-spacing:-0.8px;line-height:1.15;margin-bottom:var(--space-l)}
+  .hero-section p{font-size:15px;color:var(--text-secondary);max-width:640px}
+
+  /* LAYOUT: sidebar + main */
+  .page-layout{display:grid;grid-template-columns:220px 1fr;gap:var(--space-5xl);max-width:1280px;margin:0 auto;padding:0 var(--space-5xl)}
+  .sidebar{position:sticky;top:72px;align-self:start;max-height:calc(100vh - 88px);overflow-y:auto;padding:var(--space-3xl) 0}
+  .sidebar-nav{list-style:none}
+  .sidebar-nav .nav-group{margin-bottom:var(--space-3xl)}
+  .sidebar-nav .nav-group-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);padding:0 var(--space-2xl);margin-bottom:var(--space-l)}
+  .sidebar-nav a{display:flex;align-items:center;gap:var(--space-xl);padding:var(--space-l) var(--space-2xl);border-radius:var(--radius-m);font-size:12px;font-weight:500;color:var(--text-secondary);transition:all 0.15s;border-left:2px solid transparent;text-decoration:none}
+  .sidebar-nav a:hover{background:var(--neutral-100);color:var(--text-primary)}
+  .sidebar-nav a.active{background:var(--accent-50);color:var(--accent-700);font-weight:600;border-left-color:var(--accent-500)}
+  .sidebar-nav a .dot{width:6px;height:6px;border-radius:var(--radius-full);flex-shrink:0}
+  .main-content{min-width:0}
+
+  /* SECTION HEADERS */
+  .section-header{margin-bottom:var(--space-4xl);padding-top:var(--space-6xl)}
+  .section-header h2{font-size:22px;font-weight:700;letter-spacing:-0.5px;margin-bottom:var(--space-l)}
+  .section-header p{font-size:14px;color:var(--text-secondary);max-width:600px}
+  .section-id{scroll-margin-top:80px}
+
+  /* STAT CARDS */
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-4xl);margin-bottom:var(--space-5xl)}
+  .stat-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:var(--space-5xl);text-align:center;transition:all 0.15s}
+  .stat-card:hover{box-shadow:var(--shadow-md);border-color:var(--border-hover)}
+  .stat-card .stat-num{font-size:36px;font-weight:700;letter-spacing:-1px;line-height:1;color:var(--accent-600)}
+  .stat-card .stat-label{font-size:13px;color:var(--text-secondary);margin-top:var(--space-l)}
+
+  /* OVERVIEW CARD (single) */
+  .overview-block{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl);padding:var(--space-5xl);position:relative;overflow:hidden;margin-bottom:var(--space-4xl)}
+  .overview-block::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--accent-500),var(--accent-700))}
+  .overview-block h3{font-size:18px;font-weight:700;letter-spacing:-0.3px;margin-bottom:var(--space-xl)}
+  .overview-block p{font-size:14px;color:var(--text-secondary);line-height:1.7}
+
+  /* COLOR SWATCHES */
+  .swatch-group{margin-bottom:var(--space-4xl)}
+  .swatch-group h4{font-size:14px;font-weight:600;margin-bottom:var(--space-2xl)}
+  .swatch-row{display:flex;gap:var(--space-2xl);flex-wrap:wrap;margin-bottom:var(--space-xl)}
+  .swatch{display:flex;flex-direction:column;align-items:center;gap:var(--space-s)}
+  .swatch-circle{width:40px;height:40px;border-radius:var(--radius-m);border:1px solid var(--border)}
+  .swatch-name{font-size:10px;font-weight:600;color:var(--text-secondary)}
+  .swatch-hex{font-size:10px;color:var(--text-muted);font-family:'SF Mono',Menlo,monospace}
+
+  /* COMPACT TABLE */
+  .compact-table{width:100%;border-collapse:collapse;margin-bottom:var(--space-4xl);font-size:13px}
+  .compact-table th{text-align:left;padding:var(--space-xl) var(--space-2xl);background:var(--neutral-100);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-muted);border-bottom:1px solid var(--border)}
+  .compact-table td{padding:var(--space-xl) var(--space-2xl);border-bottom:1px solid var(--neutral-100);color:var(--text-secondary)}
+  .compact-table tr:hover td{background:var(--neutral-50)}
+  .compact-table code{font-family:'SF Mono',Menlo,monospace;font-size:12px;background:var(--neutral-100);padding:2px 6px;border-radius:var(--radius-s);color:var(--text-primary)}
+
+  /* TYPO SCALE */
+  .typo-scale{margin-bottom:var(--space-4xl)}
+  .typo-row{display:flex;align-items:baseline;gap:var(--space-4xl);padding:var(--space-xl) 0;border-bottom:1px solid var(--neutral-100)}
+  .typo-label{width:140px;flex-shrink:0;font-size:11px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.3px}
+  .typo-spec{width:120px;flex-shrink:0;font-size:12px;color:var(--text-muted);font-family:'SF Mono',Menlo,monospace}
+  .typo-sample{flex:1;color:var(--text-primary);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+
+  /* SPACING BARS */
+  .spacing-scale{margin-bottom:var(--space-4xl)}
+  .spacing-row{display:flex;align-items:center;gap:var(--space-2xl);padding:var(--space-l) 0}
+  .spacing-label{width:80px;flex-shrink:0;font-size:11px;font-weight:600;color:var(--text-muted)}
+  .spacing-bar{height:12px;background:linear-gradient(90deg,var(--accent-200),var(--accent-400));border-radius:var(--radius-s)}
+  .spacing-value{font-size:11px;color:var(--text-muted);font-family:'SF Mono',Menlo,monospace;margin-left:var(--space-xl)}
+
+  /* RADIUS DEMO */
+  .radius-row{display:flex;gap:var(--space-4xl);flex-wrap:wrap;margin-bottom:var(--space-4xl)}
+  .radius-demo{display:flex;flex-direction:column;align-items:center;gap:var(--space-l)}
+  .radius-box{width:48px;height:48px;background:var(--accent-100);border:2px solid var(--accent-300)}
+  .radius-name{font-size:10px;font-weight:600;color:var(--text-secondary)}
+  .radius-val{font-size:10px;color:var(--text-muted);font-family:'SF Mono',Menlo,monospace}
+
+  /* COMPONENT GROUP CARDS */
+  .comp-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-2xl);margin-bottom:var(--space-5xl)}
+  .comp-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-l);overflow:hidden;transition:all 0.15s}
+  .comp-card:hover{box-shadow:var(--shadow-md);border-color:var(--border-hover)}
+  .comp-card-header{padding:var(--space-2xl) var(--space-3xl);display:flex;align-items:center;gap:var(--space-xl);border-bottom:1px solid var(--neutral-100)}
+  .comp-card-header .cdot{width:10px;height:10px;border-radius:var(--radius-full);flex-shrink:0}
+  .comp-card-header h4{font-size:14px;font-weight:600;flex:1}
+  .comp-card-header .count{font-size:11px;font-weight:600;color:var(--text-muted);background:var(--neutral-100);padding:2px 8px;border-radius:var(--radius-full)}
+  .comp-card-body{padding:var(--space-2xl) var(--space-3xl);max-height:180px;overflow-y:auto}
+  .comp-pills{display:flex;flex-wrap:wrap;gap:var(--space-l)}
+  .comp-pill{font-size:11px;padding:3px 10px;border-radius:var(--radius-full);background:var(--neutral-100);color:var(--text-secondary);white-space:nowrap}
+  .comp-pill.has-var{background:var(--accent-50);color:var(--accent-700)}
+
+  /* BRAND CARDS */
+  .brand-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2xl);margin-bottom:var(--space-5xl)}
+  .brand-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-l);padding:var(--space-4xl);text-align:center;transition:all 0.15s}
+  .brand-card:hover{box-shadow:var(--shadow-md);border-color:var(--border-hover)}
+  .brand-card .brand-icon{width:48px;height:48px;border-radius:var(--radius-l);margin:0 auto var(--space-2xl);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff}
+  .brand-card h4{font-size:14px;font-weight:600;margin-bottom:var(--space-l)}
+  .brand-card p{font-size:12px;color:var(--text-secondary);line-height:1.5}
+
+  /* ARCHITECTURE FLOW */
+  .arch-flow{display:flex;align-items:center;justify-content:center;gap:var(--space-2xl);flex-wrap:wrap;margin-bottom:var(--space-5xl);padding:var(--space-5xl);background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-xl)}
+  .arch-node{background:var(--neutral-100);border:1px solid var(--border);border-radius:var(--radius-l);padding:var(--space-2xl) var(--space-4xl);font-size:13px;font-weight:600;text-align:center;min-width:120px}
+  .arch-node.highlight{background:var(--accent-50);border-color:var(--accent-300);color:var(--accent-700)}
+  .arch-arrow{color:var(--text-muted);font-size:20px;flex-shrink:0}
+
+  /* TOOL LIST */
+  .tool-list{margin-bottom:var(--space-5xl)}
+  .tool-item{display:flex;align-items:flex-start;gap:var(--space-2xl);padding:var(--space-2xl) var(--space-3xl);background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-l);margin-bottom:var(--space-xl);transition:all 0.15s}
+  .tool-item:hover{box-shadow:var(--shadow-md);border-color:var(--border-hover)}
+  .tool-num{width:28px;height:28px;border-radius:var(--radius-full);background:var(--accent-100);color:var(--accent-700);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+  .tool-info{flex:1}
+  .tool-info .tool-name{font-size:13px;font-weight:600;font-family:'SF Mono',Menlo,monospace;color:var(--text-primary)}
+  .tool-info .tool-desc{font-size:12px;color:var(--text-secondary);margin-top:2px}
+
+  /* CODE BLOCK */
+  .code-block{background:var(--neutral-800);color:var(--neutral-200);padding:var(--space-3xl);border-radius:var(--radius-l);font-family:'SF Mono',Menlo,monospace;font-size:12px;line-height:1.7;overflow-x:auto;margin-bottom:var(--space-4xl)}
+  .code-block .key{color:#7dd3fc}
+  .code-block .str{color:#86efac}
+  .code-block .comment{color:var(--neutral-500)}
+
+  /* PROCESS FLOW (reuse from procesos) */
+  .process-flow{position:relative;margin-bottom:var(--space-7xl)}
+  .flow-connector{position:absolute;left:32px;top:0;bottom:0;width:2px;background:var(--neutral-200)}
+  .step-card{position:relative;padding-left:80px;margin-bottom:var(--space-4xl)}
+  .step-card:last-child{margin-bottom:0}
+  .step-number{position:absolute;left:12px;top:0;width:42px;height:42px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;color:#fff;z-index:2}
+  .step-card.prisma .step-number{background:linear-gradient(135deg,var(--accent-500),var(--accent-700))}
+  .step-card.alt .step-number{background:linear-gradient(135deg,var(--info-500),var(--info-600))}
+  .step-body{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-l);padding:var(--space-4xl);transition:all 0.15s}
+  .step-body:hover{box-shadow:var(--shadow-md);border-color:var(--border-hover)}
+  .step-body .step-tag{display:inline-flex;align-items:center;gap:var(--space-l);font-size:10px;font-weight:600;padding:var(--space-xs) var(--space-xl);border-radius:var(--radius-full);text-transform:uppercase;letter-spacing:0.3px;margin-bottom:var(--space-xl)}
+  .step-card.prisma .step-tag{background:var(--accent-100);color:var(--accent-700)}
+  .step-card.alt .step-tag{background:var(--info-50);color:var(--info-600)}
+  .step-body h4{font-size:16px;font-weight:600;letter-spacing:-0.2px;margin-bottom:var(--space-l)}
+  .step-body .step-desc{font-size:13px;color:var(--text-secondary);line-height:1.6}
+  .step-body .cmd-block{margin-top:var(--space-3xl);background:var(--neutral-800);color:var(--neutral-200);padding:var(--space-xl) var(--space-2xl);border-radius:var(--radius-m);font-family:'SF Mono',Menlo,monospace;font-size:12px;display:flex;align-items:center;gap:var(--space-xl)}
+  .step-body .cmd-block .prompt{color:var(--success-500)}
+  .step-body .cmd-block code{flex:1}
+  .step-body .step-details{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3xl);margin-top:var(--space-3xl)}
+  .step-detail-col h5{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:var(--space-xl)}
+  .step-detail-col ul{list-style:none}
+  .step-detail-col ul li{font-size:12px;color:var(--text-secondary);padding:var(--space-s) 0;display:flex;align-items:flex-start;gap:var(--space-l)}
+  .step-detail-col ul li svg{width:12px;height:12px;flex-shrink:0;margin-top:2px;color:var(--text-muted)}
+
+  /* GOVERNANCE TABLE */
+  .gov-table{width:100%;border-collapse:collapse;margin-bottom:var(--space-5xl);font-size:13px}
+  .gov-table th{text-align:left;padding:var(--space-2xl) var(--space-3xl);background:var(--accent-50);font-weight:600;font-size:12px;color:var(--accent-700);border-bottom:2px solid var(--accent-200)}
+  .gov-table td{padding:var(--space-2xl) var(--space-3xl);border-bottom:1px solid var(--neutral-100);color:var(--text-secondary)}
+  .gov-table tr:hover td{background:var(--neutral-50)}
+  .gov-table .inst-name{font-weight:600;color:var(--text-primary)}
+
+  /* TIPS GRID */
+  .tips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-2xl);margin-bottom:var(--space-6xl)}
+  .tip-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius-l);padding:var(--space-4xl);transition:all 0.15s}
+  .tip-card:hover{box-shadow:var(--shadow-md);border-color:var(--border-hover)}
+  .tip-card .tip-icon{width:36px;height:36px;border-radius:var(--radius-m);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-2xl)}
+  .tip-card .tip-icon svg{width:18px;height:18px}
+  .tip-card h4{font-size:14px;font-weight:600;margin-bottom:var(--space-l)}
+  .tip-card p{font-size:13px;color:var(--text-secondary);line-height:1.6}
+
+  /* STROKES DEMO */
+  .strokes-row{display:flex;gap:var(--space-4xl);flex-wrap:wrap;margin-bottom:var(--space-4xl)}
+  .stroke-demo{display:flex;flex-direction:column;align-items:center;gap:var(--space-l)}
+  .stroke-line{width:80px;height:0}
+  .stroke-name{font-size:10px;font-weight:600;color:var(--text-secondary)}
+
+  /* SUB-SECTION LABEL */
+  .sub-label{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--accent-600);margin-bottom:var(--space-2xl);display:flex;align-items:center;gap:var(--space-xl)}
+  .sub-label::before{content:'';width:16px;height:2px;background:var(--accent-400);border-radius:1px}
+
+  /* SCREEN TABLE */
+  .screen-table{width:100%;border-collapse:collapse;margin-bottom:var(--space-5xl);font-size:13px}
+  .screen-table th{text-align:left;padding:var(--space-2xl) var(--space-3xl);background:var(--neutral-100);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:0.3px;color:var(--text-muted);border-bottom:1px solid var(--border)}
+  .screen-table td{padding:var(--space-2xl) var(--space-3xl);border-bottom:1px solid var(--neutral-100);color:var(--text-secondary);vertical-align:top}
+  .screen-table tr:hover td{background:var(--neutral-50)}
+  .screen-table .screen-name{font-weight:600;color:var(--text-primary);white-space:nowrap}
+  .screen-table .comp-tags{display:flex;flex-wrap:wrap;gap:var(--space-l)}
+  .screen-table .comp-tag{font-size:11px;padding:2px 8px;border-radius:var(--radius-full);background:var(--accent-50);color:var(--accent-700);white-space:nowrap}
+
+  /* FOOTER */
+  .footer{border-top:1px solid var(--border);padding:var(--space-4xl) 0;margin-top:var(--space-5xl)}
+  .footer-inner{max-width:1280px;margin:0 auto;padding:0 var(--space-5xl);display:flex;align-items:center;justify-content:space-between;font-size:12px;color:var(--text-muted)}
+
+  @media(max-width:1024px){.page-layout{grid-template-columns:1fr}.sidebar{display:none}.stat-row,.brand-grid,.comp-grid{grid-template-columns:1fr 1fr}.tips-grid{grid-template-columns:1fr 1fr}}
+  @media(max-width:768px){.tips-grid,.comp-grid,.brand-grid,.stat-row{grid-template-columns:1fr}.step-body .step-details{grid-template-columns:1fr}.arch-flow{flex-direction:column}.arch-arrow{transform:rotate(90deg)}}
+
+  /* Hamburger */
+  .nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:8px;color:var(--text-primary)}
+  .nav-hamburger svg{display:block}
+  .btn-fullscreen{background:none;border:1px solid var(--border-subtle);border-radius:var(--radius-m);cursor:pointer;padding:6px;color:var(--text-muted);display:flex;align-items:center;justify-content:center;transition:all .15s;margin-left:8px;position:relative;text-decoration:none}
+  .btn-fullscreen:hover{color:var(--brand-500);border-color:var(--brand-500);background:var(--brand-50)}
+  .fs-tooltip{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--neutral-800);color:#fff;padding:12px 16px;border-radius:var(--radius-m);font-size:12px;white-space:nowrap;z-index:1000;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+  .fs-tooltip::before{content:'';position:absolute;top:-6px;right:12px;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:6px solid var(--neutral-800)}
+  .fs-tooltip code{display:block;margin-top:6px;padding:6px 8px;background:var(--neutral-900);border-radius:4px;cursor:text}
+  .btn-fullscreen.open .fs-tooltip{display:block}
+  .mobile-menu{display:none;position:fixed;top:56px;left:0;right:0;bottom:0;background:#FFFFFF;z-index:999;border-top:1px solid #E2E8F0;padding:var(--space-3xl);overflow-y:auto}
+  .mobile-menu.open{display:flex;flex-direction:column;gap:var(--space-m)}
+  .mobile-menu a{display:block;padding:var(--space-l) var(--space-xl);border-radius:var(--radius-m);color:var(--text-secondary);text-decoration:none;font-size:15px;font-weight:500;transition:all .15s}
+  .mobile-menu a:hover,.mobile-menu a.active{background:var(--brand-50);color:var(--brand-600)}
+  @media(max-width:768px){.nav-hamburger{display:block}.nav-links{display:none}.sidebar{display:none}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-brand" href="index.html">
+      <div class="prisma-dot"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+      HUB IA <span class="badge">Chapter UX</span>
+    </a>
+    <div class="nav-links">
+      <a href="index.html">Inicio</a>
+      <a href="catalogo.html">Catálogo</a>
+      <a href="formacion.html">Formación</a>
+      <a href="procesos.html">Procesos</a>
+      <a href="prisma.html" class="active">Prisma &amp; IA</a>
+    </div>
+    <div class="nav-right">
+      <div class="search-box">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" placeholder="Buscar tokens, componentes...">
+        <span class="search-kbd">/</span>
+      </div>
+      <button class="btn-fullscreen" onclick="this.classList.toggle('open')" title="Ver sin marco">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>
+        <div class="fs-tooltip" onclick="event.stopPropagation()">Haz clic en la URL, copia con ⌘C y pégala en una pestaña nueva:<code id="fs-url" style="font-size:11px;user-select:all">https://cnco.sharepoint.com/sites/UXWorkprocess/Documentos%20compartidos/HUB%20IA%20Chapter%20UX/prisma.html</code></div>
+      </button>
+    </div>
+    <button class="nav-hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open');this.querySelector('svg').innerHTML=document.getElementById('mobile-menu').classList.contains('open')?'<line x1=&quot;18&quot; y1=&quot;6&quot; x2=&quot;6&quot; y2=&quot;18&quot;/><line x1=&quot;6&quot; y1=&quot;6&quot; x2=&quot;18&quot; y2=&quot;18&quot;/>':'<line x1=&quot;3&quot; y1=&quot;12&quot; x2=&quot;21&quot; y2=&quot;12&quot;/><line x1=&quot;3&quot; y1=&quot;6&quot; x2=&quot;21&quot; y2=&quot;6&quot;/><line x1=&quot;3&quot; y1=&quot;18&quot; x2=&quot;21&quot; y2=&quot;18&quot;/>'">
+      <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu">
+  <a href="index.html">Inicio</a>
+  <a href="catalogo.html">Catálogo</a>
+  <a href="formacion.html">Formación</a>
+  <a href="procesos.html">Procesos</a>
+  <a href="prisma.html" class="active">Prisma &amp; IA</a>
+</div>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="container">
+    <h1>Prisma Design System &amp; IA</h1>
+    <p>Sistema de diseño unificado para 14 banderas. Tokens, componentes, multi-brand y la integración con herramientas de IA.</p>
+  </div>
+</section>
+
+<!-- PAGE LAYOUT: Sidebar + Main -->
+<div class="page-layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <nav>
+    <ul class="sidebar-nav">
+      <li class="nav-group">
+        <div class="nav-group-label">Onboarding</div>
+        <a href="#onb-intro" class="active"><span class="dot" style="background:var(--success-500)"></span> Qué es Prisma</a>
+        <a href="#onb-principios"><span class="dot" style="background:var(--success-500)"></span> Principios</a>
+        <a href="#onb-estructura"><span class="dot" style="background:var(--success-500)"></span> Estructura colores</a>
+        <a href="#onb-componentes"><span class="dot" style="background:var(--success-500)"></span> Componentes</a>
+        <a href="#onb-instalacion"><span class="dot" style="background:var(--success-500)"></span> Instalación</a>
+        <a href="#onb-crear-bandera"><span class="dot" style="background:var(--success-500)"></span> Crear bandera</a>
+        <a href="#onb-validator"><span class="dot" style="background:var(--success-500)"></span> Prisma Validator</a>
+        <a href="#onb-practicas"><span class="dot" style="background:var(--success-500)"></span> Buenas prácticas</a>
+      </li>
+      <li class="nav-group">
+        <div class="nav-group-label">Sistema de diseño</div>
+        <a href="#tokens"><span class="dot" style="background:var(--accent-500)"></span> Tokens</a>
+        <a href="#componentes"><span class="dot" style="background:var(--accent-500)"></span> Componentes</a>
+        <a href="#multi-brand"><span class="dot" style="background:var(--accent-500)"></span> Multi-brand</a>
+        <a href="#guia-pantalla"><span class="dot" style="background:var(--accent-500)"></span> Guía por pantalla</a>
+      </li>
+      <li class="nav-group">
+        <div class="nav-group-label">Integración IA</div>
+        <a href="#prisma-mcp"><span class="dot" style="background:var(--brand-500)"></span> Prisma MCP</a>
+        <a href="#ds3-json"><span class="dot" style="background:var(--brand-500)"></span> DS3 JSON</a>
+        <a href="#flujo-ds3"><span class="dot" style="background:var(--brand-500)"></span> Flujo DS3 a Figma</a>
+      </li>
+      <li class="nav-group">
+        <div class="nav-group-label">Gobernanza</div>
+        <a href="#flujo-componente"><span class="dot" style="background:var(--warning-500)"></span> Lifecycle (14 fases)</a>
+        <a href="#template-jira"><span class="dot" style="background:var(--warning-500)"></span> Template Jira</a>
+        <a href="#tips"><span class="dot" style="background:var(--neutral-400)"></span> Tips</a>
+      </li>
+    </ul>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main-content">
+
+<!-- ═══════════════════════════════════════════════════════
+     ONBOARDING PRISMA — Extraído del deck Figma Onboarding-Prisma-DS
+     ═══════════════════════════════════════════════════════ -->
+
+<!-- OB-1: Qué es Prisma -->
+<section class="section-id" id="onb-intro">
+  <div class="section-header">
+    <div style="display:flex;align-items:center;gap:var(--space-l);margin-bottom:var(--space-l)">
+      <span style="background:var(--success-100);color:var(--success-700);font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase">Onboarding</span>
+      <span style="color:var(--text-tertiary);font-size:12px">01 / 08</span>
+    </div>
+    <h2>Design System Prisma</h2>
+    <p>Prisma es el sistema de diseño de las plataformas App y Web que representa los valores fundamentales de profesionalismo, confianza, capacidad, crecimiento tecnológico, cultura y trabajo colaborativo. Este sistema no solo guía la coherencia visual y funcional de nuestros productos digitales, sino que también transmite la diversidad latinoamericana mediante una estética inspirada en lo colorido, abstracto y natural, con una textura multibandera que expresa dinamismo y fuerza.</p>
+  </div>
+  <div style="margin-top:var(--space-4xl);padding:var(--space-4xl);background:linear-gradient(135deg,#7B1FA2 0%,#1C64F2 50%,#16BDCA 100%);border-radius:var(--radius-l);color:white;text-align:center">
+    <p style="font-size:14px;letter-spacing:2px;text-transform:uppercase;margin-bottom:var(--space-l);opacity:0.8">Prisma &middot; Design System</p>
+    <h3 style="font-size:48px;font-weight:800;text-transform:uppercase;letter-spacing:-1px;margin:0;color:white">Onboarding DS</h3>
+    <p style="margin-top:var(--space-2xl);font-size:14px;opacity:0.7">Guía de onboarding para diseñadores</p>
+  </div>
+</section>
+
+<!-- OB-2: Principios -->
+<section class="section-id" id="onb-principios">
+  <div class="section-header">
+    <div style="display:flex;align-items:center;gap:var(--space-l);margin-bottom:var(--space-l)">
+      <span style="background:var(--success-100);color:var(--success-700);font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase">Onboarding</span>
+      <span style="color:var(--text-tertiary);font-size:12px">02 / 08 &mdash; Filosofía</span>
+    </div>
+    <h2>Principios que nos guían</h2>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2xl);margin-top:var(--space-4xl)">
+    <div style="padding:var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:16px;font-weight:700;margin-bottom:var(--space-l)">Consistencia</h4>
+      <p style="color:var(--text-secondary);font-size:13px;margin:0">Misma solución para el mismo problema, en todas las pantallas.</p>
+    </div>
+    <div style="padding:var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:16px;font-weight:700;margin-bottom:var(--space-l)">Claridad</h4>
+      <p style="color:var(--text-secondary);font-size:13px;margin:0">Interfaces simples de entender, sin ambigüedad.</p>
+    </div>
+    <div style="padding:var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:16px;font-weight:700;margin-bottom:var(--space-l)">Accesibilidad</h4>
+      <p style="color:var(--text-secondary);font-size:13px;margin:0">Diseñado para que todas las personas puedan usarlo.</p>
+    </div>
+    <div style="padding:var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:16px;font-weight:700;margin-bottom:var(--space-l)">Escalabilidad</h4>
+      <p style="color:var(--text-secondary);font-size:13px;margin:0">Cada componente crece con el producto, no en contra de él.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OB-3: Estructura colores -->
+<section class="section-id" id="onb-estructura">
+  <div class="section-header">
+    <div style="display:flex;align-items:center;gap:var(--space-l);margin-bottom:var(--space-l)">
+      <span style="background:var(--success-100);color:var(--success-700);font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase">Onboarding</span>
+      <span style="color:var(--text-tertiary);font-size:12px">03 / 08 &mdash; Estructura</span>
+    </div>
+    <h2>Estructura de colores</h2>
+    <p>El sistema de color tiene 3 capas jerárquicas. Cada capa resuelve un nivel distinto de abstracción.</p>
+  </div>
+
+  <!-- 3-layer hierarchy -->
+  <div class="process-flow" style="margin-top:var(--space-4xl)">
+    <div class="flow-connector"></div>
+    <div class="step-card prisma">
+      <div class="step-number">1</div>
+      <div class="step-body">
+        <span class="step-tag" style="background:var(--accent-100);color:var(--accent-700)">Primitives</span>
+        <h4>Light / Dark mode</h4>
+        <p class="step-desc">Colores base por marca: Primario, Secundario y Terciario (10 shades cada uno). 332 variables totales. Agrupados por marca: Prisma, Jumbo, TFM, Disco, Prezunic, Metro, Prime, Vea, GBarbosa. Más Share/Cross colors (Info, Success, Warning, Error, Neutrals y Overlays) que son iguales para todas las marcas.</p>
+      </div>
+    </div>
+    <div class="step-card prisma">
+      <div class="step-number">2</div>
+      <div class="step-body">
+        <span class="step-tag" style="background:var(--brand-100);color:var(--brand-700)">Style Tokens (Alias)</span>
+        <h4>Bandera (Jumbo, Disco, etc.)</h4>
+        <p class="step-desc">105 tokens semánticos organizados en: Text (25), Background (26), Icons (14), Border (18), Overlay (10), Gradient (12). Cada token mapea a un Primitive distinto según la bandera. Ejemplo: <code>primary-default</code> &rarr; Prisma/Purple/700 | Jumbo/Green-Olive/700 | TFM/Green/700 | Disco/Red-brand/700.</p>
+      </div>
+    </div>
+    <div class="step-card prisma">
+      <div class="step-number">3</div>
+      <div class="step-body">
+        <span class="step-tag" style="background:var(--success-100);color:var(--success-700)">Components (Sub-Alias)</span>
+        <h4>Primary / OnPrimary</h4>
+        <p class="step-desc">153 variables a nivel componente (7-Components). Definen Primary y OnPrimary por componente: Avatar, Badge, Button, Tags, Checkbox, Chips, etc. Las variables Primary y OnPrimary se utilizan en banderas de bajo contraste donde los componentes no pasan los requerimientos de accesibilidad. Ejemplo: Vea y Metro.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OB-4: Componentes -->
+<section class="section-id" id="onb-componentes">
+  <div class="section-header">
+    <div style="display:flex;align-items:center;gap:var(--space-l);margin-bottom:var(--space-l)">
+      <span style="background:var(--success-100);color:var(--success-700);font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase">Onboarding</span>
+      <span style="color:var(--text-tertiary);font-size:12px">04 / 08 &mdash; Estructura</span>
+    </div>
+    <h2>Componentes</h2>
+    <p>La librería Prisma-Components agrupa los elementos reutilizables de UI, organizados por nivel de complejidad y listos para insertar como instancias.</p>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:var(--space-2xl);margin-top:var(--space-4xl)">
+    <div style="padding:var(--space-3xl) var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border);text-align:center">
+      <h4 style="font-size:15px;font-weight:700;text-transform:uppercase;margin:0">Átomos</h4>
+    </div>
+    <div style="padding:var(--space-3xl) var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border);text-align:center">
+      <h4 style="font-size:15px;font-weight:700;text-transform:uppercase;margin:0">Moléculas</h4>
+    </div>
+    <div style="padding:var(--space-3xl) var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border);text-align:center">
+      <h4 style="font-size:15px;font-weight:700;text-transform:uppercase;margin:0">Organismos</h4>
+    </div>
+    <div style="padding:var(--space-3xl) var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border);text-align:center">
+      <h4 style="font-size:15px;font-weight:700;text-transform:uppercase;margin:0">Template</h4>
+    </div>
+  </div>
+
+  <!-- Crear componente -->
+  <h3 style="font-size:18px;font-weight:700;margin-top:var(--space-6xl);margin-bottom:var(--space-3xl)">Cómo crear un componente y sus props</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3xl)">
+    <div style="display:flex;gap:var(--space-2xl);align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--accent-50);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--accent-700);flex-shrink:0">1</div>
+      <div>
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-xs)">Nombre el componente</h4>
+        <p style="font-size:13px;color:var(--text-secondary);margin:0">Usar <strong>PascalCase</strong> con prefijo <code>Wl</code>. Ejemplo: <code>WlProductCard</code></p>
+      </div>
+    </div>
+    <div style="display:flex;gap:var(--space-2xl);align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--accent-50);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--accent-700);flex-shrink:0">2</div>
+      <div>
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-xs)">Auto Layout</h4>
+        <p style="font-size:13px;color:var(--text-secondary);margin:0">Manténer estructura basada en auto layouts para mayor consistencia.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:var(--space-2xl);align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--accent-50);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--accent-700);flex-shrink:0">3</div>
+      <div>
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-xs)">Properties bien claras</h4>
+        <p style="font-size:13px;color:var(--text-secondary);margin:0">Lenguaje claro Diseño/Código para una construcción unificada a nivel de lenguaje.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:var(--space-2xl);align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--accent-50);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--accent-700);flex-shrink:0">4</div>
+      <div>
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-xs)">Uso de tokens</h4>
+        <p style="font-size:13px;color:var(--text-secondary);margin:0">Aplicar los tokens establecidos en el sistema para que el handoff sea óptimo para desarrollo.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4 categorías de Property -->
+  <h3 style="font-size:18px;font-weight:700;margin-top:var(--space-6xl);margin-bottom:var(--space-l)">Las 4 categorías de Property</h3>
+  <p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-3xl)">El orden de construcción importa: armarlas en este orden evita la mayoría de colisiones e inconsistencias.</p>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3xl)">
+    <div style="display:flex;gap:var(--space-2xl);align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--accent-50);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--accent-700);flex-shrink:0">1</div>
+      <div>
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-xs)">Variant &mdash; la estructura</h4>
+        <p style="font-size:13px;color:var(--text-secondary);margin:0">Define las configuraciones que cambian la forma: <strong>Type, State, Size</strong>.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:var(--space-2xl);align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--accent-50);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--accent-700);flex-shrink:0">2</div>
+      <div>
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-xs)">Boolean &mdash; qué es opcional</h4>
+        <p style="font-size:13px;color:var(--text-secondary);margin:0">Nombra cada uno <strong>Show + Elemento</strong>. Ejemplos: Show Leading Icon, Show Badge, Show Avatar. Otros boolean válidos: Loading, Selected, Disabled, Checked, Expanded, Open, Required.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:var(--space-2xl);align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--accent-50);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--accent-700);flex-shrink:0">3</div>
+      <div>
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-xs)">Instance Swap &mdash; qué es intercambiable</h4>
+        <p style="font-size:13px;color:var(--text-secondary);margin:0">Expón cada icono, imagen o componente anidado que una instancia debería poder cambiar.</p>
+      </div>
+    </div>
+    <div style="display:flex;gap:var(--space-2xl);align-items:flex-start">
+      <div style="width:32px;height:32px;border-radius:50%;background:var(--accent-50);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;color:var(--accent-700);flex-shrink:0">4</div>
+      <div>
+        <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-xs)">Text &mdash; qué se puede escribir</h4>
+        <p style="font-size:13px;color:var(--text-secondary);margin:0">El contenido editable. Si ya existe un boolean Show correspondiente, esta property completa el par.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Text property types -->
+  <div style="margin-top:var(--space-4xl);padding:var(--space-3xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+    <h4 style="font-size:13px;font-weight:700;margin-bottom:var(--space-2xl);text-transform:uppercase;color:var(--accent-700)">Tipos de Text Property</h4>
+    <div style="display:flex;flex-wrap:wrap;gap:var(--space-l)">
+      <code style="padding:6px 14px;background:white;border-radius:var(--radius-m);border:1px solid var(--border);font-size:12px">Label</code>
+      <code style="padding:6px 14px;background:white;border-radius:var(--radius-m);border:1px solid var(--border);font-size:12px">Title</code>
+      <code style="padding:6px 14px;background:white;border-radius:var(--radius-m);border:1px solid var(--border);font-size:12px">SubTitle</code>
+      <code style="padding:6px 14px;background:white;border-radius:var(--radius-m);border:1px solid var(--border);font-size:12px">Description</code>
+      <code style="padding:6px 14px;background:white;border-radius:var(--radius-m);border:1px solid var(--border);font-size:12px">Helper Text</code>
+      <code style="padding:6px 14px;background:white;border-radius:var(--radius-m);border:1px solid var(--border);font-size:12px">Error Text</code>
+    </div>
+  </div>
+
+  <!-- Ejemplo WlButtonPrimary -->
+  <div style="margin-top:var(--space-4xl);padding:var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+    <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-xs)">Ejemplo: WlButtonPrimary</h4>
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-3xl)">El componente <strong>Button</strong> es el ejemplo canónico de Prisma.</p>
+    <table class="gov-table" style="font-size:13px">
+      <thead><tr><th>Property</th><th>Tipo</th><th>Valores</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Type</strong></td><td>Variant</td><td>Primary / Secondary / Tertiary</td></tr>
+        <tr><td><strong>State</strong></td><td>Variant</td><td>Default / Hover / Pressed / Disabled</td></tr>
+        <tr><td><strong>Size</strong></td><td>Variant</td><td>Xs / Sm / Md / Lg / Xl</td></tr>
+        <tr><td><strong>Label</strong></td><td>Text</td><td>Texto editable del botón</td></tr>
+        <tr><td><strong>Show Leading Icon</strong></td><td>Boolean</td><td>true / false</td></tr>
+        <tr><td><strong>Leading Icon</strong></td><td>Instance Swap</td><td>Icono intercambiable</td></tr>
+        <tr><td><strong>Show Trailing Icon</strong></td><td>Boolean</td><td>true / false</td></tr>
+        <tr><td><strong>Trailing Icon</strong></td><td>Instance Swap</td><td>Icono intercambiable</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Boolean rules callout -->
+  <div style="margin-top:var(--space-3xl);padding:var(--space-3xl);background:var(--danger-50);border:1px solid #f5c6cb;border-radius:var(--radius-l)">
+    <h4 style="font-size:13px;font-weight:700;color:var(--danger-600);margin-bottom:var(--space-l)">Reglas para Boolean</h4>
+    <p style="font-size:12px;color:var(--danger-700);margin:0">No utilices emojis. No utilices nombres ambiguos. No utilices nombres que entren en conflicto con Instance Swap.</p>
+  </div>
+</section>
+
+<!-- OB-5: Instalación -->
+<section class="section-id" id="onb-instalacion">
+  <div class="section-header">
+    <div style="display:flex;align-items:center;gap:var(--space-l);margin-bottom:var(--space-l)">
+      <span style="background:var(--success-100);color:var(--success-700);font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase">Onboarding</span>
+      <span style="color:var(--text-tertiary);font-size:12px">05 / 08 &mdash; Instalación</span>
+    </div>
+    <h2>Cómo usar Prisma</h2>
+  </div>
+
+  <!-- Busca → Conecta → Consume -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-3xl);margin-top:var(--space-4xl);margin-bottom:var(--space-5xl)">
+    <div style="text-align:center;padding:var(--space-3xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:15px;font-weight:700;margin-bottom:var(--space-l)">1. Busca</h4>
+      <p style="font-size:12px;color:var(--text-secondary);margin:0">Abre el panel de Assets en tu archivo de Figma y busca las librerías del equipo.</p>
+    </div>
+    <div style="text-align:center;padding:var(--space-3xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:15px;font-weight:700;margin-bottom:var(--space-l)">2. Conecta</h4>
+      <p style="font-size:12px;color:var(--text-secondary);margin:0">Agrega <strong>Tokens/Prime</strong>, <strong>Tokens/Foundations</strong> y <strong>Prisma-Components</strong> a tu archivo.</p>
+    </div>
+    <div style="text-align:center;padding:var(--space-3xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:15px;font-weight:700;margin-bottom:var(--space-l)">3. Consume</h4>
+      <p style="font-size:12px;color:var(--text-secondary);margin:0">Inserta componentes como instancias directamente desde el panel de Assets.</p>
+    </div>
+  </div>
+
+  <!-- 4 pasos -->
+  <h3 style="font-size:16px;font-weight:600;margin-bottom:var(--space-3xl)">4 pasos para trabajar</h3>
+  <div class="process-flow">
+    <div class="flow-connector"></div>
+    <div class="step-card prisma">
+      <div class="step-number">1</div>
+      <div class="step-body">
+        <h4>Conecta</h4>
+        <p class="step-desc">Activa <strong>Tokens &ndash; Fundations / Prisma-Components</strong> desde el panel de librerías del archivo.</p>
+      </div>
+    </div>
+    <div class="step-card prisma">
+      <div class="step-number">2</div>
+      <div class="step-body">
+        <h4>Inserta componentes</h4>
+        <p class="step-desc">Arrastra componentes desde el panel de Assets como instancias.</p>
+      </div>
+    </div>
+    <div class="step-card prisma">
+      <div class="step-number">3</div>
+      <div class="step-body">
+        <h4>Usa variables</h4>
+        <p class="step-desc">Aplica los tokens de color y espaciado en vez de valores fijos.</p>
+      </div>
+    </div>
+    <div class="step-card prisma">
+      <div class="step-number">4</div>
+      <div class="step-body">
+        <h4>Validar (Prisma Validator)</h4>
+        <p class="step-desc">Mantén la estructura del componente original con sus tokens a través del plugin de Figma, Prisma Validator.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OB-6: Crear nueva bandera -->
+<section class="section-id" id="onb-crear-bandera">
+  <div class="section-header">
+    <div style="display:flex;align-items:center;gap:var(--space-l);margin-bottom:var(--space-l)">
+      <span style="background:var(--success-100);color:var(--success-700);font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase">Onboarding</span>
+      <span style="color:var(--text-tertiary);font-size:12px">Crear nueva bandera</span>
+    </div>
+    <h2>Crear nueva bandera</h2>
+    <p>Cada bandera se estructura en base a los 3 colores de la marca, seguido de colores cross que son iguales de manera transversal.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4xl);margin-top:var(--space-4xl)">
+    <div style="padding:var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-2xl)">Colores de marca (únicos)</h4>
+      <p style="font-size:13px;color:var(--text-secondary);margin:0"><strong>Primario</strong> &mdash; color principal de la marca<br><strong>Secundario</strong> &mdash; complementario<br><strong>Terciario</strong> &mdash; acento</p>
+    </div>
+    <div style="padding:var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-2xl)">Colores cross (transversales)</h4>
+      <p style="font-size:13px;color:var(--text-secondary);margin:0"><strong>Share colors</strong> &mdash; Info, Success, Warning, Error, Neutrals<br><strong>Overlays</strong> &mdash; fondos modales y sheets</p>
+    </div>
+  </div>
+
+  <!-- Skill Claude -->
+  <div style="margin-top:var(--space-5xl);padding:var(--space-4xl);background:linear-gradient(135deg,var(--accent-50),var(--brand-50));border-radius:var(--radius-l);border:1px solid var(--accent-200)">
+    <h4 style="font-size:16px;font-weight:700;margin-bottom:var(--space-l)">Skill Claude para crear banderas</h4>
+    <p style="font-size:13px;color:var(--text-secondary);margin-bottom:var(--space-2xl)">Usa la skill de Claude + JSON + Figma para crear y publicar una nueva bandera de forma automatizada.</p>
+    <p style="font-size:12px;color:var(--text-tertiary);margin:0">* Cada usuario que consume el <strong>DS Prisma</strong> debe actualizar el proyecto donde está trabajando.</p>
+  </div>
+</section>
+
+<!-- OB-7: Prisma Validator -->
+<section class="section-id" id="onb-validator">
+  <div class="section-header">
+    <div style="display:flex;align-items:center;gap:var(--space-l);margin-bottom:var(--space-l)">
+      <span style="background:var(--success-100);color:var(--success-700);font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase">Onboarding</span>
+      <span style="color:var(--text-tertiary);font-size:12px">Prisma Validator</span>
+    </div>
+    <h2>Prisma Validator</h2>
+    <p>Plugin de Figma que escanea componentes y aplica los tokens correctos para que estén 100% listos para el handoff.</p>
+  </div>
+
+  <!-- 3-step flow -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:var(--space-3xl);margin-top:var(--space-4xl)">
+    <div style="text-align:center;padding:var(--space-3xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <div style="width:40px;height:40px;border-radius:50%;background:var(--accent-100);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:var(--accent-700);margin:0 auto var(--space-2xl)">1</div>
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-xs)">Selecciona en Figma</h4>
+      <p style="font-size:12px;color:var(--text-secondary);margin:0">Elige un Frame, Componente o Instancia</p>
+    </div>
+    <div style="text-align:center;padding:var(--space-3xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <div style="width:40px;height:40px;border-radius:50%;background:var(--accent-100);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:var(--accent-700);margin:0 auto var(--space-2xl)">2</div>
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-xs)">Inicia el escaneo</h4>
+      <p style="font-size:12px;color:var(--text-secondary);margin:0">El plugin revisa 8 checks de compliance</p>
+    </div>
+    <div style="text-align:center;padding:var(--space-3xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <div style="width:40px;height:40px;border-radius:50%;background:var(--accent-100);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;color:var(--accent-700);margin:0 auto var(--space-2xl)">3</div>
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-xs)">Revisa y corrige</h4>
+      <p style="font-size:12px;color:var(--text-secondary);margin:0">Usa Auto-Fix para aplicar tokens sugeridos</p>
+    </div>
+  </div>
+
+  <!-- Compliance example -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3xl);margin-top:var(--space-4xl)">
+    <div style="padding:var(--space-4xl);background:var(--warning-50);border-radius:var(--radius-l);border:1px solid #f0d9a0;text-align:center">
+      <div style="font-size:36px;font-weight:800;color:var(--warning-600)">63%</div>
+      <p style="font-size:12px;color:var(--warning-700);margin:var(--space-l) 0 0;font-weight:600">COMPLIANCE &mdash; WARN</p>
+      <p style="font-size:11px;color:var(--text-tertiary);margin:var(--space-xs) 0 0">5 passed &middot; 3 issues &middot; 8 checks</p>
+    </div>
+    <div style="padding:var(--space-4xl);background:var(--success-50);border-radius:var(--radius-l);border:1px solid #a3cfbb;text-align:center">
+      <div style="font-size:36px;font-weight:800;color:var(--success-600)">88%</div>
+      <p style="font-size:12px;color:var(--success-700);margin:var(--space-l) 0 0;font-weight:600">COMPLIANCE &mdash; PASS</p>
+      <p style="font-size:11px;color:var(--text-tertiary);margin:var(--space-xs) 0 0">7 passed &middot; 1 issues &middot; 8 checks</p>
+    </div>
+  </div>
+  <p style="font-size:12px;color:var(--text-tertiary);margin-top:var(--space-2xl);text-align:center">Escanea el componente y aplica los tokens en caso de que no los tenga para que esté 100% para el HandOff</p>
+
+  <!-- Canal de actualizaciones -->
+  <div style="margin-top:var(--space-5xl);padding:var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border);text-align:center">
+    <h4 style="font-size:16px;font-weight:700;margin-bottom:var(--space-l)">Actualizaciones de Prisma Validator</h4>
+    <p style="font-size:13px;color:var(--text-secondary)">Las novedades, releases y cambios del plugin se comunican en el canal de Teams.</p>
+    <a href="https://teams.microsoft.com/l/channel/19%3A767cec3f2bec4c559e1735f4cd170024%40thread.tacv2/%E2%9D%96%20Prisma%20Validator%20-%20Figma?groupId=9a910ecd-c02a-4b6d-99da-7c80a64dd305&tenantId=a50762c4-c5ad-413a-a05e-9ffe15752882" target="_blank" rel="noopener" style="display:inline-block;margin-top:var(--space-2xl);padding:10px 24px;background:var(--brand-500);color:white;border-radius:var(--radius-m);font-size:13px;font-weight:600;text-decoration:none">Abrir canal en Teams &rarr;</a>
+  </div>
+</section>
+
+<!-- OB-8: Buenas y malas prácticas -->
+<section class="section-id" id="onb-practicas">
+  <div class="section-header">
+    <div style="display:flex;align-items:center;gap:var(--space-l);margin-bottom:var(--space-l)">
+      <span style="background:var(--success-100);color:var(--success-700);font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase">Onboarding</span>
+      <span style="color:var(--text-tertiary);font-size:12px">07-08 / 08 &mdash; Buenas y malas prácticas</span>
+    </div>
+    <h2>Buenas y malas prácticas</h2>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-4xl);margin-top:var(--space-4xl)">
+    <!-- DO -->
+    <div style="padding:var(--space-4xl);background:var(--success-50);border-radius:var(--radius-l);border:1px solid #a3cfbb">
+      <h4 style="font-size:15px;font-weight:700;color:var(--success-700);margin-bottom:var(--space-2xl)">TODO BIEN!</h4>
+      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-l)">
+        <li style="font-size:13px;color:var(--text-secondary);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--success-600)">&check;</span> Usar componentes de la librería como instancias.</li>
+        <li style="font-size:13px;color:var(--text-secondary);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--success-600)">&check;</span> Vincular variables establecidas en el sistema.</li>
+        <li style="font-size:13px;color:var(--text-secondary);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--success-600)">&check;</span> Reportar bugs o casos no cubiertos al equipo de DS.</li>
+      </ul>
+    </div>
+    <!-- DON'T -->
+    <div style="padding:var(--space-4xl);background:var(--danger-50);border-radius:var(--radius-l);border:1px solid #f5c6cb">
+      <h4 style="font-size:15px;font-weight:700;color:var(--danger-600);margin-bottom:var(--space-2xl)">EVITA ESTO</h4>
+      <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-l)">
+        <li style="font-size:13px;color:var(--text-secondary);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--danger-600)">&times;</span> Duplicar y modificar componentes sueltos.</li>
+        <li style="font-size:13px;color:var(--text-secondary);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--danger-600)">&times;</span> Usar colores o medidas hardcodeadas.</li>
+        <li style="font-size:13px;color:var(--text-secondary);padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--danger-600)">&times;</span> Crear variantes "temporales" sin documentarlas.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Necesitas algo mas -->
+  <h3 style="font-size:18px;font-weight:700;margin-top:var(--space-6xl);margin-bottom:var(--space-3xl)">Necesitas algo más?</h3>
+
+  <!-- Links Figma -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3xl);margin-bottom:var(--space-4xl)">
+    <div style="padding:var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:15px;font-weight:700;margin-bottom:var(--space-2xl);display:flex;align-items:center;gap:var(--space-l)"><span style="background:var(--accent-100);color:var(--accent-700);font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase">App</span> Librerias Figma</h4>
+      <div style="display:flex;flex-direction:column;gap:var(--space-l)">
+        <a href="https://www.figma.com/design/ajTov04sBM1NsSV10A801Y/Tokens---Foundations?m=auto&node-id=0-1&t=STZg0hpTJanM7fG1-1" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:var(--space-l);padding:10px 16px;background:white;border:1px solid var(--border);border-radius:var(--radius-m);text-decoration:none;font-size:13px;color:var(--text-primary);font-weight:500;transition:border-color .15s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-500)" stroke-width="2"><path d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/><path d="M3 9h18"/><path d="M9 3v18"/></svg> Tokens &ndash; Foundations</a>
+        <a href="https://www.figma.com/design/LnYUTRFuwWpI9phwDCSHOx/APP-Prisma-Components?m=auto&node-id=0-1&t=3L9jrQZnOxVP7IL5-1" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:var(--space-l);padding:10px 16px;background:white;border:1px solid var(--border);border-radius:var(--radius-m);text-decoration:none;font-size:13px;color:var(--text-primary);font-weight:500;transition:border-color .15s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-500)" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> APP Prisma-Components</a>
+      </div>
+    </div>
+    <div style="padding:var(--space-4xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:15px;font-weight:700;margin-bottom:var(--space-2xl);display:flex;align-items:center;gap:var(--space-l)"><span style="background:var(--brand-100);color:var(--brand-700);font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase">Web</span> Librerias Figma</h4>
+      <div style="display:flex;flex-direction:column;gap:var(--space-l)">
+        <a href="https://www.figma.com/design/NI2j6WrkADt9MgQEbXJaC9/Radix-Tokens-Foundation?node-id=0-1&t=VHdevRbgY6GSUGy6-1" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:var(--space-l);padding:10px 16px;background:white;border:1px solid var(--border);border-radius:var(--radius-m);text-decoration:none;font-size:13px;color:var(--text-primary);font-weight:500;transition:border-color .15s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--brand-500)" stroke-width="2"><path d="M5 3h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2z"/><path d="M3 9h18"/><path d="M9 3v18"/></svg> Radix Tokens Foundation</a>
+        <a href="https://www.figma.com/design/V4JC6ZQiNFEechja7p3W3A/Web-Components?node-id=113-6221&t=rI1s2tD9NzyIFh09-1" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:var(--space-l);padding:10px 16px;background:white;border:1px solid var(--border);border-radius:var(--radius-m);text-decoration:none;font-size:13px;color:var(--text-primary);font-weight:500;transition:border-color .15s"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--brand-500)" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> Web Components</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Recursos -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3xl)">
+    <div style="padding:var(--space-3xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-l)">Pedir un componente</h4>
+      <p style="font-size:12px;color:var(--text-secondary);margin:0">Abrí una solicitud describiendo el caso de uso y el equipo de DS lo evalúa. <strong>Respetando el flujo de trabajo.</strong></p>
+    </div>
+    <div style="padding:var(--space-3xl);background:var(--neutral-50);border-radius:var(--radius-l);border:1px solid var(--border)">
+      <h4 style="font-size:14px;font-weight:700;margin-bottom:var(--space-l)">Soporte</h4>
+      <p style="font-size:12px;color:var(--text-secondary);margin:0">Escribe al equipo de Prisma para dudas puntuales de uso.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     2. TOKENS DE DISENO
+     ═══════════════════════════════════════════ -->
+<section class="section-id" id="tokens">
+  <div class="section-header">
+    <h2>Tokens de diseño</h2>
+    <p>Sistema de tokens organizado en capas: primitivos, semánticos y por componente. Los tokens primitivos definen la paleta base, los semánticos asignan significado.</p>
+  </div>
+
+  <!-- Colores primitivos -->
+  <div class="sub-label">Colores primitivos</div>
+
+  <div class="swatch-group">
+    <h4>Purple (Primary)</h4>
+    <div class="swatch-row">
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#faf4fb"></div>
+        <span class="swatch-name">50</span>
+        <span class="swatch-hex">#faf4fb</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#d9a8e2"></div>
+        <span class="swatch-name">300</span>
+        <span class="swatch-hex">#d9a8e2</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#9c27b0"></div>
+        <span class="swatch-name">500</span>
+        <span class="swatch-hex">#9c27b0</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#6a1b7a"></div>
+        <span class="swatch-name">700</span>
+        <span class="swatch-hex">#6a1b7a</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#250a46"></div>
+        <span class="swatch-name">900</span>
+        <span class="swatch-hex">#250a46</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="swatch-group">
+    <h4>Teal (Secondary)</h4>
+    <div class="swatch-row">
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#edfafa"></div>
+        <span class="swatch-name">50</span>
+        <span class="swatch-hex">#edfafa</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#6ec6c0"></div>
+        <span class="swatch-name">300</span>
+        <span class="swatch-hex">#6ec6c0</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#0d8f84"></div>
+        <span class="swatch-name">500</span>
+        <span class="swatch-hex">#0d8f84</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#065f56"></div>
+        <span class="swatch-name">700</span>
+        <span class="swatch-hex">#065f56</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#012c28"></div>
+        <span class="swatch-name">900</span>
+        <span class="swatch-hex">#012c28</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="swatch-group">
+    <h4>Grey (Neutral)</h4>
+    <div class="swatch-row">
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#f6f7f8"></div>
+        <span class="swatch-name">50</span>
+        <span class="swatch-hex">#f6f7f8</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#b0b5bd"></div>
+        <span class="swatch-name">300</span>
+        <span class="swatch-hex">#b0b5bd</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#6b7280"></div>
+        <span class="swatch-name">500</span>
+        <span class="swatch-hex">#6b7280</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#3d4451"></div>
+        <span class="swatch-name">700</span>
+        <span class="swatch-hex">#3d4451</span>
+      </div>
+      <div class="swatch">
+        <div class="swatch-circle" style="background:#1e232b"></div>
+        <span class="swatch-name">900</span>
+        <span class="swatch-hex">#1e232b</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tokens semánticos -->
+  <div class="sub-label">Tokens semánticos</div>
+
+  <table class="compact-table">
+    <thead>
+      <tr><th>Token</th><th>Referencia</th><th>Uso</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><code>Text.Primary.primary-default</code></td><td>Purple.700</td><td>Texto primario de marca</td></tr>
+      <tr><td><code>Text.Neutrals.neutral-body</code></td><td>Grey.800</td><td>Cuerpo de texto</td></tr>
+      <tr><td><code>Text.Neutrals.neutral-caption</code></td><td>Grey.400</td><td>Captions y texto auxiliar</td></tr>
+      <tr><td><code>Text.Warning</code></td><td>Warning.700</td><td>Textos de advertencia</td></tr>
+      <tr><td><code>Text.Info</code></td><td>Info.700</td><td>Textos informativos</td></tr>
+      <tr><td><code>Text.Success</code></td><td>Success.700</td><td>Textos de éxito</td></tr>
+      <tr><td><code>Text.Error</code></td><td>Error.700</td><td>Textos de error</td></tr>
+    </tbody>
+  </table>
+
+  <!-- Tipografía -->
+  <div class="sub-label">Tipografía &mdash; Plus Jakarta Sans</div>
+
+  <div class="typo-scale">
+    <div class="typo-row">
+      <span class="typo-label">Display Large</span>
+      <span class="typo-spec">57px / 600</span>
+      <span class="typo-sample" style="font-size:32px;font-weight:600">Prisma DS</span>
+    </div>
+    <div class="typo-row">
+      <span class="typo-label">Headline Large</span>
+      <span class="typo-spec">32px / 600</span>
+      <span class="typo-sample" style="font-size:24px;font-weight:600">Headline Large</span>
+    </div>
+    <div class="typo-row">
+      <span class="typo-label">Title Medium</span>
+      <span class="typo-spec">16px / 500</span>
+      <span class="typo-sample" style="font-size:16px;font-weight:500">Title Medium</span>
+    </div>
+    <div class="typo-row">
+      <span class="typo-label">Body Large</span>
+      <span class="typo-spec">16px / 400</span>
+      <span class="typo-sample" style="font-size:16px;font-weight:400">Body Large text sample</span>
+    </div>
+    <div class="typo-row">
+      <span class="typo-label">Body Medium</span>
+      <span class="typo-spec">14px / 400</span>
+      <span class="typo-sample" style="font-size:14px;font-weight:400">Body Medium text sample</span>
+    </div>
+    <div class="typo-row">
+      <span class="typo-label">Label Large</span>
+      <span class="typo-spec">14px / 500</span>
+      <span class="typo-sample" style="font-size:14px;font-weight:500">LABEL LARGE</span>
+    </div>
+    <div class="typo-row">
+      <span class="typo-label">Label Small</span>
+      <span class="typo-spec">11px / 500</span>
+      <span class="typo-sample" style="font-size:11px;font-weight:500">LABEL SMALL</span>
+    </div>
+  </div>
+
+  <!-- Espaciado -->
+  <div class="sub-label">Espaciado</div>
+
+  <div class="spacing-scale">
+    <div class="spacing-row">
+      <span class="spacing-label">xs</span>
+      <div class="spacing-bar" style="width:2px"></div>
+      <span class="spacing-value">2px</span>
+    </div>
+    <div class="spacing-row">
+      <span class="spacing-label">s</span>
+      <div class="spacing-bar" style="width:4px"></div>
+      <span class="spacing-value">4px</span>
+    </div>
+    <div class="spacing-row">
+      <span class="spacing-label">m</span>
+      <div class="spacing-bar" style="width:8px"></div>
+      <span class="spacing-value">8px</span>
+    </div>
+    <div class="spacing-row">
+      <span class="spacing-label">l</span>
+      <div class="spacing-bar" style="width:12px"></div>
+      <span class="spacing-value">12px</span>
+    </div>
+    <div class="spacing-row">
+      <span class="spacing-label">xl</span>
+      <div class="spacing-bar" style="width:16px"></div>
+      <span class="spacing-value">16px</span>
+    </div>
+    <div class="spacing-row">
+      <span class="spacing-label">2xl</span>
+      <div class="spacing-bar" style="width:24px"></div>
+      <span class="spacing-value">24px</span>
+    </div>
+    <div class="spacing-row">
+      <span class="spacing-label">3xl</span>
+      <div class="spacing-bar" style="width:32px"></div>
+      <span class="spacing-value">32px</span>
+    </div>
+    <div class="spacing-row">
+      <span class="spacing-label">4xl</span>
+      <div class="spacing-bar" style="width:40px"></div>
+      <span class="spacing-value">40px</span>
+    </div>
+    <div class="spacing-row">
+      <span class="spacing-label">5xl</span>
+      <div class="spacing-bar" style="width:48px"></div>
+      <span class="spacing-value">48px</span>
+    </div>
+    <div class="spacing-row">
+      <span class="spacing-label">6xl</span>
+      <div class="spacing-bar" style="width:56px"></div>
+      <span class="spacing-value">56px</span>
+    </div>
+    <div class="spacing-row">
+      <span class="spacing-label">9xl</span>
+      <div class="spacing-bar" style="width:64px"></div>
+      <span class="spacing-value">64px</span>
+    </div>
+  </div>
+
+  <!-- Border Radius -->
+  <div class="sub-label">Border Radius</div>
+
+  <div class="radius-row">
+    <div class="radius-demo">
+      <div class="radius-box" style="border-radius:0"></div>
+      <span class="radius-name">none</span>
+      <span class="radius-val">0px</span>
+    </div>
+    <div class="radius-demo">
+      <div class="radius-box" style="border-radius:4px"></div>
+      <span class="radius-name">s</span>
+      <span class="radius-val">4px</span>
+    </div>
+    <div class="radius-demo">
+      <div class="radius-box" style="border-radius:8px"></div>
+      <span class="radius-name">m</span>
+      <span class="radius-val">8px</span>
+    </div>
+    <div class="radius-demo">
+      <div class="radius-box" style="border-radius:12px"></div>
+      <span class="radius-name">l</span>
+      <span class="radius-val">12px</span>
+    </div>
+    <div class="radius-demo">
+      <div class="radius-box" style="border-radius:16px"></div>
+      <span class="radius-name">xl</span>
+      <span class="radius-val">16px</span>
+    </div>
+    <div class="radius-demo">
+      <div class="radius-box" style="border-radius:999px"></div>
+      <span class="radius-name">full</span>
+      <span class="radius-val">999px</span>
+    </div>
+  </div>
+
+  <!-- Strokes -->
+  <div class="sub-label">Strokes</div>
+
+  <div class="strokes-row">
+    <div class="stroke-demo">
+      <hr class="stroke-line" style="border:none;border-top:1px solid var(--neutral-800)">
+      <span class="stroke-name">1px solid</span>
+    </div>
+    <div class="stroke-demo">
+      <hr class="stroke-line" style="border:none;border-top:2px solid var(--neutral-800)">
+      <span class="stroke-name">2px solid</span>
+    </div>
+    <div class="stroke-demo">
+      <hr class="stroke-line" style="border:none;border-top:3px solid var(--neutral-800)">
+      <span class="stroke-name">3px solid</span>
+    </div>
+    <div class="stroke-demo">
+      <hr class="stroke-line" style="border:none;border-top:1px dashed var(--neutral-800)">
+      <span class="stroke-name">1px dash</span>
+    </div>
+    <div class="stroke-demo">
+      <hr class="stroke-line" style="border:none;border-top:2px dashed var(--neutral-800)">
+      <span class="stroke-name">2px dash</span>
+    </div>
+    <div class="stroke-demo">
+      <hr class="stroke-line" style="border:none;border-top:3px dashed var(--neutral-800)">
+      <span class="stroke-name">3px dash</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     3. COMPONENTES
+     ═══════════════════════════════════════════ -->
+<section class="section-id" id="componentes">
+  <div class="section-header">
+    <h2>Componentes</h2>
+    <p>82 componentes organizados por jerarquía atómica. Cada grupo contiene componentes con múltiples variantes para cubrir todos los casos de uso.</p>
+  </div>
+
+  <div class="comp-grid">
+    <!-- Atoms -->
+    <div class="comp-card">
+      <div class="comp-card-header" style="border-top:3px solid var(--brand-500)">
+        <span class="cdot" style="background:var(--brand-500)"></span>
+        <h4>Atoms</h4>
+        <span class="count">26</span>
+      </div>
+      <div class="comp-card-body">
+        <div class="comp-pills">
+          <span class="comp-pill">Badge</span>
+          <span class="comp-pill">Backdrop</span>
+          <span class="comp-pill">Banners</span>
+          <span class="comp-pill has-var">Buttons (280)</span>
+          <span class="comp-pill">Brand</span>
+          <span class="comp-pill">CheckBox</span>
+          <span class="comp-pill">Chips</span>
+          <span class="comp-pill">Dropdown</span>
+          <span class="comp-pill">DiscountRibbon</span>
+          <span class="comp-pill">FavoriteButton</span>
+          <span class="comp-pill">ShareButton</span>
+          <span class="comp-pill">FabListas</span>
+          <span class="comp-pill">Launcher</span>
+          <span class="comp-pill">Loader</span>
+          <span class="comp-pill">PageControl</span>
+          <span class="comp-pill has-var">Payments (149)</span>
+          <span class="comp-pill">ProductImage</span>
+          <span class="comp-pill">ProgressBar</span>
+          <span class="comp-pill">PromotionalRibbon</span>
+          <span class="comp-pill">RadioButton</span>
+          <span class="comp-pill">Skeleton</span>
+          <span class="comp-pill">Tabs</span>
+          <span class="comp-pill has-var">Tags (48)</span>
+          <span class="comp-pill">Toggles</span>
+          <span class="comp-pill">Tooltip</span>
+          <span class="comp-pill">Top_cart-detail</span>
+          <span class="comp-pill">Ubicación map</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Molecules -->
+    <div class="comp-card">
+      <div class="comp-card-header" style="border-top:3px solid var(--accent-500)">
+        <span class="cdot" style="background:var(--accent-500)"></span>
+        <h4>Molecules</h4>
+        <span class="count">23</span>
+      </div>
+      <div class="comp-card-body">
+        <div class="comp-pills">
+          <span class="comp-pill">Accordions</span>
+          <span class="comp-pill">AddressCard</span>
+          <span class="comp-pill has-var">Alert (15)</span>
+          <span class="comp-pill">Banner de hiperlinks</span>
+          <span class="comp-pill">Banners Carruseles</span>
+          <span class="comp-pill">CategoryBanner</span>
+          <span class="comp-pill">Data Card</span>
+          <span class="comp-pill">Footer card</span>
+          <span class="comp-pill">Info Copy</span>
+          <span class="comp-pill has-var">Inputs (28)</span>
+          <span class="comp-pill">Location</span>
+          <span class="comp-pill">Menu</span>
+          <span class="comp-pill">Minimum Order</span>
+          <span class="comp-pill">Resumen</span>
+          <span class="comp-pill has-var">Select list (30)</span>
+          <span class="comp-pill">Select Promo</span>
+          <span class="comp-pill">Snackbar</span>
+          <span class="comp-pill">Steppers</span>
+          <span class="comp-pill">Sticky Buttons</span>
+          <span class="comp-pill">Talla/Color</span>
+          <span class="comp-pill">Text Area</span>
+          <span class="comp-pill">Title section</span>
+          <span class="comp-pill has-var">Top_bar (16)</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Organisms -->
+    <div class="comp-card">
+      <div class="comp-card-header" style="border-top:3px solid var(--success-500)">
+        <span class="cdot" style="background:var(--success-500)"></span>
+        <h4>Organisms</h4>
+        <span class="count">14</span>
+      </div>
+      <div class="comp-card-body">
+        <div class="comp-pills">
+          <span class="comp-pill">Bottom sheet</span>
+          <span class="comp-pill">Category</span>
+          <span class="comp-pill">Countdown-box</span>
+          <span class="comp-pill">Coupons</span>
+          <span class="comp-pill">Dialog</span>
+          <span class="comp-pill">Dynamic Section</span>
+          <span class="comp-pill has-var">Empty States (15)</span>
+          <span class="comp-pill">LiveTracking</span>
+          <span class="comp-pill">Login</span>
+          <span class="comp-pill">Lists</span>
+          <span class="comp-pill">Order-detail</span>
+          <span class="comp-pill">Pop-up</span>
+          <span class="comp-pill has-var">Quantity Selector (50)</span>
+          <span class="comp-pill">Smart banner</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Headers -->
+    <div class="comp-card">
+      <div class="comp-card-header" style="border-top:3px solid var(--warning-500)">
+        <span class="cdot" style="background:var(--warning-500)"></span>
+        <h4>Headers</h4>
+        <span class="count">4</span>
+      </div>
+      <div class="comp-card-body">
+        <div class="comp-pills">
+          <span class="comp-pill">Header_app</span>
+          <span class="comp-pill">Header promo</span>
+          <span class="comp-pill">HeaderPoints</span>
+          <span class="comp-pill">HeaderOffers</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cards -->
+    <div class="comp-card">
+      <div class="comp-card-header" style="border-top:3px solid #f97316">
+        <span class="cdot" style="background:#f97316"></span>
+        <h4>Cards</h4>
+        <span class="count">21</span>
+      </div>
+      <div class="comp-card-body">
+        <div class="comp-pills">
+          <span class="comp-pill">Card</span>
+          <span class="comp-pill has-var">Product Card (50)</span>
+          <span class="comp-pill">Product Card Brasil</span>
+          <span class="comp-pill">ProductCard_Details</span>
+          <span class="comp-pill">Product Card JumboCol</span>
+          <span class="comp-pill">Product Card JumboArg-Disco</span>
+          <span class="comp-pill">ProductCard-TFM</span>
+          <span class="comp-pill">ProductCardPrezunic</span>
+          <span class="comp-pill">ProductCards_Combo</span>
+          <span class="comp-pill">ConfirmationCard</span>
+          <span class="comp-pill">ContentCard</span>
+          <span class="comp-pill">InformationCard</span>
+          <span class="comp-pill">NotificationCard</span>
+          <span class="comp-pill">MoneyCards</span>
+          <span class="comp-pill">PromoCard</span>
+          <span class="comp-pill">LevelsCard</span>
+          <span class="comp-pill">BalanceCard</span>
+          <span class="comp-pill">Totalizer</span>
+          <span class="comp-pill">SponsorCard</span>
+          <span class="comp-pill">CardMessage</span>
+          <span class="comp-pill">Banner action</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navegación -->
+    <div class="comp-card">
+      <div class="comp-card-header" style="border-top:3px solid var(--danger-500)">
+        <span class="cdot" style="background:var(--danger-500)"></span>
+        <h4>Navegación</h4>
+        <span class="count">3</span>
+      </div>
+      <div class="comp-card-body">
+        <div class="comp-pills">
+          <span class="comp-pill has-var">Nav Bar (27)</span>
+          <span class="comp-pill">Search</span>
+          <span class="comp-pill">User</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     4. MULTI-BRAND
+     ═══════════════════════════════════════════ -->
+<section class="section-id" id="multi-brand">
+  <div class="section-header">
+    <h2>Multi-brand</h2>
+    <p>Prisma soporta tematización por marca. Cada bandera tiene su propio set de tokens que se aplican sobre la misma estructura de componentes. Light + Dark mode incluidos.</p>
+  </div>
+
+  <div class="brand-grid">
+    <div class="brand-card">
+      <div class="brand-icon" style="background:linear-gradient(135deg,#9c27b0,#7b1fa2)">P</div>
+      <h4>Prisma</h4>
+      <p>Tema base por defecto. Tokens en <code>Style Tokens/Prisma.json</code></p>
+    </div>
+    <div class="brand-card">
+      <div class="brand-icon" style="background:linear-gradient(135deg,#4CAF50,#2E7D32)">J</div>
+      <h4>Jumbo</h4>
+      <p>Chile, Argentina, Colombia. Tokens en <code>Style Tokens/Jumbo.json</code></p>
+    </div>
+    <div class="brand-card">
+      <div class="brand-icon" style="background:linear-gradient(135deg,#1565C0,#0D47A1)">M</div>
+      <h4>Metro</h4>
+      <p>Perú. Tokens en <code>Style Tokens/Metro.json</code></p>
+    </div>
+    <div class="brand-card">
+      <div class="brand-icon" style="background:linear-gradient(135deg,#E53935,#C62828)">D</div>
+      <h4>Disco</h4>
+      <p>Argentina. Tokens en <code>Style Tokens/Disco.json</code></p>
+    </div>
+    <div class="brand-card">
+      <div class="brand-icon" style="background:linear-gradient(135deg,#FF8F00,#EF6C00)">Pz</div>
+      <h4>Prezunic</h4>
+      <p>Brasil. Tokens en <code>Style Tokens/Prezunic.json</code></p>
+    </div>
+    <div class="brand-card">
+      <div class="brand-icon" style="background:linear-gradient(135deg,#2E7D32,#1B5E20)">TF</div>
+      <h4>The Fresh Market</h4>
+      <p>Colombia. Tokens en <code>Style Tokens/TFM.json</code></p>
+    </div>
+    <div class="brand-card">
+      <div class="brand-icon" style="background:linear-gradient(135deg,#F57C00,#E65100)">GB</div>
+      <h4>GBarbosa</h4>
+      <p>Brasil. Tokens en <code>Style Tokens/GBarbosa.json</code></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     5. GUIA POR PANTALLA
+     ═══════════════════════════════════════════ -->
+<section class="section-id" id="guia-pantalla">
+  <div class="section-header">
+    <h2>Guía por pantalla</h2>
+    <p>Composición recomendada de componentes Prisma por tipo de pantalla. Usa esta referencia rápida al diseñar o validar con DS3.</p>
+  </div>
+
+  <table class="screen-table">
+    <thead>
+      <tr><th>Pantalla</th><th>Componentes recomendados</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="screen-name">Home</td>
+        <td><div class="comp-tags"><span class="comp-tag">Header_app</span><span class="comp-tag">Banners Carruseles</span><span class="comp-tag">Category</span><span class="comp-tag">Title section</span><span class="comp-tag">Product Card</span><span class="comp-tag">Nav Bar</span></div></td>
+      </tr>
+      <tr>
+        <td class="screen-name">PLP</td>
+        <td><div class="comp-tags"><span class="comp-tag">Top_bar</span><span class="comp-tag">Nav Bar</span><span class="comp-tag">Chips</span><span class="comp-tag">Product Card (PLP)</span><span class="comp-tag">Sticky Buttons</span></div></td>
+      </tr>
+      <tr>
+        <td class="screen-name">PDP</td>
+        <td><div class="comp-tags"><span class="comp-tag">Top_bar</span><span class="comp-tag">ProductImage</span><span class="comp-tag">Tags</span><span class="comp-tag">Quantity Selector</span><span class="comp-tag">Buttons</span><span class="comp-tag">Bottom sheet</span></div></td>
+      </tr>
+      <tr>
+        <td class="screen-name">Carrito</td>
+        <td><div class="comp-tags"><span class="comp-tag">Top_bar</span><span class="comp-tag">ProductCard_Details</span><span class="comp-tag">Totalizer</span><span class="comp-tag">Sticky Buttons</span></div></td>
+      </tr>
+      <tr>
+        <td class="screen-name">Checkout</td>
+        <td><div class="comp-tags"><span class="comp-tag">Top_bar</span><span class="comp-tag">Steppers</span><span class="comp-tag">AddressCard</span><span class="comp-tag">Select list</span><span class="comp-tag">Payments</span><span class="comp-tag">Resumen</span></div></td>
+      </tr>
+      <tr>
+        <td class="screen-name">Perfil</td>
+        <td><div class="comp-tags"><span class="comp-tag">Header_app</span><span class="comp-tag">User</span><span class="comp-tag">MoneyCards</span><span class="comp-tag">LevelsCard</span><span class="comp-tag">Select list</span><span class="comp-tag">Nav Bar</span></div></td>
+      </tr>
+      <tr>
+        <td class="screen-name">Confirmación</td>
+        <td><div class="comp-tags"><span class="comp-tag">Empty States (Success)</span><span class="comp-tag">ConfirmationCard</span><span class="comp-tag">Buttons</span></div></td>
+      </tr>
+      <tr>
+        <td class="screen-name">Búsqueda</td>
+        <td><div class="comp-tags"><span class="comp-tag">Nav Bar (Focus search)</span><span class="comp-tag">Chips</span><span class="comp-tag">Product Card</span><span class="comp-tag">Empty States</span></div></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     6. PRISMA MCP
+     ═══════════════════════════════════════════ -->
+<section class="section-id" id="prisma-mcp">
+  <div class="section-header">
+    <h2>Prisma MCP</h2>
+    <p>Model Context Protocol que conecta Claude con el plugin Prisma Designer y Figma. Permite sincronizar, validar y crear pantallas con componentes del sistema de diseño directamente desde Cowork.</p>
+  </div>
+
+  <!-- Architecture flow -->
+  <div class="arch-flow">
+    <div class="arch-node highlight">Claude (Cowork)</div>
+    <span class="arch-arrow">&rarr;</span>
+    <div class="arch-node highlight">Prisma MCP</div>
+    <span class="arch-arrow">&rarr;</span>
+    <div class="arch-node">Prisma Designer<br><small style="color:var(--text-muted);font-weight:400">Plugin Cowork</small></div>
+    <span class="arch-arrow">&rarr;</span>
+    <div class="arch-node">Figma Canvas</div>
+  </div>
+
+  <!-- 8 tools -->
+  <div class="sub-label">Herramientas disponibles</div>
+
+  <div class="tool-list">
+    <div class="tool-item">
+      <span class="tool-num">1</span>
+      <div class="tool-info">
+        <div class="tool-name">sync_prisma_library</div>
+        <div class="tool-desc">Escanea Prisma-Components y actualiza el catálogo local de componentes</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <span class="tool-num">2</span>
+      <div class="tool-info">
+        <div class="tool-name">create_screens_from_ds3</div>
+        <div class="tool-desc">Toma DS3 JSON y genera una spec enriquecida con componentes reales</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <span class="tool-num">3</span>
+      <div class="tool-info">
+        <div class="tool-name">create_screens_from_prompts</div>
+        <div class="tool-desc">Convierte prompts en lenguaje natural en pantallas con componentes Prisma</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <span class="tool-num">4</span>
+      <div class="tool-info">
+        <div class="tool-name">list_prisma_components</div>
+        <div class="tool-desc">Lista todos los componentes del catálogo con filtro opcional por nombre o tipo</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <span class="tool-num">5</span>
+      <div class="tool-info">
+        <div class="tool-name">resolve_component</div>
+        <div class="tool-desc">Encuentra el componente que mejor coincide con una descripción en lenguaje natural</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <span class="tool-num">6</span>
+      <div class="tool-info">
+        <div class="tool-name">create_local_component_spec</div>
+        <div class="tool-desc">Genera spec para componentes nuevos que no existen en la librería</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <span class="tool-num">7</span>
+      <div class="tool-info">
+        <div class="tool-name">get_figma_file_info</div>
+        <div class="tool-desc">Obtiene información del archivo Figma: paginas, frames y estructura</div>
+      </div>
+    </div>
+    <div class="tool-item">
+      <span class="tool-num">8</span>
+      <div class="tool-info">
+        <div class="tool-name">validate_ds3_json</div>
+        <div class="tool-desc">Valida un DS3 JSON contra el catálogo de Prisma antes de crear pantallas</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Installation -->
+  <div class="sub-label">Instalación</div>
+
+  <div class="process-flow" style="margin-bottom:var(--space-5xl)">
+    <div class="flow-connector"></div>
+
+    <div class="step-card prisma">
+      <div class="step-number">1</div>
+      <div class="step-body">
+        <span class="step-tag">Setup</span>
+        <h4>Instalar dependencias</h4>
+        <p class="step-desc">Clona el repositorio de prisma-mcp e instala las dependencias con npm.</p>
+        <div class="cmd-block"><span class="prompt">$</span><code>cd prisma-mcp && npm install</code></div>
+      </div>
+    </div>
+
+    <div class="step-card prisma">
+      <div class="step-number">2</div>
+      <div class="step-body">
+        <span class="step-tag">Token</span>
+        <h4>Obtener Personal Access Token de Figma</h4>
+        <p class="step-desc">En Figma, ve a Settings &rarr; Personal Access Tokens &rarr; genera uno nuevo con permisos de lectura sobre archivos y librerías.</p>
+      </div>
+    </div>
+
+    <div class="step-card prisma">
+      <div class="step-number">3</div>
+      <div class="step-body">
+        <span class="step-tag">Config</span>
+        <h4>Registrar en mcp_settings.json</h4>
+        <p class="step-desc">Agrega la configuración del MCP al archivo de settings de Claude con el token y la ruta al servidor.</p>
+        <div class="cmd-block"><span class="prompt">#</span><code>mcp_settings.json &rarr; "prisma-mcp": { "command": "node", "args": ["index.js"] }</code></div>
+      </div>
+    </div>
+
+    <div class="step-card prisma">
+      <div class="step-number">4</div>
+      <div class="step-body">
+        <span class="step-tag">Listo</span>
+        <h4>Reiniciar Claude</h4>
+        <p class="step-desc">Cierra y abre Claude. El MCP aparecerá en la lista de conectores disponibles. Verifica con <code>list_prisma_components</code>.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     7. DS3 JSON
+     ═══════════════════════════════════════════ -->
+<section class="section-id" id="ds3-json">
+  <div class="section-header">
+    <h2>DS3 JSON</h2>
+    <p>Formato estructurado que describe pantallas usando componentes Prisma. Es el output de DS3 (Design Directions) y el input para Prisma Designer o Figma Make.</p>
+  </div>
+
+  <div class="overview-block">
+    <h3>Estructura del formato</h3>
+    <p>Cada DS3 JSON contiene un array de pantallas (<code>screens</code>). Cada pantalla define un <code>screen_id</code>, <code>screen_name</code>, y un array de <code>components</code> que referencian componentes reales de Prisma con su tipo y variante. El formato es validable contra el catálogo con <code>validate_ds3_json</code>.</p>
+  </div>
+
+  <div class="sub-label">Ejemplo</div>
+
+  <div class="code-block"><span class="comment">// Ejemplo de un DS3 JSON minimal</span>
+{
+  <span class="key">"screen_id"</span>: <span class="str">"P01"</span>,
+  <span class="key">"screen_name"</span>: <span class="str">"Events Feed"</span>,
+  <span class="key">"components"</span>: [
+    {
+      <span class="key">"type"</span>: <span class="str">"Header_app"</span>,
+      <span class="key">"variant"</span>: <span class="str">"Default"</span>
+    },
+    {
+      <span class="key">"type"</span>: <span class="str">"Title_section"</span>,
+      <span class="key">"text"</span>: <span class="str">"Eventos"</span>
+    },
+    {
+      <span class="key">"type"</span>: <span class="str">"Product Card"</span>,
+      <span class="key">"variant"</span>: <span class="str">"Carrusel Card"</span>
+    }
+  ]
+}</div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     8. FLUJO DS3 → FIGMA
+     ═══════════════════════════════════════════ -->
+<section class="section-id" id="flujo-ds3">
+  <div class="section-header">
+    <h2>Flujo DS3 a Figma</h2>
+    <p>Pipeline completo desde el output de Diseño Agéntico hasta pantallas listas en Figma con componentes reales de Prisma.</p>
+  </div>
+
+  <div class="process-flow">
+    <div class="flow-connector"></div>
+
+    <div class="step-card prisma">
+      <div class="step-number">1</div>
+      <div class="step-body">
+        <span class="step-tag">Input</span>
+        <h4>Ejecutar DS3 &rarr; genera packets.ds3</h4>
+        <p class="step-desc">El paso DS3 del Diseño Agéntico genera 3 design directions como DS3 JSON. Cada direction contiene las pantallas con componentes Prisma mapeados.</p>
+        <div class="cmd-block"><span class="prompt">$</span><code>/ds3-design-directions</code></div>
+      </div>
+    </div>
+
+    <div class="step-card prisma">
+      <div class="step-number">2</div>
+      <div class="step-body">
+        <span class="step-tag">Validación</span>
+        <h4>validate_ds3_json &rarr; verificar antes de crear</h4>
+        <p class="step-desc">Valida que todos los componentes referenciados existan en el catálogo de Prisma. Reporta componentes no encontrados y sugiere alternativas.</p>
+        <div class="cmd-block"><span class="prompt">$</span><code>/validar-ds3</code></div>
+      </div>
+    </div>
+
+    <div class="step-card prisma">
+      <div class="step-number">3</div>
+      <div class="step-body">
+        <span class="step-tag">Spec</span>
+        <h4>create_screens_from_ds3 &rarr; generar spec enriquecida</h4>
+        <p class="step-desc">Toma el DS3 JSON validado y genera una spec enriquecida que incluye las propiedades exactas de cada componente, sus variantes y configuraciones.</p>
+      </div>
+    </div>
+
+    <div class="step-card prisma">
+      <div class="step-number">4</div>
+      <div class="step-body">
+        <span class="step-tag">Prisma Designer</span>
+        <h4>Crear pantallas con Prisma Designer</h4>
+        <p class="step-desc">Desde Cowork, ejecuta el skill <code>/crear-pantallas</code> del plugin Prisma Designer. El plugin toma el DS3 JSON, lo conecta con el MCP de Figma y crea las pantallas directamente en tu archivo de Figma.</p>
+        <div class="step-details">
+          <div class="step-detail-col">
+            <h5>Prisma Designer crea</h5>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Frames con auto-layout</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Componentes instanciados</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Tokens aplicados por marca</li>
+            </ul>
+          </div>
+          <div class="step-detail-col">
+            <h5>Importante</h5>
+            <ul>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> Sync Prisma antes de crear</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> Valida el JSON primero</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg> Revisa la estructura después</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cmd-block"><span class="prompt">$</span><code>/crear-pantallas</code></div>
+      </div>
+    </div>
+
+    <div class="step-card alt">
+      <div class="step-number">5</div>
+      <div class="step-body">
+        <span class="step-tag">Opcional</span>
+        <h4>Componentes nuevos &rarr; Figma Make</h4>
+        <p class="step-desc">Si el DS3 incluye componentes que no existen en Prisma, se genera un prompt para Figma Make. Copia el prompt y úsalo directamente en Figma para crear el componente como diseño nuevo.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Alternative flow -->
+  <div class="overview-block" style="border-left:3px solid var(--info-500)">
+    <h3>Flujo alternativo: prompts de texto</h3>
+    <p>Si no tienes un DS3 JSON, puedes usar <code>create_screens_from_prompts</code> para describir pantallas en lenguaje natural. El MCP resuelve los componentes automáticamente y genera la spec. Ideal para prototipos rápidos o cuando el flujo agéntico no es necesario.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     9. FLUJO DE GOBERNANZA — LIFECYCLE 14 FASES
+     ═══════════════════════════════════════════ -->
+<section class="section-id" id="flujo-componente">
+  <div class="section-header">
+    <h2>Lifecycle de un componente — 14 fases</h2>
+    <p>Flujo end-to-end de gobernanza: desde el levantamiento de necesidad hasta la entrega a desarrollo. Cada fase es una subtarea en Jira con responsable y checklist.</p>
+  </div>
+
+  <table class="gov-table" style="font-size:13px">
+    <thead>
+      <tr><th style="width:32px">#</th><th>Fase</th><th>Responsable</th><th>Checklist</th></tr>
+    </thead>
+    <tbody>
+      <tr><td><strong>1</strong></td><td class="inst-name">Levantamiento de necesidad</td><td><code>Equipo solicitante</code></td><td>Definir problema, uso, alcance (transversal/específico)</td></tr>
+      <tr><td><strong>2</strong></td><td class="inst-name">Existe? — validación previa</td><td><code>Jairo (Validador)</code></td><td>Revisar librería actual, descartar duplicados</td></tr>
+      <tr><td><strong>3</strong></td><td class="inst-name">Definición de alcance</td><td><code>Owner + Validador</code></td><td>Confirmar variantes, estados, plataformas</td></tr>
+      <tr><td><strong>4</strong></td><td class="inst-name">Creación (diseño)</td><td><code>PD/UX del país</code></td><td>Diseño en Figma siguiendo foundations</td></tr>
+      <tr><td><strong>5</strong></td><td class="inst-name">Validación de tokens</td><td><code>PD/UX + Jairo</code></td><td>Correr Prisma Validator plugin, score &ge; umbral</td></tr>
+      <tr><td><strong>6</strong></td><td class="inst-name">Pre-Critique</td><td><code>Owner</code></td><td>Revisión interna previa a critique formal</td></tr>
+      <tr><td><strong>7</strong></td><td class="inst-name">Validación de componentes</td><td><code>Jairo</code></td><td>Revisión estructural / nomenclatura</td></tr>
+      <tr><td><strong>8</strong></td><td class="inst-name">Documentación</td><td><code>PD/UX (+ UX Writer)</code></td><td>Specs, uso, do's &amp; don'ts</td></tr>
+      <tr><td><strong>9</strong></td><td class="inst-name">Traslado a librería</td><td><code>Jairo</code></td><td>Publicar en archivo de componentes</td></tr>
+      <tr><td><strong>10</strong></td><td class="inst-name">Validación externa</td><td><code>UX Externos según país</code></td><td>Validación por equipo local</td></tr>
+      <tr><td><strong>11</strong></td><td class="inst-name">Critique</td><td><code>Owner + equipo</code></td><td>Revisión final grupal</td></tr>
+      <tr><td><strong>12</strong></td><td class="inst-name">Publicación</td><td><code>Owner (César)</code></td><td>Publicación oficial en librería DS</td></tr>
+      <tr><td><strong>13</strong></td><td class="inst-name">Handoff</td><td><code>Owner/Validador &rarr; Dev</code></td><td>Traspaso a codegen Flutter/Dart</td></tr>
+      <tr><td><strong>14</strong></td><td class="inst-name">Cierre de UX</td><td><code>Owner</code></td><td>Cierre formal, notificar stakeholders</td></tr>
+    </tbody>
+  </table>
+
+  <div style="margin-top:var(--space-4xl);padding:var(--space-3xl);background:var(--neutral-100);border-radius:var(--radius-l);border-left:3px solid var(--warning-500)">
+    <h4 style="font-size:14px;margin-bottom:var(--space-l)">Checklist genérico — pegar en cada subtarea</h4>
+    <pre style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--text-secondary);line-height:1.8;margin:0">- [ ] Responsable asignado
+- [ ] Insumos previos recibidos
+- [ ] Entregable de esta fase completo
+- [ ] Validado por siguiente responsable en la cadena</pre>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     10. TEMPLATE JIRA
+     ═══════════════════════════════════════════ -->
+<section class="section-id" id="template-jira">
+  <div class="section-header">
+    <h2>Template Jira — Creación de componente</h2>
+    <p>Template para el Epic de creación de componentes, mapeado 1:1 con el flujo de gobernanza. Cada equipo tiene su propio tablero por marca.</p>
+  </div>
+
+  <div style="margin-bottom:var(--space-4xl);padding:var(--space-3xl);background:var(--warning-50);border:1px solid #f0d9a0;border-radius:var(--radius-l)">
+    <p style="font-size:13px;color:var(--warning-700);margin:0"><strong>Alcance:</strong> como los tableros están separados por marca, en el Epic solo se indica si el componente es <strong>Transversal</strong> (aplica a todas las marcas) o <strong>específico</strong> de esa marca. Si es Transversal, se crea un Epic por cada tablero de marca afectada, linkeados entre sí.</p>
+  </div>
+
+  <!-- Config base -->
+  <h3 style="font-size:16px;font-weight:600;margin-bottom:var(--space-2xl);display:flex;align-items:center;gap:var(--space-l)"><span style="background:var(--accent-100);color:var(--accent-700);font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase">Epic</span> Configuracion base</h3>
+
+  <table class="gov-table" style="font-size:13px;margin-bottom:var(--space-5xl)">
+    <tbody>
+      <tr><td style="width:180px"><strong>Tipo de issue</strong></td><td>Epic</td></tr>
+      <tr><td><strong>Summary</strong></td><td><code>[DS] Creación de componente: {Nombre del componente}</code></td></tr>
+      <tr><td><strong>Componente Jira</strong></td><td>Design System</td></tr>
+      <tr><td><strong>Reporter</strong></td><td>Quien levanta la necesidad</td></tr>
+      <tr><td><strong>Assignee</strong></td><td>Owner del DS (César)</td></tr>
+      <tr><td><strong>Labels</strong></td><td><code>ds-component, prisma, {atom / molecule / organism}</code></td></tr>
+    </tbody>
+  </table>
+
+  <!-- Descripción del Epic -->
+  <h3 style="font-size:16px;font-weight:600;margin-bottom:var(--space-2xl)">Descripción del Epic — pegar en Jira</h3>
+
+  <div style="background:var(--neutral-100);border:1px solid var(--border);border-radius:var(--radius-l);padding:var(--space-4xl);margin-bottom:var(--space-5xl)">
+    <pre style="font-size:12px;font-family:'JetBrains Mono',monospace;color:var(--text-secondary);line-height:1.8;margin:0;white-space:pre-wrap">## Contexto
+Por qué se necesita este componente? Qué problema resuelve o qué solicitud lo origina?
+
+## Alcance
+- Alcance: [ ] Transversal (aplica a todas las marcas)  [ ] Específico de esta marca
+- Tipo de componente: [ ] Atom  [ ] Molecule  [ ] Organism
+- Plataformas: [ ] App  [ ] Web
+
+## Comportamiento esperado
+- Estados: Default / Hover / Active / Focus / Disabled / Error / Loading / Success
+- Variantes:
+- Interacciones: (qué ocurre al tocar/clickear, transiciones, feedback al usuario)
+- Responsive / adaptabilidad: (cómo cambia entre breakpoints o entre App y Web)
+- Casos limite: (contenido largo, sin datos, error de carga, offline, etc.)
+
+## Criterios de aceptación
+- [ ] Cumple el comportamiento descrito arriba en todos sus estados y variantes
+- [ ] Cumple con tokens definidos en Prisma Validator (score de compliance)
+- [ ] Pasa Pre-Critique y Critique
+- [ ] Documentado en librería
+- [ ] Validado por país(es) externo(s) correspondiente(s)
+- [ ] Handoff a desarrollo aprobado
+
+## Referencias
+- Link Figma:
+- Link Confluence (si aplica):</pre>
+  </div>
+
+  <!-- Custom fields -->
+  <h3 style="font-size:16px;font-weight:600;margin-bottom:var(--space-2xl);display:flex;align-items:center;gap:var(--space-l)"><span style="background:var(--info-50);color:var(--info-600);font-size:10px;font-weight:700;padding:3px 10px;border-radius:var(--radius-full);text-transform:uppercase">Campos</span> Custom fields sugeridos</h3>
+
+  <table class="gov-table" style="font-size:13px;margin-bottom:var(--space-5xl)">
+    <thead>
+      <tr><th>Campo</th><th>Tipo</th><th>Opciones</th></tr>
+    </thead>
+    <tbody>
+      <tr><td class="inst-name">Alcance</td><td>Select</td><td>Transversal, Específico de marca</td></tr>
+      <tr><td class="inst-name">Tipo de componente</td><td>Select</td><td>Atom, Molecule, Organism</td></tr>
+      <tr><td class="inst-name">Fase del lifecycle</td><td>Select</td><td>Las 14 fases de la tabla anterior, para filtrar tableros/reportes</td></tr>
+      <tr><td class="inst-name">Instancia de validación</td><td>Select</td><td>Pre-Critique, Critique, Validación de componentes</td></tr>
+    </tbody>
+  </table>
+
+  <div style="padding:var(--space-3xl);background:var(--warning-50);border:1px solid #f0d9a0;border-radius:var(--radius-l)">
+    <p style="font-size:12px;color:var(--warning-700);margin:0"><strong>Nota de implementación:</strong> los nombres exactos de campos custom pueden variar según si el tablero es Company-managed o Team-managed — revisar en Project Settings &gt; Fields antes de crearlos. Este template asume el roster actual (Owner César, Validador Jairo, PDs por país/marca); si cambia el roster, solo hay que actualizar la columna Responsable.</p>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     11. TIPS
+     ═══════════════════════════════════════════ -->
+<section class="section-id" id="tips">
+  <div class="section-header">
+    <h2>Tips para trabajar con Prisma</h2>
+    <p>Mejores prácticas validadas por el Chapter para mantener la calidad y consistencia del sistema de diseño.</p>
+  </div>
+
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-icon" style="background:var(--accent-100)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-600)" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></div>
+      <h4>Usa tokens, no hardcodees colores</h4>
+      <p>Siempre referencia tokens semánticos en vez de valores hex directos. Así los temas de cada marca se aplican automáticamente.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon" style="background:var(--brand-50)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg></div>
+      <h4>Consulta el catálogo antes de crear</h4>
+      <p>Antes de diseñar algo nuevo, usa <code>list_prisma_components</code> o <code>resolve_component</code> para verificar que no exista ya.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon" style="background:var(--success-50)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--success-600)" stroke-width="2" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <h4>Valida con resolve_component</h4>
+      <p>Cuando no estás seguro del nombre exacto, describe lo que necesitas y <code>resolve_component</code> encontrará el match más cercano.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon" style="background:var(--warning-50)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--warning-600)" stroke-width="2" stroke-linecap="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+      <h4>Respeta la jerarquía atómica</h4>
+      <p>Atoms componen Molecules, Molecules componen Organisms. No saltes niveles al construir pantallas complejas.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon" style="background:var(--info-50)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--info-600)" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div>
+      <h4>Documenta componentes nuevos</h4>
+      <p>Cada componente nuevo debe tener: descripción de uso, variantes, estados, y ejemplos. Usa <code>create_local_component_spec</code> para generar la doc base.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-icon" style="background:var(--danger-50)"><svg viewBox="0 0 24 24" fill="none" stroke="var(--danger-600)" stroke-width="2" stroke-linecap="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg></div>
+      <h4>Sincroniza con sync_prisma_library</h4>
+      <p>Después de cualquier cambio en Prisma-Components, ejecuta sync para que el MCP tenga el catálogo actualizado. Sin sync, los componentes nuevos no se resuelven.</p>
+    </div>
+  </div>
+</section>
+
+
+</div><!-- /main-content -->
+</div><!-- /page-layout -->
+
+<!-- NAV CONTEXTUAL -->
+<div style="max-width:1280px;margin:var(--space-5xl) auto 0;padding:0 var(--space-5xl);display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3xl)">
+  <a href="procesos.html" style="display:flex;align-items:center;gap:var(--space-l);padding:var(--space-2xl);border:1px solid var(--border);border-radius:var(--radius-l);text-decoration:none;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='var(--brand-300)';this.style.boxShadow='0 2px 8px rgba(37,99,235,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+    <div><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px">Anterior</div><div style="font-size:14px;font-weight:600;color:var(--text-primary)">Procesos</div></div>
+  </a>
+  <a href="index.html" style="display:flex;align-items:center;justify-content:flex-end;gap:var(--space-l);padding:var(--space-2xl);border:1px solid var(--border);border-radius:var(--radius-l);text-decoration:none;transition:border-color .15s,box-shadow .15s" onmouseover="this.style.borderColor='var(--brand-300)';this.style.boxShadow='0 2px 8px rgba(37,99,235,.08)'" onmouseout="this.style.borderColor='var(--border)';this.style.boxShadow='none'">
+    <div style="text-align:right"><div style="font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px">Volver al</div><div style="font-size:14px;font-weight:600;color:var(--text-primary)">Inicio</div></div>
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="var(--text-muted)" stroke-width="2" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+  </a>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner" style="flex-direction:column;gap:var(--space-3xl);text-align:center">
+    <div style="display:flex;gap:var(--space-3xl);flex-wrap:wrap;justify-content:center">
+      <a href="index.html" style="color:var(--text-muted);text-decoration:none;font-size:13px;transition:color .15s" onmouseover="this.style.color='var(--brand-500)'" onmouseout="this.style.color='var(--text-muted)'">Inicio</a>
+      <a href="catalogo.html" style="color:var(--text-muted);text-decoration:none;font-size:13px;transition:color .15s" onmouseover="this.style.color='var(--brand-500)'" onmouseout="this.style.color='var(--text-muted)'">Catálogo</a>
+      <a href="formacion.html" style="color:var(--text-muted);text-decoration:none;font-size:13px;transition:color .15s" onmouseover="this.style.color='var(--brand-500)'" onmouseout="this.style.color='var(--text-muted)'">Formación</a>
+      <a href="procesos.html" style="color:var(--text-muted);text-decoration:none;font-size:13px;transition:color .15s" onmouseover="this.style.color='var(--brand-500)'" onmouseout="this.style.color='var(--text-muted)'">Procesos</a>
+      <a href="prisma.html" style="color:var(--brand-500);font-weight:600;text-decoration:none;font-size:13px">Prisma &amp; IA</a>
+    </div>
+    <div><span>HUB IA &middot; Chapter UX Cencosud &middot; Prisma Design System</span></div>
+  </div>
+</footer>
+
+<script>
+// Scroll spy
+const sections = document.querySelectorAll('.section-id');
+const sidebarLinks = document.querySelectorAll('.sidebar-nav a');
+
+function updateSpy() {
+  let current = '';
+  sections.forEach(section => {
+    const top = section.getBoundingClientRect().top;
+    if (top <= 120) current = section.id;
+  });
+  sidebarLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
+}
+
+window.addEventListener('scroll', updateSpy, { passive: true });
+updateSpy();
+</script>
+</body>
+</html>
