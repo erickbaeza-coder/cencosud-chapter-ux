@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HUB IA — Chapter UX Cencosud</title>
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --surface-alt: #F5F4F0;
+    --text-1: #1A1A18;
+    --text-2: #5F5E5A;
+    --text-3: #888780;
+    --border: #E5E4DF;
+    --accent: #534AB7;
+    --accent-light: #EEEDFE;
+    --accent-text: #3C3489;
+    --teal: #0F6E56;
+    --teal-light: #E1F5EE;
+    --teal-text: #085041;
+    --blue: #185FA5;
+    --blue-light: #E6F1FB;
+    --blue-text: #0C447C;
+    --amber: #854F0B;
+    --amber-light: #FAEEDA;
+    --amber-text: #633806;
+    --coral: #993C1D;
+    --coral-light: #FAECE7;
+    --coral-text: #712B13;
+    --pink: #993556;
+    --pink-light: #FBEAF0;
+    --pink-text: #72243E;
+    --green: #3B6D11;
+    --green-light: #EAF3DE;
+    --red: #A32D2D;
+    --red-light: #FCEBEB;
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06);
+    --shadow-lg: 0 4px 12px rgba(0,0,0,0.08);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--bg); color: var(--text-1); line-height: 1.5; }
+
+  /* NAV */
+  .nav { background: var(--surface); border-bottom: 1px solid var(--border); position: sticky; top: 0; z-index: 100; }
+  .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; height: 56px; gap: 32px; }
+  .nav-logo { font-weight: 600; font-size: 15px; color: var(--accent); display: flex; align-items: center; gap: 8px; white-space: nowrap; }
+  .nav-logo span { background: var(--accent); color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; }
+  .nav-links { display: flex; gap: 4px; overflow-x: auto; }
+  .nav-links a { padding: 8px 14px; border-radius: var(--radius-sm); font-size: 13px; color: var(--text-2); text-decoration: none; white-space: nowrap; transition: all 0.15s; font-weight: 500; }
+  .nav-links a:hover { background: var(--surface-alt); color: var(--text-1); }
+  .nav-links a.active { background: var(--accent-light); color: var(--accent-text); }
+  .nav-search { margin-left: auto; }
+  .nav-search input { background: var(--surface-alt); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 7px 12px 7px 32px; font-size: 13px; width: 200px; outline: none; background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23888780' stroke-width='2' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cline x1='21' y1='21' x2='16.65' y2='16.65'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 10px center; }
+  .nav-search input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-light); }
+
+  /* SECTIONS */
+  .section { display: none; }
+  .section.active { display: block; }
+  .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px; }
+
+  /* HERO */
+  .hero { padding: 48px 0 32px; }
+  .hero h1 { font-size: 28px; font-weight: 600; margin-bottom: 8px; }
+  .hero p { font-size: 16px; color: var(--text-2); max-width: 600px; }
+
+  /* STATS ROW */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin: 24px 0 32px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+  .stat-card .number { font-size: 28px; font-weight: 600; }
+  .stat-card .label { font-size: 13px; color: var(--text-2); margin-top: 2px; }
+
+  /* QUICK ACCESS */
+  .quick-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin: 24px 0; }
+  .quick-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px 16px; text-align: center; cursor: pointer; transition: all 0.15s; text-decoration: none; color: var(--text-1); }
+  .quick-card:hover { border-color: var(--accent); box-shadow: var(--shadow-lg); transform: translateY(-1px); }
+  .quick-card .icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 18px; }
+  .quick-card .title { font-size: 13px; font-weight: 600; }
+  .quick-card .desc { font-size: 11px; color: var(--text-3); margin-top: 4px; }
+
+  /* NEWS */
+  .news-section { margin: 32px 0; }
+  .news-section h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+  .news-list { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  .news-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 20px; }
+  .news-card .tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px; }
+  .news-card h3 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .news-card p { font-size: 12px; color: var(--text-2); }
+  .news-card .date { font-size: 11px; color: var(--text-3); margin-top: 8px; }
+
+  /* CATALOG */
+  .catalog-filters { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; align-items: center; }
+  .catalog-filters .filter-label { font-size: 13px; color: var(--text-2); font-weight: 500; margin-right: 8px; }
+  .filter-btn { padding: 6px 14px; border-radius: 20px; border: 1px solid var(--border); background: var(--surface); font-size: 12px; cursor: pointer; transition: all 0.15s; color: var(--text-2); }
+  .filter-btn:hover, .filter-btn.active { background: var(--accent-light); border-color: var(--accent); color: var(--accent-text); }
+
+  .catalog-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+  .skill-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; transition: all 0.15s; }
+  .skill-card:hover { box-shadow: var(--shadow-lg); }
+  .skill-card-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+  .skill-card h3 { font-size: 15px; font-weight: 600; }
+  .skill-card .tech-name { font-size: 12px; color: var(--text-3); font-family: monospace; margin-top: 2px; }
+  .skill-card .badge { font-size: 11px; font-weight: 600; padding: 3px 10px; border-radius: 12px; white-space: nowrap; }
+  .badge-pub { background: var(--teal-light); color: var(--teal-text); }
+  .badge-dev { background: var(--amber-light); color: var(--amber-text); }
+  .badge-rev { background: var(--blue-light); color: var(--blue-text); }
+  .badge-wip { background: var(--coral-light); color: var(--coral-text); }
+  .skill-card .description { font-size: 13px; color: var(--text-2); margin-bottom: 12px; }
+  .skill-card .meta { display: flex; gap: 16px; font-size: 12px; color: var(--text-3); margin-bottom: 14px; flex-wrap: wrap; }
+  .skill-card .meta span { display: flex; align-items: center; gap: 4px; }
+  .skill-card .actions { display: flex; gap: 8px; }
+  .btn { padding: 7px 16px; border-radius: var(--radius-sm); font-size: 12px; font-weight: 600; cursor: pointer; border: none; transition: all 0.15s; }
+  .btn-primary { background: var(--accent); color: white; }
+  .btn-primary:hover { background: var(--accent-text); }
+  .btn-ghost { background: transparent; color: var(--accent-text); border: 1px solid var(--border); }
+  .btn-ghost:hover { background: var(--accent-light); }
+
+  /* FORMATION */
+  .learning-path { display: flex; gap: 16px; margin: 24px 0; align-items: stretch; }
+  .path-card { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; position: relative; }
+  .path-card .level { font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 8px; }
+  .path-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .path-card p { font-size: 13px; color: var(--text-2); }
+  .path-card .topics { margin-top: 12px; }
+  .path-card .topic { font-size: 12px; color: var(--text-2); padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .path-card .topic:last-child { border-bottom: none; }
+  .path-arrow { display: flex; align-items: center; font-size: 20px; color: var(--text-3); }
+
+  .videos-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 24px 0; }
+  .video-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+  .video-thumb { background: var(--surface-alt); height: 140px; display: flex; align-items: center; justify-content: center; color: var(--text-3); font-size: 32px; }
+  .video-info { padding: 16px; }
+  .video-info h4 { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+  .video-info p { font-size: 12px; color: var(--text-2); }
+  .video-info .video-meta { font-size: 11px; color: var(--text-3); margin-top: 6px; }
+
+  /* GLOSSARY */
+  .glossary-list { margin: 24px 0; }
+  .glossary-item { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 16px 20px; margin-bottom: 8px; }
+  .glossary-item h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+  .glossary-item h4 .cat { font-size: 11px; font-weight: 500; padding: 1px 8px; border-radius: 4px; }
+  .glossary-item p { font-size: 13px; color: var(--text-2); }
+  .glossary-item .example { font-size: 12px; color: var(--text-3); margin-top: 6px; font-style: italic; }
+
+  /* PROCESSES */
+  .process-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 16px; }
+  .process-card h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; }
+  .process-card .process-desc { font-size: 13px; color: var(--text-2); margin-bottom: 16px; }
+  .process-steps { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .process-step { background: var(--accent-light); color: var(--accent-text); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; }
+  .process-arrow { color: var(--text-3); font-size: 14px; }
+
+  /* PRISMA */
+  .prisma-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 24px 0; }
+  .prisma-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; }
+  .prisma-card .icon-box { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 12px; }
+  .prisma-card h3 { font-size: 15px; font-weight: 600; margin-bottom: 6px; }
+  .prisma-card p { font-size: 13px; color: var(--text-2); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .stats, .quick-grid, .catalog-grid, .news-list, .videos-grid, .prisma-grid { grid-template-columns: 1fr; }
+    .learning-path { flex-direction: column; }
+    .path-arrow { transform: rotate(90deg); justify-content: center; }
+    .nav-links { display: none; }
+  }
+  @media (max-width: 1024px) {
+    .stats { grid-template-columns: repeat(2, 1fr); }
+    .quick-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  /* Tab content visibility */
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+</style>
+</head>
+<body>
+
+<!-- NAVIGATION -->
+<nav class="nav">
+  <div class="nav-inner">
+    <div class="nav-logo">HUB IA <span>CHAPTER UX</span></div>
+    <div class="nav-links">
+      <a href="#" class="active" onclick="showSection('inicio')">Inicio</a>
+      <a href="#" onclick="showSection('catalogo')">Catálogo</a>
+      <a href="#" onclick="showSection('formacion')">Formación</a>
+      <a href="#" onclick="showSection('procesos')">Procesos</a>
+      <a href="#" onclick="showSection('prisma')">Prisma & IA</a>
+    </div>
+    <div class="nav-search">
+      <input type="text" placeholder="Buscar skills, guías, términos...">
+    </div>
+  </div>
+</nav>
+
+<!-- ==================== INICIO ==================== -->
+<div id="inicio" class="section active">
+  <div class="container">
+    <div class="hero">
+      <h1>Bienvenido al HUB IA</h1>
+      <p>La plataforma central del Chapter UX para descubrir, aprender e instalar las capacidades de IA disponibles en todas las banderas de Cencosud.</p>
+    </div>
+
+    <div class="stats">
+      <div class="stat-card">
+        <div class="number" style="color: var(--accent);">16</div>
+        <div class="label">Skills & plugins disponibles</div>
+      </div>
+      <div class="stat-card">
+        <div class="number" style="color: var(--teal);">3</div>
+        <div class="label">Procesos agénticos</div>
+      </div>
+      <div class="stat-card">
+        <div class="number" style="color: var(--amber);">2</div>
+        <div class="label">Herramientas IA</div>
+      </div>
+      <div class="stat-card">
+        <div class="number" style="color: var(--coral);">6</div>
+        <div class="label">Banderas participando</div>
+      </div>
+    </div>
+
+    <div class="quick-grid">
+      <a class="quick-card" onclick="showSection('catalogo')">
+        <div class="icon" style="background: var(--blue-light); color: var(--blue);">&#9881;</div>
+        <div class="title">Catálogo de skills</div>
+        <div class="desc">Explorar e instalar</div>
+      </a>
+      <a class="quick-card" onclick="showSection('formacion')">
+        <div class="icon" style="background: var(--amber-light); color: var(--amber);">&#9733;</div>
+        <div class="title">Academia IA</div>
+        <div class="desc">Ruta de aprendizaje</div>
+      </a>
+      <a class="quick-card" onclick="showSection('procesos')">
+        <div class="icon" style="background: var(--coral-light); color: var(--coral);">&#9654;</div>
+        <div class="title">Procesos agénticos</div>
+        <div class="desc">Discovery y diseño</div>
+      </a>
+      <a class="quick-card" onclick="showSection('prisma')">
+        <div class="icon" style="background: var(--pink-light); color: var(--pink);">&#9670;</div>
+        <div class="title">Prisma & IA</div>
+        <div class="desc">Design system + Claude</div>
+      </a>
+      <a class="quick-card" onclick="showSection('formacion')">
+        <div class="icon" style="background: var(--teal-light); color: var(--teal);">&#9782;</div>
+        <div class="title">Glosario</div>
+        <div class="desc">Términos clave</div>
+      </a>
+    </div>
+
+    <div class="news-section">
+      <h2>Novedades</h2>
+      <div class="news-list">
+        <div class="news-card">
+          <div class="tag" style="background: var(--accent-light); color: var(--accent-text);">Plugin</div>
+          <h3>Discovery Agéntico v2.0</h3>
+          <p>Nueva versión del plugin con mejoras en S3 (User Needs) y Quality Gate integrado.</p>
+          <div class="date">28 agosto 2026</div>
+        </div>
+        <div class="news-card">
+          <div class="tag" style="background: var(--teal-light); color: var(--teal-text);">Skill</div>
+          <h3>Usuarios Sintéticos ahora transversal</h3>
+          <p>La skill de Jumbo se extendió para uso en Marketplace y Metro Perú.</p>
+          <div class="date">25 agosto 2026</div>
+        </div>
+        <div class="news-card">
+          <div class="tag" style="background: var(--amber-light); color: var(--amber-text);">Formación</div>
+          <h3>Capacitación: Conectar MCPs</h3>
+          <p>Grabación disponible de la sesión de conexión de Figma MCP con Claude Code.</p>
+          <div class="date">20 agosto 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="news-section">
+      <h2>Herramientas IA disponibles</h2>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;">
+        <div class="skill-card">
+          <h3>Claude</h3>
+          <p class="description" style="margin-top:8px;">Asistente IA de Anthropic. Disponible en Chat, Cowork y Claude Code. Licencias por equipo.</p>
+          <div class="meta">
+            <span>Chat &middot; Cowork &middot; Claude Code</span>
+          </div>
+          <div class="actions">
+            <button class="btn btn-ghost" onclick="showSection('formacion')">Ver guía de uso</button>
+          </div>
+        </div>
+        <div class="skill-card">
+          <h3>Figma Make</h3>
+          <p class="description" style="margin-top:8px;">Generación y edición de diseños en Figma mediante IA. Integrado con Prisma via MCP.</p>
+          <div class="meta">
+            <span>Figma &middot; Claude Code &middot; MCP</span>
+          </div>
+          <div class="actions">
+            <button class="btn btn-ghost" onclick="showSection('prisma')">Ver integración Prisma</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== CATÁLOGO ==================== -->
+<div id="catalogo" class="section">
+  <div class="container">
+    <div class="hero">
+      <h1>Catálogo de skills, plugins y agentes</h1>
+      <p>Descubre, instala y contribuye herramientas de IA para Product Design.</p>
+    </div>
+
+    <div class="catalog-filters">
+      <span class="filter-label">Tipo:</span>
+      <button class="filter-btn active">Todos</button>
+      <button class="filter-btn">Skills</button>
+      <button class="filter-btn">Plugins</button>
+      <button class="filter-btn">Agentes</button>
+      <button class="filter-btn">MCPs</button>
+      <span style="margin-left: 16px;" class="filter-label">Estado:</span>
+      <button class="filter-btn">Publicada</button>
+      <button class="filter-btn">En desarrollo</button>
+      <button class="filter-btn">WIP</button>
+      <span style="margin-left: 16px;" class="filter-label">Bandera:</span>
+      <button class="filter-btn">Transversal</button>
+      <button class="filter-btn">WL</button>
+      <button class="filter-btn">Jumbo</button>
+      <button class="filter-btn">Easy</button>
+      <button class="filter-btn">Paris</button>
+      <button class="filter-btn">MKP</button>
+    </div>
+
+    <div class="catalog-grid">
+      <!-- Skill 1 -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div>
+            <h3>UX Jira Ticket Writer</h3>
+            <div class="tech-name">ux-jira-ticket-writer</div>
+          </div>
+          <span class="badge badge-pub">Publicada</span>
+        </div>
+        <p class="description">Genera tickets UX para Jira con estructura estandarizada: criterios de aceptación, definición de done y contexto.</p>
+        <div class="meta">
+          <span>&#128100; Equipo WL</span>
+          <span>&#127988; Transversal</span>
+          <span>v2.1</span>
+          <span>Skill</span>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary">Instalar</button>
+          <button class="btn btn-ghost">Ver proceso</button>
+          <button class="btn btn-ghost">Changelog</button>
+        </div>
+      </div>
+
+      <!-- Skill 2 -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div>
+            <h3>PO Brief Creator</h3>
+            <div class="tech-name">po-brief-creator</div>
+          </div>
+          <span class="badge badge-pub">Publicada</span>
+        </div>
+        <p class="description">Crea briefs de producto para Product Owners con contexto, problema, hipótesis y métricas de éxito.</p>
+        <div class="meta">
+          <span>&#128100; Equipo WL</span>
+          <span>&#127988; Transversal</span>
+          <span>v1.0</span>
+          <span>Skill</span>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary">Instalar</button>
+          <button class="btn btn-ghost">Ver proceso</button>
+          <button class="btn btn-ghost">Changelog</button>
+        </div>
+      </div>
+
+      <!-- Plugin 1 -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div>
+            <h3>Discovery y Diseño Agéntico</h3>
+            <div class="tech-name">discovery-agentico</div>
+          </div>
+          <span class="badge badge-pub">Publicada</span>
+        </div>
+        <p class="description">Proceso end-to-end: Discovery (S1-S6) + Diseño (DS1-DS3). Estrategia, research, journey, valor de negocio, PDR, wireframes y design directions.</p>
+        <div class="meta">
+          <span>&#128100; Equipo WL</span>
+          <span>&#127988; Transversal</span>
+          <span>v2.0</span>
+          <span>Plugin</span>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary">Instalar plugin</button>
+          <button class="btn btn-ghost">Ver proceso</button>
+          <button class="btn btn-ghost">6 skills incluidas</button>
+        </div>
+      </div>
+
+      <!-- Plugin 2 -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div>
+            <h3>Prisma Designer</h3>
+            <div class="tech-name">prisma-designer</div>
+          </div>
+          <span class="badge badge-pub">Publicada</span>
+        </div>
+        <p class="description">Crea pantallas en Figma desde DS3 JSON. Incluye sync del catálogo, validación, quality gate y resolución de componentes.</p>
+        <div class="meta">
+          <span>&#128100; Equipo WL</span>
+          <span>&#127988; Transversal</span>
+          <span>v1.0</span>
+          <span>Plugin</span>
+        </div>
+        <div class="actions">
+          <button class="btn btn-primary">Instalar plugin</button>
+          <button class="btn btn-ghost">5 skills incluidas</button>
+        </div>
+      </div>
+
+      <!-- Skill 3 -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div>
+            <h3>Usuarios Sintéticos</h3>
+            <div class="tech-name">usuarios-sinteticos</div>
+          </div>
+          <span class="badge badge-dev">En desarrollo</span>
+        </div>
+        <p class="description">Genera perfiles de usuario sintéticos basados en data cuantitativa con rango de severidad para testing y validación.</p>
+        <div class="meta">
+          <span>&#128100; Cami Bascur (Jumbo)</span>
+          <span>&#127988; Transversal (futuro)</span>
+          <span>v0.3</span>
+          <span>Skill</span>
+        </div>
+        <div class="actions">
+          <button class="btn btn-ghost" disabled style="opacity:0.5;">Próximamente</button>
+          <button class="btn btn-ghost">Ver roadmap</button>
+        </div>
+      </div>
+
+      <!-- Skill 4 -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div>
+            <h3>Asistente Figma + Contenido</h3>
+            <div class="tech-name">figma-content-assistant</div>
+          </div>
+          <span class="badge badge-rev">En revisión</span>
+        </div>
+        <p class="description">Asistente de Figma con skill de contenido integrado para mantener coherencia de copy en flujos.</p>
+        <div class="meta">
+          <span>&#128100; Cami Bascur + Day</span>
+          <span>&#127988; Jumbo</span>
+          <span>v0.5</span>
+          <span>Skill</span>
+        </div>
+        <div class="actions">
+          <button class="btn btn-ghost">Ver detalle</button>
+        </div>
+      </div>
+
+      <!-- Skill 5 -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div>
+            <h3>CIAM Ecosistema de procesos</h3>
+            <div class="tech-name">ciam-ecosystem</div>
+          </div>
+          <span class="badge badge-dev">En desarrollo</span>
+        </div>
+        <p class="description">Estructura en Claude Code para el ecosistema de procesos de trabajo de CIAM.</p>
+        <div class="meta">
+          <span>&#128100; Bea</span>
+          <span>&#127988; Transversal</span>
+          <span>v0.1</span>
+          <span>Agente</span>
+        </div>
+        <div class="actions">
+          <button class="btn btn-ghost" disabled style="opacity:0.5;">Próximamente</button>
+        </div>
+      </div>
+
+      <!-- Skill 6 -->
+      <div class="skill-card">
+        <div class="skill-card-header">
+          <div>
+            <h3>Agente Figma Contenido</h3>
+            <div class="tech-name">figma-content-agent</div>
+          </div>
+          <span class="badge badge-wip">WIP</span>
+        </div>
+        <p class="description">Agente dentro de Figma a nivel de contenido. Revisión pendiente para Easy, WL y Paris.</p>
+        <div class="meta">
+          <span>&#128100; Day + Peti (Cami gestiona)</span>
+          <span>&#127988; Multi-bandera</span>
+          <span>WIP</span>
+          <span>Agente</span>
+        </div>
+        <div class="actions">
+          <button class="btn btn-ghost">Ver roadmap</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FORMACIÓN ==================== -->
+<div id="formacion" class="section">
+  <div class="container">
+    <div class="hero">
+      <h1>Formación & capacitación</h1>
+      <p>Ruta de aprendizaje progresiva para que todo el Chapter UX trabaje con IA de forma unificada.</p>
+    </div>
+
+    <h2 style="font-size: 18px; font-weight: 600; margin-bottom: 16px;">Ruta de aprendizaje — Academia IA UX</h2>
+    <div class="learning-path">
+      <div class="path-card" style="border-top: 3px solid var(--teal);">
+        <div class="level" style="color: var(--teal);">Nivel 1</div>
+        <h3>Básico</h3>
+        <p>Fundamentos de IA para Product Design</p>
+        <div class="topics">
+          <div class="topic">Glosario de términos IA</div>
+          <div class="topic">Qué es Claude y sus entornos</div>
+          <div class="topic">Cómo promptear correctamente</div>
+          <div class="topic">Buenas prácticas de uso</div>
+          <div class="topic">Errores comunes a evitar</div>
+        </div>
+      </div>
+      <div class="path-arrow">&#8594;</div>
+      <div class="path-card" style="border-top: 3px solid var(--amber);">
+        <div class="level" style="color: var(--amber);">Nivel 2</div>
+        <h3>Intermedio</h3>
+        <p>Skills y conexiones</p>
+        <div class="topics">
+          <div class="topic">Instalar y usar skills</div>
+          <div class="topic">Conectar MCPs (Figma, Jira)</div>
+          <div class="topic">Usar Figma Make con Prisma</div>
+          <div class="topic">Procesos agénticos básicos</div>
+          <div class="topic">Crear tu primera skill</div>
+        </div>
+      </div>
+      <div class="path-arrow">&#8594;</div>
+      <div class="path-card" style="border-top: 3px solid var(--accent);">
+        <div class="level" style="color: var(--accent);">Nivel 3</div>
+        <h3>Avanzado</h3>
+        <p>Plugins, agentes y contribución</p>
+        <div class="topics">
+          <div class="topic">Crear plugins reutilizables</div>
+          <div class="topic">Diseñar procesos agénticos</div>
+          <div class="topic">Contribuir al catálogo del HUB</div>
+          <div class="topic">Quality Gate y estándares</div>
+          <div class="topic">Agentes especializados</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px;">Videos de capacitación</h2>
+    <div class="videos-grid">
+      <div class="video-card">
+        <div class="video-thumb">&#9654;</div>
+        <div class="video-info">
+          <h4>Introducción a Claude para UX</h4>
+          <p>Fundamentos, entornos y primeros pasos con prompting.</p>
+          <div class="video-meta">45 min &middot; SharePoint &middot; Ago 2026</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">&#9654;</div>
+        <div class="video-info">
+          <h4>Conectar Figma MCP con Claude Code</h4>
+          <p>Paso a paso para configurar el MCP de Figma y empezar a trabajar.</p>
+          <div class="video-meta">30 min &middot; Teams &middot; Ago 2026</div>
+        </div>
+      </div>
+      <div class="video-card">
+        <div class="video-thumb">&#9654;</div>
+        <div class="video-info">
+          <h4>Discovery Agéntico: Demo completa</h4>
+          <p>Recorrido S1 a S6 + DS1 a DS3 con caso real.</p>
+          <div class="video-meta">60 min &middot; Teams &middot; Jul 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <h2 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px;">Glosario IA para Product Design</h2>
+    <p style="font-size: 13px; color: var(--text-2); margin-bottom: 16px;">Conceptos clave de IA explicados para el Chapter UX.</p>
+    <div class="glossary-list">
+      <div class="glossary-item">
+        <h4>Prompt <span class="cat" style="background: var(--accent-light); color: var(--accent-text);">Fundamento</span></h4>
+        <p>La instrucción o solicitud que le entregas a Claude. Puede incluir contexto, objetivo, restricciones, fuentes y formato esperado.</p>
+        <div class="example">Ejemplo: "Revisa esta pantalla sin modificarla. Evalúa jerarquía, accesibilidad y casos borde."</div>
+      </div>
+      <div class="glossary-item">
+        <h4>Skill <span class="cat" style="background: var(--teal-light); color: var(--teal-text);">Creación</span></h4>
+        <p>Paquete de instrucciones reutilizables que especializa a Claude en una tarea. Incluye un archivo SKILL.md y puede contener referencias o scripts.</p>
+        <div class="example">Ejemplo: Una skill que audita pantallas con el mismo checklist de UX y Design System.</div>
+      </div>
+      <div class="glossary-item">
+        <h4>Plugin <span class="cat" style="background: var(--blue-light); color: var(--blue-text);">Integración</span></h4>
+        <p>Paquete reutilizable que amplía lo que Claude puede hacer. Reúne skills, agentes, comandos, hooks y conexiones MCP en una sola instalación.</p>
+        <div class="example">Ejemplo: El plugin Discovery Agéntico incluye 6 skills del proceso S1-S6.</div>
+      </div>
+      <div class="glossary-item">
+        <h4>MCP <span class="cat" style="background: var(--blue-light); color: var(--blue-text);">Integración</span></h4>
+        <p>Model Context Protocol: estándar abierto que conecta Claude con herramientas, bases de datos y servicios externos.</p>
+        <div class="example">Ejemplo: Un servidor MCP de Figma expone herramientas para leer el archivo de diseño desde Claude.</div>
+      </div>
+      <div class="glossary-item">
+        <h4>Quality Gate <span class="cat" style="background: var(--pink-light); color: var(--pink-text);">Prisma</span></h4>
+        <p>Evaluación de calidad de diseño que mide 6 dimensiones con scoring de 100 puntos antes de entregar pantallas.</p>
+        <div class="example">Ejemplo: Pasar el quality gate antes de hacer handoff para asegurar estándares Prisma.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PROCESOS ==================== -->
+<div id="procesos" class="section">
+  <div class="container">
+    <div class="hero">
+      <h1>Procesos agénticos</h1>
+      <p>Flujos de trabajo estandarizados que combinan skills, plugins y agentes para resolver problemas de diseño end-to-end.</p>
+    </div>
+
+    <div class="process-card" style="border-left: 4px solid var(--accent);">
+      <h3>Discovery Agéntico (S1 → S6)</h3>
+      <p class="process-desc">Proceso completo de discovery de producto: desde la estrategia hasta el Product Design Requirements.</p>
+      <div class="process-steps">
+        <span class="process-step">S1 Estrategia</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step">S2 Mercado</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step">S3 Usuarios</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step">S4 Journey</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step">S5 Negocio</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step">S6 PDR</span>
+      </div>
+      <div class="meta" style="margin-top: 16px;">
+        <span>Plugin: discovery-agentico</span>
+        <span>Owner: Equipo WL</span>
+        <span>Transversal</span>
+      </div>
+      <div class="actions" style="margin-top: 12px;">
+        <button class="btn btn-primary">Ver flujo completo</button>
+        <button class="btn btn-ghost">Instalar plugin</button>
+      </div>
+    </div>
+
+    <div class="process-card" style="border-left: 4px solid var(--coral);">
+      <h3>Diseño Agéntico (DS1 → DS3)</h3>
+      <p class="process-desc">Del PDR a las pantallas: wireframes, generación de diseño y design directions con 3 opciones.</p>
+      <div class="process-steps">
+        <span class="process-step" style="background: var(--coral-light); color: var(--coral-text);">DS1 Wireframe</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step" style="background: var(--coral-light); color: var(--coral-text);">DS2 Generador</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step" style="background: var(--coral-light); color: var(--coral-text);">DS3 Directions</span>
+      </div>
+      <div class="meta" style="margin-top: 16px;">
+        <span>Plugin: discovery-agentico</span>
+        <span>Requiere: PDR completado (S6)</span>
+      </div>
+      <div class="actions" style="margin-top: 12px;">
+        <button class="btn btn-primary">Ver flujo completo</button>
+      </div>
+    </div>
+
+    <div class="process-card" style="border-left: 4px solid var(--pink);">
+      <h3>Prisma Designer (DS3 → Figma)</h3>
+      <p class="process-desc">Convierte el output DS3 en pantallas reales en Figma usando el sistema de diseño Prisma.</p>
+      <div class="process-steps">
+        <span class="process-step" style="background: var(--pink-light); color: var(--pink-text);">DS3 JSON</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step" style="background: var(--pink-light); color: var(--pink-text);">Validar</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step" style="background: var(--pink-light); color: var(--pink-text);">Crear pantallas</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step" style="background: var(--pink-light); color: var(--pink-text);">Quality Gate</span>
+      </div>
+      <div class="meta" style="margin-top: 16px;">
+        <span>Plugin: prisma-designer</span>
+        <span>Requiere: Figma MCP + Prisma MCP</span>
+      </div>
+      <div class="actions" style="margin-top: 12px;">
+        <button class="btn btn-primary">Ver flujo completo</button>
+        <button class="btn btn-ghost">Instalar plugin</button>
+      </div>
+    </div>
+
+    <div class="process-card" style="border-left: 4px solid var(--text-3);">
+      <h3>Procesos por bandera</h3>
+      <p class="process-desc">Skills y flujos específicos de cada bandera con potencial de transversalización.</p>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px;">
+        <div style="background: var(--surface-alt); padding: 16px; border-radius: var(--radius-sm);">
+          <div style="font-size: 14px; font-weight: 600;">Easy</div>
+          <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">1:1 Skill (Syl)</div>
+          <div style="font-size: 11px; color: var(--text-3); margin-top: 2px;">Por validar</div>
+        </div>
+        <div style="background: var(--surface-alt); padding: 16px; border-radius: var(--radius-sm);">
+          <div style="font-size: 14px; font-weight: 600;">Jumbo</div>
+          <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">Usuarios Sintéticos + Contenido</div>
+          <div style="font-size: 11px; color: var(--text-3); margin-top: 2px;">En desarrollo</div>
+        </div>
+        <div style="background: var(--surface-alt); padding: 16px; border-radius: var(--radius-sm);">
+          <div style="font-size: 14px; font-weight: 600;">Marketplace</div>
+          <div style="font-size: 12px; color: var(--text-2); margin-top: 4px;">Flujos + CES + Analytics (Mari)</div>
+          <div style="font-size: 11px; color: var(--text-3); margin-top: 2px;">Por validar</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== PRISMA & IA ==================== -->
+<div id="prisma" class="section">
+  <div class="container">
+    <div class="hero">
+      <h1>Prisma & IA</h1>
+      <p>Cómo el sistema de diseño unificado PRISMA trabaja con las herramientas de inteligencia artificial del Chapter.</p>
+    </div>
+
+    <div class="prisma-grid">
+      <div class="prisma-card">
+        <div class="icon-box" style="background: var(--pink-light); color: var(--pink);">&#9670;</div>
+        <h3>Qué es Prisma</h3>
+        <p>Sistema de diseño unificado de experiencia para las 14 banderas de Cencosud en el continente americano. Tokens, componentes, patrones y guidelines en un solo lugar.</p>
+      </div>
+      <div class="prisma-card">
+        <div class="icon-box" style="background: var(--accent-light); color: var(--accent);">&#9881;</div>
+        <h3>Prisma + Claude</h3>
+        <p>Claude accede al catálogo de componentes Prisma via MCP, resuelve componentes por descripción natural y valida diseños contra las design rules.</p>
+      </div>
+      <div class="prisma-card">
+        <div class="icon-box" style="background: var(--blue-light); color: var(--blue);">&#8644;</div>
+        <h3>Prisma MCP</h3>
+        <p>Servidor MCP que expone el catálogo de componentes, permite sync desde Figma, validación de DS3 JSON y creación de pantallas directamente.</p>
+      </div>
+      <div class="prisma-card">
+        <div class="icon-box" style="background: var(--teal-light); color: var(--teal);">&#10003;</div>
+        <h3>Quality Gate</h3>
+        <p>Evaluación de 6 dimensiones con scoring de 100 puntos. Verifica consistencia, accesibilidad, tokens, responsive y adherencia al DS.</p>
+      </div>
+      <div class="prisma-card">
+        <div class="icon-box" style="background: var(--amber-light); color: var(--amber);">&#9733;</div>
+        <h3>Prisma Designer Plugin</h3>
+        <p>Plugin completo: sync librería, resolver componentes, validar DS3, crear pantallas en Figma y quality gate. Todo desde Cowork o Claude Code.</p>
+      </div>
+      <div class="prisma-card">
+        <div class="icon-box" style="background: var(--coral-light); color: var(--coral);">&#9998;</div>
+        <h3>Flujo DS3 → Figma</h3>
+        <p>Desde el JSON de design directions hasta pantallas reales en Figma: validar → crear → revisar calidad. Reducción de 80% en tiempo de construcción.</p>
+      </div>
+    </div>
+
+    <h2 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px;">Flujo Prisma con IA</h2>
+    <div class="process-card" style="border-left: 4px solid var(--pink);">
+      <div class="process-steps">
+        <span class="process-step" style="background: var(--pink-light); color: var(--pink-text);">Sync Prisma</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step" style="background: var(--pink-light); color: var(--pink-text);">DS3 JSON</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step" style="background: var(--pink-light); color: var(--pink-text);">Validar JSON</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step" style="background: var(--pink-light); color: var(--pink-text);">Resolver componentes</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step" style="background: var(--pink-light); color: var(--pink-text);">Crear en Figma</span>
+        <span class="process-arrow">&#8594;</span>
+        <span class="process-step" style="background: var(--pink-light); color: var(--pink-text);">Quality Gate</span>
+      </div>
+      <div class="meta" style="margin-top: 16px;">
+        <span>Requiere: prisma-mcp + figma MCP</span>
+        <span>Plugin: prisma-designer</span>
+      </div>
+    </div>
+
+    <h2 style="font-size: 18px; font-weight: 600; margin: 32px 0 16px;">Guías de conexión</h2>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+      <div class="skill-card">
+        <h3 style="font-size: 14px;">Conectar Figma MCP</h3>
+        <p class="description">Paso a paso para instalar y configurar el MCP de Figma con Claude Code.</p>
+        <button class="btn btn-ghost" style="margin-top: 8px;">Ver guía</button>
+      </div>
+      <div class="skill-card">
+        <h3 style="font-size: 14px;">Conectar Prisma MCP</h3>
+        <p class="description">Configurar el servidor MCP de Prisma para acceder al catálogo de componentes.</p>
+        <button class="btn btn-ghost" style="margin-top: 8px;">Ver guía</button>
+      </div>
+      <div class="skill-card">
+        <h3 style="font-size: 14px;">Instalar Prisma Designer</h3>
+        <p class="description">Instalar el plugin completo de Prisma Designer en Cowork.</p>
+        <button class="btn btn-ghost" style="margin-top: 8px;">Ver guía</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  const links = document.querySelectorAll('.nav-links a');
+  const map = { inicio: 0, catalogo: 1, formacion: 2, procesos: 3, prisma: 4 };
+  if (map[id] !== undefined) links[map[id]].classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    if (this.parentElement.querySelector('.filter-label')) {
+      const siblings = [];
+      let sib = this.previousElementSibling;
+      while (sib && !sib.classList.contains('filter-label')) {
+        if (sib.classList.contains('filter-btn')) siblings.push(sib);
+        sib = sib.previousElementSibling;
+      }
+      sib = this.nextElementSibling;
+      while (sib && !sib.classList.contains('filter-label') && sib.tagName !== 'SPAN') {
+        if (sib.classList.contains('filter-btn')) siblings.push(sib);
+        sib = sib.nextElementSibling;
+      }
+      siblings.forEach(s => s.classList.remove('active'));
+    }
+    this.classList.toggle('active');
+  });
+});
+</script>
+</body>
+</html>
