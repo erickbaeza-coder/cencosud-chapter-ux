@@ -732,11 +732,26 @@ function applyFilters() {
 
 // ── Install: copia comando al clipboard ──
 function installSkill(slug) {
+  // Check if there's a downloadable .skill package
+  const downloadMap = {
+    'discovery-agentico': 'downloads/discovery-agentico.skill',
+    'prisma-designer': 'downloads/prisma-designer.skill'
+  };
+  if (downloadMap[slug]) {
+    const a = document.createElement('a');
+    a.href = downloadMap[slug];
+    a.download = slug + '.skill';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    showToast(`Descargando ${slug}.skill...`);
+    return;
+  }
+  // Fallback: copy install command for skills without package
   const cmd = `claude plugin install ${slug}`;
   navigator.clipboard.writeText(cmd).then(() => {
     showToast(`Comando copiado: ${cmd}`);
   }).catch(() => {
-    // Fallback
     prompt('Copia este comando y pégalo en tu terminal:', cmd);
   });
 }
