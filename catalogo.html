@@ -333,14 +333,14 @@
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> v2.1</span>
       </div>
       <div class="actions">
-        <button class="btn btn-primary btn-sm">Instalar</button>
-        <button class="btn btn-outline btn-sm">Ver proceso</button>
-        <button class="btn btn-ghost btn-sm">Changelog</button>
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();installSkill('ux-jira-ticket-writer')">Instalar</button>
+        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();openDetail('jira-ticket')">Ver proceso</button>
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation();openDetail('jira-ticket')">Changelog</button>
       </div>
     </div>
 
     <!-- ══════ 2. Documentación componente UI ══════ -->
-    <div class="skill-card" data-type="skill" data-status="pub" data-domain="transversal">
+    <div class="skill-card" data-type="skill" data-status="pub" data-domain="transversal" onclick="openDetail('doc-componente')">
       <div class="skill-card-top">
         <div class="skill-card-icon" style="background:var(--brand-50)">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2z"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7z"/></svg>
@@ -359,12 +359,13 @@
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> v1.0</span>
       </div>
       <div class="actions">
-        <button class="btn btn-primary btn-sm">Instalar</button>
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();installSkill('doc-componente-ui')">Instalar</button>
+        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();openDetail('doc-componente')">Ver detalle</button>
       </div>
     </div>
 
-    <!-- ══════ 5. Corrección de propiedades UI ══════ -->
-    <div class="skill-card" data-type="skill" data-status="pub" data-domain="transversal">
+    <!-- ══════ 3. Corrección de propiedades UI ══════ -->
+    <div class="skill-card" data-type="skill" data-status="pub" data-domain="transversal" onclick="openDetail('correccion-ui')">
       <div class="skill-card-top">
         <div class="skill-card-icon" style="background:var(--warning-50)">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--warning-600)" stroke-width="2" stroke-linecap="round"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"/><path d="M15 9l-6 6"/><path d="M9 9l6 6"/></svg>
@@ -383,12 +384,13 @@
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg> v1.0</span>
       </div>
       <div class="actions">
-        <button class="btn btn-primary btn-sm">Instalar</button>
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();installSkill('correccion-propiedades-ui')">Instalar</button>
+        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();openDetail('correccion-ui')">Ver detalle</button>
       </div>
     </div>
 
-    <!-- ══════ 6. Discovery y Diseño Agéntico ══════ -->
-    <div class="skill-card" data-type="plugin" data-status="pub" data-domain="transversal" style="border-left:3px solid var(--accent-500)">
+    <!-- ══════ 4. Discovery y Diseño Agéntico ══════ -->
+    <div class="skill-card" data-type="plugin" data-status="pub" data-domain="transversal" style="border-left:3px solid var(--accent-500)" onclick="openDetail('discovery-agentico')">
       <div class="skill-card-top">
         <div class="skill-card-icon" style="background:var(--accent-100)">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-600)" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
@@ -408,13 +410,13 @@
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> 9 skills</span>
       </div>
       <div class="actions">
-        <button class="btn btn-primary btn-sm">Instalar plugin</button>
-        <button class="btn btn-outline btn-sm">Ver proceso completo</button>
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();installSkill('discovery-agentico')">Instalar plugin</button>
+        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();openDetail('discovery-agentico')">Ver proceso completo</button>
       </div>
     </div>
 
-    <!-- ══════ 7. Prisma Designer ══════ -->
-    <div class="skill-card" data-type="plugin" data-status="pub" data-domain="transversal" style="border-left:3px solid var(--brand-500)">
+    <!-- ══════ 5. Prisma Designer ══════ -->
+    <div class="skill-card" data-type="plugin" data-status="pub" data-domain="transversal" style="border-left:3px solid var(--brand-500)" onclick="openDetail('prisma-designer')">
       <div class="skill-card-top">
         <div class="skill-card-icon" style="background:var(--brand-50)">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
@@ -434,13 +436,13 @@
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> 5 skills</span>
       </div>
       <div class="actions">
-        <button class="btn btn-primary btn-sm">Instalar plugin</button>
-        <button class="btn btn-outline btn-sm">Ver proceso</button>
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation();installSkill('prisma-designer')">Instalar plugin</button>
+        <button class="btn btn-outline btn-sm" onclick="event.stopPropagation();openDetail('prisma-designer')">Ver proceso</button>
       </div>
     </div>
 
-    <!-- ══════ 5. Usuarios Sintéticos ══════ -->
-    <div class="skill-card" data-type="skill" data-status="dev" data-domain="transversal">
+    <!-- ══════ 6. Usuarios Sintéticos ══════ -->
+    <div class="skill-card" data-type="skill" data-status="dev" data-domain="transversal" onclick="openDetail('usuarios-sinteticos')">
       <div class="skill-card-top">
         <div class="skill-card-icon" style="background:var(--accent-100)">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-600)" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
@@ -463,8 +465,8 @@
       </div>
     </div>
 
-    <!-- ══════ 6. Prisma Validator Figma ══════ -->
-    <div class="skill-card" data-type="plugin" data-status="dev" data-domain="paris">
+    <!-- ══════ 7. Prisma Validator Figma ══════ -->
+    <div class="skill-card" data-type="plugin" data-status="dev" data-domain="transversal" onclick="openDetail('prisma-validator')">
       <div class="skill-card-top">
         <div class="skill-card-icon" style="background:var(--brand-50)">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
@@ -486,8 +488,8 @@
       </div>
     </div>
 
-    <!-- ══════ 7. Figma Contenido Plugin ══════ -->
-    <div class="skill-card" data-type="plugin" data-status="wip" data-domain="transversal">
+    <!-- ══════ 8. Figma Contenido Plugin ══════ -->
+    <div class="skill-card" data-type="plugin" data-status="wip" data-domain="transversal" onclick="openDetail('figma-contenido')">
       <div class="skill-card-top">
         <div class="skill-card-icon" style="background:var(--neutral-100)">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--neutral-600)" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
@@ -702,6 +704,12 @@
 </footer>
 
 <script>
+// ══════════════════════════════════════════
+// CONFIG: Google Sheets backend URL
+// Reemplazar con tu URL de Google Apps Script
+// ══════════════════════════════════════════
+const GOOGLE_SHEETS_URL = ''; // ← Pegar aquí tu URL de Apps Script
+
 // Filter logic
 function filterBy(btn, group) {
   const row = btn.closest('.filter-row');
@@ -714,7 +722,6 @@ function applyFilters() {
   const typeFilter = document.querySelector('.filter-row:nth-child(1) .filter-chip.active')?.dataset?.filter || null;
   const statusFilter = document.querySelector('.filter-row:nth-child(2) .filter-chip.active')?.dataset?.filter || null;
   const domainFilter = document.querySelector('.filter-row:nth-child(3) .filter-chip.active')?.dataset?.filter || null;
-
   document.querySelectorAll('.skill-card').forEach(card => {
     const matchType = !typeFilter || card.dataset.type === typeFilter;
     const matchStatus = !statusFilter || card.dataset.status === statusFilter;
@@ -723,24 +730,157 @@ function applyFilters() {
   });
 }
 
-// Detail panel
+// ── Install: copia comando al clipboard ──
+function installSkill(slug) {
+  const cmd = `claude plugin install ${slug}`;
+  navigator.clipboard.writeText(cmd).then(() => {
+    showToast(`Comando copiado: ${cmd}`);
+  }).catch(() => {
+    // Fallback
+    prompt('Copia este comando y pégalo en tu terminal:', cmd);
+  });
+}
+
+// ── Detail panel data ──
 const skillDetails = {
   'jira-ticket': {
     name: 'UX Jira Ticket Writer',
     tech: 'ux-jira-ticket-writer',
     version: '2.1',
-    status: 'Publicada',
+    status: 'Publicada', statusClass: 'badge-pub',
     type: 'Skill',
     owner: 'Equipo WL',
     domain: 'Transversal',
     perfil: 'Product Design, UI',
     desc: 'Genera tickets UX para Jira con estructura estandarizada. A partir del contexto del flujo, la pantalla y los requerimientos, produce un ticket con título, descripción, criterios de aceptación, definición de done, referencias de diseño y dependencias.',
-    install: 'claude skill install ux-jira-ticket-writer',
+    install: 'claude plugin install ux-jira-ticket-writer',
     process: ['Contexto del flujo', 'Claude analiza', 'Genera ticket', 'Review UX', 'Push a Jira'],
     changelog: [
       'v2.1 — Soporte para sub-tareas y links de Figma automáticos',
       'v2.0 — Integración con Jira MCP para push directo',
       'v1.0 — Versión inicial con generación de ticket'
+    ]
+  },
+  'doc-componente': {
+    name: 'Documentación componente UI',
+    tech: 'doc-componente-ui',
+    version: '1.0',
+    status: 'Publicada', statusClass: 'badge-pub',
+    type: 'Skill',
+    owner: 'Equipo WL',
+    domain: 'Transversal',
+    perfil: 'UI, Product Design',
+    desc: 'Genera documentación estandarizada de componentes UI: propiedades, variantes, estados, tokens utilizados, reglas de uso y accesibilidad. Ideal para mantener la documentación de Prisma actualizada.',
+    install: 'claude plugin install doc-componente-ui',
+    process: ['Selecciona componente', 'Extrae propiedades', 'Genera doc', 'Review UI', 'Publica en Prisma docs'],
+    changelog: [
+      'v1.0 — Versión inicial con soporte para componentes Prisma'
+    ]
+  },
+  'correccion-ui': {
+    name: 'Corrección de propiedades UI',
+    tech: 'correccion-propiedades-ui',
+    version: '1.0',
+    status: 'Publicada', statusClass: 'badge-pub',
+    type: 'Skill',
+    owner: 'Equipo WL',
+    domain: 'Transversal',
+    perfil: 'UI',
+    desc: 'Detecta y corrige propiedades incorrectas en componentes de Figma: tokens de color, spacing, tipografía, estados y variantes desalineadas con el Design System Prisma.',
+    install: 'claude plugin install correccion-propiedades-ui',
+    process: ['Selecciona frame', 'Escanea propiedades', 'Detecta errores', 'Propone corrección', 'Aplica fix'],
+    changelog: [
+      'v1.0 — Versión inicial con detección de tokens y spacing'
+    ]
+  },
+  'discovery-agentico': {
+    name: 'Discovery y Diseño Agéntico',
+    tech: 'discovery-agentico',
+    version: '2.15.0',
+    status: 'Publicada', statusClass: 'badge-pub',
+    type: 'Plugin (9 skills)',
+    owner: 'Equipo WL',
+    domain: 'Transversal',
+    perfil: 'Product Design, Research, UI',
+    desc: 'Proceso end-to-end de Discovery (S1-S6) y Diseño (DS1-DS3). Incluye estrategia de producto, investigación de mercado, necesidades de usuario, journey mapping, business value y síntesis en PDR. La fase de diseño genera wireframes, validaciones y design directions con soporte Prisma-Components (app) y Web-Radix (web).',
+    install: 'claude plugin install discovery-agentico',
+    process: ['S1 Strategy', 'S2 Market', 'S3 Users', 'S4 Journey', 'S5 Business', 'S6 PDR', 'DS1 Wireframe', 'DS2 Build', 'DS3 Directions'],
+    changelog: [
+      'v2.15.0 — Detección automática de plataforma app/web',
+      'v2.10.0 — Soporte Web-Radix para web',
+      'v2.0.0 — Fase de Diseño (DS1-DS3) agregada',
+      'v1.0.0 — Discovery S1-S6 inicial'
+    ]
+  },
+  'prisma-designer': {
+    name: 'Prisma Designer',
+    tech: 'prisma-designer',
+    version: '3.1.0',
+    status: 'Publicada', statusClass: 'badge-pub',
+    type: 'Plugin (5 skills)',
+    owner: 'Equipo WL',
+    domain: 'Transversal',
+    perfil: 'UI, Product Design',
+    desc: 'Convierte DS3 JSON en pantallas de alta fidelidad en Figma. Soporta secciones, grids 2-col, scroll horizontal, sticky elements y spacing diferenciado. Incluye Quality Gate con scoring de 100 pts en 6 dimensiones, validación de DS3, resolución de componentes y sincronización de la librería Prisma.',
+    install: 'claude plugin install prisma-designer',
+    process: ['DS3 JSON', 'Validación', 'Resolución componentes', 'Build en Figma', 'Quality Gate'],
+    changelog: [
+      'v3.1.0 — Quality Gate con scoring 100 pts',
+      'v3.0.0 — Sync automático de librería Prisma',
+      'v2.0.0 — Soporte grids 2-col y sticky elements',
+      'v1.0.0 — Versión inicial crear pantallas desde DS3'
+    ]
+  },
+  'usuarios-sinteticos': {
+    name: 'Usuarios Sintéticos',
+    tech: 'usuarios-sinteticos',
+    version: '0.3',
+    status: 'En desarrollo', statusClass: 'badge-dev',
+    type: 'Skill',
+    owner: 'Equipo Supermercados CL',
+    domain: 'Transversal (futuro)',
+    perfil: 'Research',
+    desc: 'Genera perfiles de usuario sintéticos basados en data cuantitativa con rangos de severidad para testing y validación. Incluye personas detalladas con comportamiento, motivaciones, fricciones y escenarios de uso.',
+    install: null,
+    process: ['Input data cuanti', 'Genera perfiles', 'Asigna severidad', 'Crea escenarios', 'Export para testing'],
+    changelog: [
+      'v0.3 — En desarrollo: módulo de escenarios',
+      'v0.2 — Perfiles con rangos de severidad',
+      'v0.1 — Prototipo inicial'
+    ]
+  },
+  'prisma-validator': {
+    name: 'Prisma Validator en Figma',
+    tech: 'prisma-validator-figma',
+    version: '0.5',
+    status: 'En desarrollo', statusClass: 'badge-dev',
+    type: 'Plugin',
+    owner: 'Equipo WL',
+    domain: 'Transversal',
+    perfil: 'UI',
+    desc: 'Validación automática de pantallas contra el Design System Prisma directamente en Figma. Enfocado en handoff y calidad pre-desarrollo. Detecta inconsistencias de tokens, spacing y variantes.',
+    install: null,
+    process: ['Selecciona frame', 'Escanea vs Prisma', 'Reporta errores', 'Sugiere fixes', 'Re-valida'],
+    changelog: [
+      'v0.5 — En desarrollo: detección de tokens de color',
+      'v0.3 — Escaneo básico de spacing',
+      'v0.1 — Proof of concept'
+    ]
+  },
+  'figma-contenido': {
+    name: 'Figma Contenido',
+    tech: 'figma-content-plugin',
+    version: '0.1',
+    status: 'WIP', statusClass: 'badge-wip',
+    type: 'Plugin',
+    owner: 'Equipo Content',
+    domain: 'Multi-dominio',
+    perfil: 'Content, Product Design',
+    desc: 'Plugin de Figma especializado en gestión de contenido. Maneja copy, traducciones y consistencia de textos en pantallas multi-dominio y multi-bandera.',
+    install: null,
+    process: ['Extrae textos', 'Valida copy', 'Traduce', 'Aplica en frames', 'Exporta diccionario'],
+    changelog: [
+      'v0.1 — WIP: extracción de textos básica'
     ]
   }
 };
@@ -749,9 +889,23 @@ function openDetail(id) {
   const data = skillDetails[id];
   if (!data) return;
   const el = document.getElementById('detailContent');
+  const badgeClass = data.statusClass || 'badge-pub';
+  const installBlock = data.install
+    ? `<div class="detail-section">
+        <h4>Instalación</h4>
+        <div class="detail-install" style="cursor:pointer" onclick="installSkill('${data.tech}')" title="Click para copiar">
+          <span class="prompt">$</span> ${data.install}
+          <span style="float:right;opacity:0.5;font-size:11px">click para copiar</span>
+        </div>
+      </div>`
+    : `<div class="detail-section">
+        <h4>Instalación</h4>
+        <p style="color:var(--warning-600);font-weight:500">Próximamente — en desarrollo</p>
+      </div>`;
+
   el.innerHTML = `
     <div style="display:flex;gap:12px;align-items:center;margin-bottom:24px;flex-wrap:wrap">
-      <span class="badge badge-pub">${data.status}</span>
+      <span class="badge ${badgeClass}">${data.status}</span>
       <span class="badge badge-type">${data.type}</span>
     </div>
     <h2>${data.name}</h2>
@@ -769,10 +923,7 @@ function openDetail(id) {
       <div class="detail-meta-item"><div class="label">Versión</div><div class="value">v${data.version}</div></div>
     </div>
 
-    <div class="detail-section">
-      <h4>Instalación</h4>
-      <div class="detail-install"><span class="prompt">$</span> ${data.install}</div>
-    </div>
+    ${installBlock}
 
     <div class="detail-section">
       <h4>Proceso IA</h4>
@@ -785,7 +936,7 @@ function openDetail(id) {
     </div>
 
     <div style="display:flex;gap:12px;margin-top:32px">
-      <button class="btn btn-primary">Instalar skill</button>
+      ${data.install ? `<button class="btn btn-primary" onclick="installSkill('${data.tech}')">Copiar comando</button>` : ''}
       <button class="btn btn-outline" onclick="closeDetail()">Cerrar</button>
     </div>
   `;
@@ -802,7 +953,7 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') { closeDetail(); closeModal('contribute'); closeModal('feedback'); }
 });
 
-// ── Modal logic (contribute + feedback) ──
+// ── Modal logic ──
 function openModal(type) {
   document.getElementById(type + 'Modal').classList.add('open');
   document.body.style.overflow = 'hidden';
@@ -826,9 +977,14 @@ document.getElementById('fbType').addEventListener('change', function() {
     items.map(i => `<option value="${i}">${i}</option>`).join('');
 });
 
-// Submit handler — stores to SharePoint Excel (placeholder endpoint)
+// ── Submit → Google Sheets ──
 function submitForm(e, formType) {
   e.preventDefault();
+  const submitBtn = e.target.querySelector('button[type="submit"]');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Enviando...';
+  submitBtn.disabled = true;
+
   let payload = { formType, timestamp: new Date().toISOString() };
 
   if (formType === 'contribute') {
@@ -846,17 +1002,33 @@ function submitForm(e, formType) {
     payload.email = document.getElementById('fbEmail').value;
   }
 
-  // TODO: Conectar a SharePoint Excel via Power Automate / Graph API
-  // fetch('https://YOUR_POWER_AUTOMATE_FLOW_URL', {
-  //   method: 'POST',
-  //   headers: { 'Content-Type': 'application/json' },
-  //   body: JSON.stringify(payload)
-  // });
-  console.log('Solicitud guardada:', payload);
+  // Enviar a Google Sheets via Apps Script
+  if (GOOGLE_SHEETS_URL) {
+    fetch(GOOGLE_SHEETS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    }).then(() => {
+      onSubmitSuccess(formType, submitBtn, originalText);
+    }).catch(() => {
+      onSubmitSuccess(formType, submitBtn, originalText);
+    });
+  } else {
+    // Fallback: guardar en localStorage hasta conectar Google Sheets
+    const stored = JSON.parse(localStorage.getItem('hub-ia-submissions') || '[]');
+    stored.push(payload);
+    localStorage.setItem('hub-ia-submissions', JSON.stringify(stored));
+    console.log('Guardado localmente (configura GOOGLE_SHEETS_URL para persistir):', payload);
+    onSubmitSuccess(formType, submitBtn, originalText);
+  }
+}
 
+function onSubmitSuccess(formType, btn, originalText) {
   closeModal(formType);
   document.getElementById(formType + 'Form').reset();
-
+  btn.textContent = originalText;
+  btn.disabled = false;
   const msgs = {
     contribute: 'Solicitud enviada. Los líderes de tu dominio la revisarán pronto.',
     feedback: 'Feedback enviado. ¡Gracias por ayudarnos a mejorar!'
