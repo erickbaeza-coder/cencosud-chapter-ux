@@ -49,12 +49,6 @@
   .nav-links a:hover{background:var(--neutral-100);color:var(--text-primary)}
   .nav-links a.active{background:var(--neutral-100);color:var(--text-primary);font-weight:600}
   .nav-right{margin-left:auto;display:flex;align-items:center;gap:var(--space-xl)}
-  .search-box{position:relative}
-  .search-box input{background:var(--neutral-100);border:1px solid transparent;border-radius:var(--radius-m);padding:7px var(--space-2xl) 7px 36px;font-size:13px;font-family:inherit;width:240px;color:var(--text-primary);outline:none;transition:all 0.15s}
-  .search-box input::placeholder{color:var(--text-muted)}
-  .search-box input:focus{background:var(--bg-card);border-color:var(--ring);box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
-  .search-box svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--text-muted);width:15px;height:15px}
-  .search-kbd{position:absolute;right:8px;top:50%;transform:translateY(-50%);background:var(--neutral-200);color:var(--text-muted);font-size:10px;font-weight:600;padding:1px 6px;border-radius:var(--radius-s);line-height:1.6}
   .container{max-width:1280px;margin:0 auto;padding:0 var(--space-5xl)}
 
   /* LAYOUT: sidebar + main */
@@ -214,13 +208,7 @@
       <a href="procesos.html">Procesos</a>
       <a href="prisma.html">Prisma & IA</a>
     </div>
-    <div class="nav-right">
-      <div class="search-box">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" placeholder="Buscar skills, guías, términos...">
-        <span class="search-kbd">/</span>
-      </div>
-    </div>
+    <div class="nav-right"></div>
     <button class="nav-hamburger" onclick="document.getElementById('mobile-menu').classList.toggle('open');this.querySelector('svg').innerHTML=document.getElementById('mobile-menu').classList.contains('open')?'<line x1=&quot;18&quot; y1=&quot;6&quot; x2=&quot;6&quot; y2=&quot;18&quot;/><line x1=&quot;6&quot; y1=&quot;6&quot; x2=&quot;18&quot; y2=&quot;18&quot;/>':'<line x1=&quot;3&quot; y1=&quot;12&quot; x2=&quot;21&quot; y2=&quot;12&quot;/><line x1=&quot;3&quot; y1=&quot;6&quot; x2=&quot;21&quot; y2=&quot;6&quot;/><line x1=&quot;3&quot; y1=&quot;18&quot; x2=&quot;21&quot; y2=&quot;18&quot;/>'">
       <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
     </button>
@@ -268,9 +256,9 @@
 <!-- STATS BAR -->
 <section class="section-id" id="catalogo-grid">
   <div class="stats-bar">
-    <div class="stat"><span class="num">8</span><span class="lbl">Total</span></div>
+    <div class="stat"><span class="num">11</span><span class="lbl">Total</span></div>
     <div class="divider"></div>
-    <div class="stat"><span class="num" style="color:var(--success-600)">5</span><span class="lbl">Publicadas</span></div>
+    <div class="stat"><span class="num" style="color:var(--success-600)">8</span><span class="lbl">Publicadas</span></div>
     <div class="divider"></div>
     <div class="stat"><span class="num" style="color:var(--warning-600)">2</span><span class="lbl">En desarrollo</span></div>
     <div class="divider"></div>
@@ -282,8 +270,8 @@
 <div class="filters-section">
     <div class="filter-row">
       <span class="filter-label">Tipo</span>
-      <button class="filter-chip active" onclick="filterBy(this,'type')">Todos <span class="count">8</span></button>
-      <button class="filter-chip" onclick="filterBy(this,'type')" data-filter="skill">Skills <span class="count">4</span></button>
+      <button class="filter-chip active" onclick="filterBy(this,'type')">Todos <span class="count">11</span></button>
+      <button class="filter-chip" onclick="filterBy(this,'type')" data-filter="skill">Skills <span class="count">7</span></button>
       <button class="filter-chip" onclick="filterBy(this,'type')" data-filter="plugin">Plugins <span class="count">4</span></button>
     </div>
     <div class="filter-row">
@@ -498,6 +486,81 @@
       </div>
       <div class="actions">
         <button class="btn btn-ghost btn-sm">Ver roadmap</button>
+      </div>
+    </div>
+
+    <!-- ══════ 9. Prisma Component Doc Canvas ══════ -->
+    <div class="skill-card" data-type="skill" data-status="pub" data-domain="transversal" onclick="openDetail('prisma-doc-canvas')">
+      <div class="skill-card-top">
+        <div class="skill-card-icon" style="background:var(--brand-50)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+        </div>
+        <div class="skill-card-badges">
+          <span class="badge badge-pub">Publicada</span>
+          <span class="badge badge-type">Skill</span>
+        </div>
+      </div>
+      <h3>Prisma Component Doc Canvas</h3>
+      <div class="tech-name">prisma-component-doc-canvas</div>
+      <p class="desc">Genera documentación visual en canvas de Figma para componentes Prisma. Estructura de 8 secciones con estilo Bento, dev handoff incluido.</p>
+      <div class="meta-row">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Equipo WL</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Transversal</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> v1.0</span>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); installSkill('prisma-component-doc-canvas')">Instalar</button>
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); openDetail('prisma-doc-canvas')">Ver detalle</button>
+      </div>
+    </div>
+
+    <!-- ══════ 10. UX Writer Copys Regionales ══════ -->
+    <div class="skill-card" data-type="skill" data-status="pub" data-domain="transversal" onclick="openDetail('ux-writer-copys')">
+      <div class="skill-card-top">
+        <div class="skill-card-icon" style="background:#FEF3C7">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+        </div>
+        <div class="skill-card-badges">
+          <span class="badge badge-pub">Publicada</span>
+          <span class="badge badge-type">Skill</span>
+        </div>
+      </div>
+      <h3>UX Writer Copys Regionales</h3>
+      <div class="tech-name">ux-writer-copys-regionales</div>
+      <p class="desc">UX Writer especializado en copys regionales de grocery. Consulta guías de Confluence, adapta por país (AR, CL, UY) y valida tono y terminología.</p>
+      <div class="meta-row">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Equipo WL</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Transversal</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> v1.0</span>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); installSkill('ux-writer-copys-regionales')">Instalar</button>
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); openDetail('ux-writer-copys')">Ver detalle</button>
+      </div>
+    </div>
+
+    <!-- ══════ 11. Prisma Component Property ══════ -->
+    <div class="skill-card" data-type="skill" data-status="pub" data-domain="transversal" onclick="openDetail('prisma-property')">
+      <div class="skill-card-top">
+        <div class="skill-card-icon" style="background:#E0E7FF">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round"><path d="M12 3v18"/><path d="M3 12h18"/><circle cx="12" cy="12" r="9"/></svg>
+        </div>
+        <div class="skill-card-badges">
+          <span class="badge badge-pub">Publicada</span>
+          <span class="badge badge-type">Skill</span>
+        </div>
+      </div>
+      <h3>Prisma Component Property</h3>
+      <div class="tech-name">prisma-component-property</div>
+      <p class="desc">Audita, corrige y normaliza Component Properties en Figma. Garantiza consistencia, naming estándar y compatibilidad con code connect.</p>
+      <div class="meta-row">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Equipo WL</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Transversal</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg> v1.0</span>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary btn-sm" onclick="event.stopPropagation(); installSkill('prisma-component-property')">Instalar</button>
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); openDetail('prisma-property')">Ver detalle</button>
       </div>
     </div>
 
@@ -725,7 +788,10 @@ function installSkill(slug) {
   // Check if there's a downloadable .skill package
   const downloadMap = {
     'discovery-agentico': 'downloads/discovery-agentico.skill',
-    'prisma-designer': 'downloads/prisma-designer.skill'
+    'prisma-designer': 'downloads/prisma-designer.skill',
+    'prisma-component-doc-canvas': 'downloads/prisma-component-doc-canvas.skill',
+    'ux-writer-copys-regionales': 'downloads/ux-writer-copys-regionales.skill',
+    'prisma-component-property': 'downloads/prisma-component-property.skill'
   };
   if (downloadMap[slug]) {
     const a = document.createElement('a');
@@ -886,6 +952,54 @@ const skillDetails = {
     process: ['Extrae textos', 'Valida copy', 'Traduce', 'Aplica en frames', 'Exporta diccionario'],
     changelog: [
       'v0.1 — WIP: extracción de textos básica'
+    ]
+  },
+  'prisma-doc-canvas': {
+    name: 'Prisma Component Doc Canvas',
+    tech: 'prisma-component-doc-canvas',
+    version: '1.0',
+    status: 'Publicada', statusClass: 'badge-pub',
+    type: 'Skill',
+    owner: 'Equipo WL',
+    domain: 'Transversal',
+    perfil: 'Product Design, UI',
+    desc: 'Genera documentación visual en canvas de Figma para componentes del Design System Prisma. Estructura confirmada de 8 secciones (Top_doc, Header, Overview, Anatomy, States, Properties+Usage, Interaction, Accessibility) con estilo Bento. Incluye tablas canónicas, dev handoff y validación visual con screenshots.',
+    install: 'claude plugin install prisma-component-doc-canvas',
+    process: ['Inspecciona componente', 'Lee propiedades reales', 'Crea Top_doc banner', 'Genera 8 secciones', 'Valida con screenshot', 'Entrega canvas'],
+    changelog: [
+      'v1.0 — Estructura final confirmada con 8 secciones canónicas'
+    ]
+  },
+  'ux-writer-copys': {
+    name: 'UX Writer Copys Regionales',
+    tech: 'ux-writer-copys-regionales',
+    version: '1.0',
+    status: 'Publicada', statusClass: 'badge-pub',
+    type: 'Skill',
+    owner: 'Equipo WL',
+    domain: 'Transversal',
+    perfil: 'Content, UX Writing, Product Design',
+    desc: 'UX Writer senior especializado en el ecosistema regional de apps de grocery. Consulta guías de tono y terminología en Confluence antes de opinar, detecta inconsistencias, adapta copys por país (Argentina, Chile, Uruguay y otros mercados LatAm), y valida consistencia terminológica entre módulos (grocery, loyalty, checkout, onboarding, etc.).',
+    install: 'claude plugin install ux-writer-copys-regionales',
+    process: ['Consulta guías Confluence', 'Detecta inconsistencias', 'Adapta por país', 'Justifica cambios', 'Valida terminología'],
+    changelog: [
+      'v1.0 — Integración con Confluence y glosario canónico regional'
+    ]
+  },
+  'prisma-property': {
+    name: 'Prisma Component Property',
+    tech: 'prisma-component-property',
+    version: '1.0',
+    status: 'Publicada', statusClass: 'badge-pub',
+    type: 'Skill',
+    owner: 'Equipo WL',
+    domain: 'Transversal',
+    perfil: 'Product Design, UI',
+    desc: 'Gobierna, audita y corrige Component Properties (VARIANT, BOOLEAN, INSTANCE_SWAP, TEXT) de componentes Prisma en Figma. Sigue un flujo de 10 pasos: inspeccionar, analizar, clasificar, detectar problemas, proponer cambios, evaluar riesgo, confirmar, ejecutar, verificar y reportar. Garantiza naming estándar, consistencia y compatibilidad con code connect.',
+    install: 'claude plugin install prisma-component-property',
+    process: ['Inspecciona componente', 'Analiza properties', 'Detecta problemas', 'Propone correcciones', 'Evalúa riesgo', 'Ejecuta y verifica'],
+    changelog: [
+      'v1.0 — Flujo completo de auditoría y corrección de properties'
     ]
   }
 };
