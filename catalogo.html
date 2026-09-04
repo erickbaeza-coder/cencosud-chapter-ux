@@ -258,9 +258,9 @@
   <div class="stats-bar">
     <div class="stat"><span class="num">9</span><span class="lbl">Total</span></div>
     <div class="divider"></div>
-    <div class="stat"><span class="num" style="color:var(--success-600)">6</span><span class="lbl">Publicadas</span></div>
+    <div class="stat"><span class="num" style="color:var(--success-600)">7</span><span class="lbl">Publicadas</span></div>
     <div class="divider"></div>
-    <div class="stat"><span class="num" style="color:var(--warning-600)">2</span><span class="lbl">En desarrollo</span></div>
+    <div class="stat"><span class="num" style="color:var(--warning-600)">1</span><span class="lbl">En desarrollo</span></div>
     <div class="divider"></div>
     <div class="stat"><span class="num" style="color:var(--neutral-500)">1</span><span class="lbl">WIP</span></div>
   </div>
@@ -395,13 +395,13 @@
     </div>
 
     <!-- ══════ 7. Prisma Validator Figma ══════ -->
-    <div class="skill-card" data-type="plugin" data-status="dev" data-domain="transversal" onclick="openDetail('prisma-validator')">
+    <div class="skill-card" data-type="plugin" data-status="pub" data-domain="transversal" onclick="openDetail('prisma-validator')">
       <div class="skill-card-top">
         <div class="skill-card-icon" style="background:var(--brand-50)">
           <svg viewBox="0 0 24 24" fill="none" stroke="var(--brand-600)" stroke-width="2" stroke-linecap="round"><path d="M22 11.08V12a10 10 0 11-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
         </div>
         <div class="skill-card-badges">
-          <span class="badge badge-dev">En desarrollo</span>
+          <span class="badge badge-pub">Publicada</span>
           <span class="badge badge-type">Plugin</span>
         </div>
       </div>
@@ -413,7 +413,8 @@
         <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg> Transversal</span>
       </div>
       <div class="actions">
-        <button class="btn btn-outline btn-sm btn-disabled">Próximamente</button>
+        <a class="btn btn-primary btn-sm" href="https://teams.microsoft.com/l/channel/19%3A767cec3f2bec4c559e1735f4cd170024%40thread.tacv2/%E2%9D%96%20Prisma%20Validator%20-%20Figma?groupId=9a910ecd-c02a-4b6d-99da-7c80a64dd305&tenantId=a50762c4-c5ad-413a-a05e-9ffe15752882" target="_blank" onclick="event.stopPropagation()" style="text-decoration:none">Ver versiones</a>
+        <button class="btn btn-ghost btn-sm" onclick="event.stopPropagation(); openDetail('prisma-validator')">Ver detalle</button>
       </div>
     </div>
 
@@ -842,19 +843,18 @@ const skillDetails = {
   'prisma-validator': {
     name: 'Prisma Validator en Figma',
     tech: 'prisma-validator-figma',
-    version: '0.5',
-    status: 'En desarrollo', statusClass: 'badge-dev',
+    version: '1.0',
+    status: 'Publicada', statusClass: 'badge-pub',
     type: 'Plugin',
     owner: 'Equipo WL',
     domain: 'Transversal',
-    perfil: 'UI',
-    desc: 'Validación automática de pantallas contra el Design System Prisma directamente en Figma. Enfocado en handoff y calidad pre-desarrollo. Detecta inconsistencias de tokens, spacing y variantes.',
+    perfil: 'UI, Product Design',
+    desc: 'Plugin de Figma para validación automática de pantallas contra el Design System Prisma. Detecta inconsistencias de tokens, spacing, tipografía y variantes. Enfocado en handoff y calidad pre-desarrollo. Las versiones se publican en el canal de Teams.',
     install: null,
+    link: 'https://teams.microsoft.com/l/channel/19%3A767cec3f2bec4c559e1735f4cd170024%40thread.tacv2/%E2%9D%96%20Prisma%20Validator%20-%20Figma?groupId=9a910ecd-c02a-4b6d-99da-7c80a64dd305&tenantId=a50762c4-c5ad-413a-a05e-9ffe15752882',
     process: ['Selecciona frame', 'Escanea vs Prisma', 'Reporta errores', 'Sugiere fixes', 'Re-valida'],
     changelog: [
-      'v0.5 — En desarrollo: detección de tokens de color',
-      'v0.3 — Escaneo básico de spacing',
-      'v0.1 — Proof of concept'
+      'v1.0 — Publicada: validación completa de tokens, spacing y variantes'
     ]
   },
   'figma-contenido': {
