@@ -88,13 +88,16 @@
 
   /* FILTERS */
   .filters-section{margin-bottom:var(--space-4xl)}
-  .filter-row{display:flex;gap:var(--space-l);align-items:center;flex-wrap:wrap;margin-bottom:var(--space-xl)}
-  .filter-label{font-size:12px;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;margin-right:var(--space-l)}
-  .filter-chip{padding:var(--space-m) var(--space-2xl);border-radius:var(--radius-full);border:1px solid var(--border);background:var(--bg-card);font-size:12px;font-weight:500;color:var(--text-secondary);transition:all 0.15s;white-space:nowrap}
+  .filter-bar{display:flex;align-items:center;gap:var(--space-l);flex-wrap:wrap}
+  .filter-sep{color:var(--neutral-300);font-size:14px;user-select:none;margin:0 var(--space-s)}
+  .filter-chip{padding:var(--space-m) var(--space-2xl);border-radius:var(--radius-full);border:1px solid var(--border);background:var(--bg-card);font-size:12px;font-weight:500;color:var(--text-secondary);transition:all 0.15s;white-space:nowrap;display:inline-flex;align-items:center;gap:var(--space-m)}
   .filter-chip:hover{border-color:var(--brand-300);color:var(--text-primary)}
   .filter-chip.active{background:var(--brand-50);border-color:var(--brand-300);color:var(--brand-700);font-weight:600}
-  .filter-chip .count{background:var(--neutral-100);color:var(--text-muted);font-size:10px;font-weight:600;padding:1px 6px;border-radius:var(--radius-full);margin-left:var(--space-s)}
-  .filter-chip.active .count{background:var(--brand-100);color:var(--brand-600)}
+  .filter-chip .chip-icon{font-size:13px;opacity:0.7}
+  .filter-chip.active .chip-icon{opacity:1}
+  .filter-chip .dot{width:6px;height:6px;border-radius:var(--radius-full);flex-shrink:0}
+  .filter-chip .count{font-size:10px;font-weight:600;opacity:0.6}
+  .filter-chip.active .count{opacity:1}
 
   /* CATALOG GRID */
   .catalog-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:var(--space-2xl);margin-bottom:var(--space-6xl)}
@@ -278,24 +281,16 @@
 
 <!-- FILTERS -->
 <div class="filters-section">
-    <div class="filter-row">
-      <span class="filter-label">Tipo</span>
-      <button class="filter-chip active" onclick="filterBy(this,'type')">Todos <span class="count">9</span></button>
-      <button class="filter-chip" onclick="filterBy(this,'type')" data-filter="skill">Skills <span class="count">5</span></button>
-      <button class="filter-chip" onclick="filterBy(this,'type')" data-filter="plugin">Plugins <span class="count">4</span></button>
-    </div>
-    <div class="filter-row">
-      <span class="filter-label">Estado</span>
-      <button class="filter-chip active" onclick="filterBy(this,'status')">Todos</button>
-      <button class="filter-chip" onclick="filterBy(this,'status')" data-filter="pub">Publicada</button>
-      <button class="filter-chip" onclick="filterBy(this,'status')" data-filter="dev">En desarrollo</button>
-      <button class="filter-chip" onclick="filterBy(this,'status')" data-filter="wip">WIP</button>
-    </div>
-    <div class="filter-row">
-      <span class="filter-label">Dominio</span>
-      <button class="filter-chip active" onclick="filterBy(this,'domain')">Todos</button>
-      <button class="filter-chip" onclick="filterBy(this,'domain')" data-filter="transversal">Transversal</button>
-    </div>
+  <div class="filter-bar">
+    <button class="filter-chip active" onclick="filterBy(this,'type')">Todos <span class="count">9</span></button>
+    <button class="filter-chip" onclick="filterBy(this,'type')" data-filter="skill"><svg class="chip-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Skills</button>
+    <button class="filter-chip" onclick="filterBy(this,'type')" data-filter="plugin"><svg class="chip-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Plugins</button>
+    <span class="filter-sep">|</span>
+    <button class="filter-chip active" onclick="filterBy(this,'status')">Todos</button>
+    <button class="filter-chip" onclick="filterBy(this,'status')" data-filter="pub"><span class="dot" style="background:var(--success-500)"></span> Publicada</button>
+    <button class="filter-chip" onclick="filterBy(this,'status')" data-filter="dev"><span class="dot" style="background:var(--warning-500)"></span> En desarrollo</button>
+    <button class="filter-chip" onclick="filterBy(this,'status')" data-filter="wip"><span class="dot" style="background:var(--neutral-400)"></span> WIP</button>
+  </div>
 </div>
 
 <!-- CATALOG GRID -->
@@ -715,21 +710,28 @@ const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxZGbuVhM6DkY
 
 // Filter logic
 function filterBy(btn, group) {
-  const row = btn.closest('.filter-row');
-  row.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+  const bar = btn.closest('.filter-bar');
+  bar.querySelectorAll('.filter-chip').forEach(c => {
+    const cGroup = c.getAttribute('onclick')?.match(/'(\w+)'\)$/)?.[1];
+    if (cGroup === group) c.classList.remove('active');
+  });
   btn.classList.add('active');
   applyFilters();
 }
 
 function applyFilters() {
-  const typeFilter = document.querySelector('.filter-row:nth-child(1) .filter-chip.active')?.dataset?.filter || null;
-  const statusFilter = document.querySelector('.filter-row:nth-child(2) .filter-chip.active')?.dataset?.filter || null;
-  const domainFilter = document.querySelector('.filter-row:nth-child(3) .filter-chip.active')?.dataset?.filter || null;
+  const bar = document.querySelector('.filter-bar');
+  const chips = bar.querySelectorAll('.filter-chip.active');
+  let typeFilter = null, statusFilter = null;
+  chips.forEach(c => {
+    const g = c.getAttribute('onclick')?.match(/'(\w+)'\)$/)?.[1];
+    if (g === 'type') typeFilter = c.dataset.filter || null;
+    if (g === 'status') statusFilter = c.dataset.filter || null;
+  });
   document.querySelectorAll('.skill-card').forEach(card => {
     const matchType = !typeFilter || card.dataset.type === typeFilter;
     const matchStatus = !statusFilter || card.dataset.status === statusFilter;
-    const matchDomain = !domainFilter || card.dataset.domain === domainFilter;
-    card.style.display = (matchType && matchStatus && matchDomain) ? '' : 'none';
+    card.style.display = (matchType && matchStatus) ? '' : 'none';
   });
 }
 
