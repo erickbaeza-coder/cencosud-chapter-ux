@@ -843,17 +843,18 @@ const skillDetails = {
   'prisma-validator': {
     name: 'Prisma Validator en Figma',
     tech: 'prisma-validator-figma',
-    version: '1.0',
+    version: '1.8.0',
     status: 'Publicada', statusClass: 'badge-pub',
     type: 'Plugin',
-    owner: 'Equipo WL',
+    owner: 'Cesar Castillo · Equipo WL',
     domain: 'Transversal',
     perfil: 'UI, Product Design',
-    desc: 'Plugin de Figma para validación automática de pantallas contra el Design System Prisma. Detecta inconsistencias de tokens, spacing, tipografía y variantes. Enfocado en handoff y calidad pre-desarrollo. Las versiones se publican en el canal de Teams.',
+    desc: 'Plugin de Figma para validación automática de pantallas contra el Design System Prisma. Detecta inconsistencias de tokens, spacing, tipografía y variantes. Enfocado en handoff y calidad pre-desarrollo. Incluye función de Properties. Las versiones se publican en el canal de Teams.',
     install: null,
     link: 'https://teams.microsoft.com/l/channel/19%3A767cec3f2bec4c559e1735f4cd170024%40thread.tacv2/%E2%9D%96%20Prisma%20Validator%20-%20Figma?groupId=9a910ecd-c02a-4b6d-99da-7c80a64dd305&tenantId=a50762c4-c5ad-413a-a05e-9ffe15752882',
-    process: ['Selecciona frame', 'Escanea vs Prisma', 'Reporta errores', 'Sugiere fixes', 'Re-valida'],
+    process: ['Selecciona frame', 'Escanea vs Prisma', 'Reporta errores', 'Valida Properties', 'Sugiere fixes', 'Re-valida'],
     changelog: [
+      'v1.8.0 — Corrección de errores + nueva función de Properties',
       'v1.0 — Publicada: validación completa de tokens, spacing y variantes'
     ]
   },
@@ -936,10 +937,16 @@ function openDetail(id) {
           <span style="float:right;opacity:0.5;font-size:11px">click para copiar</span>
         </div>
       </div>`
-    : `<div class="detail-section">
-        <h4>Instalación</h4>
-        <p style="color:var(--warning-600);font-weight:500">Próximamente — en desarrollo</p>
-      </div>`;
+    : data.link
+      ? `<div class="detail-section">
+          <h4>Instalación</h4>
+          <p style="margin-bottom:12px">Disponible como plugin de Figma. Las versiones se publican en el canal de Teams.</p>
+          <a class="btn btn-primary btn-sm" href="${data.link}" target="_blank" style="text-decoration:none">Ver versiones en Teams</a>
+        </div>`
+      : `<div class="detail-section">
+          <h4>Instalación</h4>
+          <p style="color:var(--warning-600);font-weight:500">Próximamente — en desarrollo</p>
+        </div>`;
 
   el.innerHTML = `
     <div style="display:flex;gap:12px;align-items:center;margin-bottom:24px;flex-wrap:wrap">
@@ -1004,7 +1011,7 @@ function closeModal(type) {
 
 // Feedback: dynamic item list
 const catalogItems = {
-  skill: ['UX Jira Ticket Writer', 'Documentación componente UI', 'Corrección de propiedades UI', 'Usuarios Sintéticos'],
+  skill: ['UX Jira Ticket Writer', 'Usuarios Sintéticos', 'Prisma Component Doc Canvas', 'UX Writer Copys Regionales', 'Prisma Component Property'],
   plugin: ['Discovery y Diseño Agéntico', 'Prisma Designer', 'Prisma Validator en Figma', 'Figma Contenido']
 };
 
