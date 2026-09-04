@@ -286,7 +286,6 @@
     <button class="filter-chip" onclick="filterBy(this,'type')" data-filter="skill"><svg class="chip-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Skills</button>
     <button class="filter-chip" onclick="filterBy(this,'type')" data-filter="plugin"><svg class="chip-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg> Plugins</button>
     <span class="filter-sep">|</span>
-    <button class="filter-chip active" onclick="filterBy(this,'status')">Todos</button>
     <button class="filter-chip" onclick="filterBy(this,'status')" data-filter="pub"><span class="dot" style="background:var(--success-500)"></span> Publicada</button>
     <button class="filter-chip" onclick="filterBy(this,'status')" data-filter="dev"><span class="dot" style="background:var(--warning-500)"></span> En desarrollo</button>
     <button class="filter-chip" onclick="filterBy(this,'status')" data-filter="wip"><span class="dot" style="background:var(--neutral-400)"></span> WIP</button>
@@ -711,6 +710,12 @@ const GOOGLE_SHEETS_URL = 'https://script.google.com/macros/s/AKfycbxZGbuVhM6DkY
 // Filter logic
 function filterBy(btn, group) {
   const bar = btn.closest('.filter-bar');
+  const isType = group === 'type';
+  if (!isType && btn.classList.contains('active')) {
+    btn.classList.remove('active');
+    applyFilters();
+    return;
+  }
   bar.querySelectorAll('.filter-chip').forEach(c => {
     const cGroup = c.getAttribute('onclick')?.match(/'(\w+)'\)$/)?.[1];
     if (cGroup === group) c.classList.remove('active');
